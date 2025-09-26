@@ -1,12 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
-    {% load static %}
+<html lang="uz">
+  {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tez Sot - Joylashuv</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
-<body>
-    
+<body class="">
+    <div class="container max-w-6xl mx-auto px-4">
+        <nav class="py-6 flex  items-center justify-between">
+            <div class="flex items-center">
+                <h1 class="font-bold text-4xl text-blue-600 mb-[5px] font-['Poppins', sans-serif]">Tez Sot</h1>
+                <div class="flex ml-[10px] items-center cursor-pointer group" id="locationSelector">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-gray-500 group-hover:text-blue-600">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.768 2.693c.956-.344 1.88.58 1.536 1.535l-6.04 16.777c-.375 1.043-1.842 1.063-2.246.03l-2.829-7.228-7.228-2.828c-1.032-.404-1.012-1.871.03-2.247l16.777-6.04z"></path>
+                    </svg>
+                    <span class="ml-2 font-semibold text-gray-700" id="currentLocation">Andijon</span>
+             
+                </div>
+            </div>
+            <div class="flex justify-end  gap-[40px]">
+              <span class="hover:text-blue-600 text-[#A7AFBC] flex items-center cursor-pointer gap-[10px] relative">
+                <i class="fa-regular fa-heart font-boldb hover:text-blue-600 absolute text-[18px]  left-[-25px] top-[13px]"></i>
+                <h1 class="font-bold hover:text-blue-600 text-[18px]" >Sevimlilar</h1>
+              </span>
+              <span class="hover:text-blue-600 flex items-center cursor-pointer gap-[10px] relative">
+                <i class="fa-regular fa-user font-boldb hover:text-blue-600 absolute text-[18px] text-[#A7AFBC]  left-[-25px] top-[13px]"></i>
+                <h1 class="font-bold hover:text-blue-600 text-[18px] text-[#A7AFBC]" >Tizimga Kirish</h1>
+              </span>
+              <span class="w-[150px] h-[40px] gap-[10px] bg-[#283940] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-blue-600">
+
+                <h1 class="text-white font-bold text-[18px]"> Elon berish</h1>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#27383F"><rect width="24" height="24" rx="12" fill="#fff"></rect><g clip-path="url(#plus-filled_svg__a)"><path d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z" fill="#27383F"></path></g><defs><clipPath id="plus-filled_svg__a"><path fill="#fff" d="M5.6 5.6h12.8v12.8H5.6z"></path></clipPath></defs></svg>
+              </span>
+            </div>
+        </nav>
+    </div>
+
+    <div id="locationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl w-full max-w-md">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h2 class="text-lg font-bold">Joylashuvingizni tanlang</h2>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-4">
+                <div class="relative mb-4">
+                    <input type="text" id="locationSearch" placeholder="Qidirish..." class="w-full p-3 border rounded-lg pl-10">
+                    <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+                </div>
+                
+                <div class="max-h-64 overflow-y-auto" id="locationList">
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const regions = [
+            "Andijon", "Buxoro", "Farg'ona", "Jizzax", "Xorazm", 
+            "Namangan", "Navoiy", "Qashqadaryo", "Qoraqalpog'iston", 
+            "Samarqand", "Sirdaryo", "Surxondaryo", "Toshkent"
+        ];
+
+        const locationSelector = document.getElementById('locationSelector');
+        const locationModal = document.getElementById('locationModal');
+        const closeModal = document.getElementById('closeModal');
+        const currentLocation = document.getElementById('currentLocation');
+        const locationSearch = document.getElementById('locationSearch');
+        const locationList = document.getElementById('locationList');
+
+        document.addEventListener('DOMContentLoaded', function() {
+         
+            getCurrentLocation();
+            
+            populateLocationList(regions);
+            
+            locationSelector.addEventListener('click', openLocationModal);
+            closeModal.addEventListener('click', closeLocationModal);
+            
+            locationSearch.addEventListener('input', filterLocations);
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === locationModal) {
+                    closeLocationModal();
+                }
+            });
+        });
+
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        console.log("Joylashuv aniqlandi");
+                    },
+                    function(error) {
+                        console.log("Joylashuvni aniqlab bo'lmadi");
+                    }
+                );
+            }
+        }
+
+       
+        function openLocationModal() {
+            locationModal.classList.remove('hidden');
+            locationModal.classList.add('flex');
+        }
+
+      
+        function closeLocationModal() {
+            locationModal.classList.add('hidden');
+            locationModal.classList.remove('flex');
+            locationSearch.value = '';
+            filterLocations(); 
+        }
+
+        function populateLocationList(items) {
+            locationList.innerHTML = '';
+            
+            items.forEach(item => {
+                const option = document.createElement('div');
+                option.className = 'p-3 hover:bg-blue-50 rounded-lg cursor-pointer';
+                option.textContent = item;
+                
+                option.addEventListener('click', function() {
+                    currentLocation.textContent = item;
+                    closeLocationModal();
+                });
+                
+                locationList.appendChild(option);
+            });
+        }
+
+        function filterLocations() {
+            const searchTerm = locationSearch.value.toLowerCase();
+            const options = locationList.querySelectorAll('div');
+            
+            options.forEach(option => {
+                const text = option.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
