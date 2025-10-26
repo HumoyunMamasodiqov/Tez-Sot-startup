@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hisobingizni Yarating</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#66B2E4',
+                        secondary: '#4A90C2',
+                        success: '#10B981',
+                        error: '#EF4444',
+                        warning: '#F59E0B'
+                    },
+                    borderRadius: {
+                        'button': '8px'
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+                        'form': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        .input-container {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transition: color 0.2s ease;
+        }
+        
+        .input-field {
+            padding-left: 40px !important;
+            padding-right: 40px !important;
+            transition: all 0.2s ease;
+        }
+        
+        .input-field:focus + .input-icon {
+            color: #66B2E4;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+            transition: color 0.2s ease;
+        }
+        
+        .password-toggle:hover {
+            color: #66B2E4;
+        }
+        
+        .custom-checkbox {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        
+        .custom-checkbox:hover {
+            border-color: #66B2E4;
+        }
+        
+        .custom-checkbox:checked {
+            background-color: #66B2E4;
+            border-color: #66B2E4;
+        }
+        
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .progress-container {
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #66B2E4, #4A90C2);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: -25px;
+            right: 0;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-weak {
+            background-color: #EF4444;
+            width: 25%;
+        }
+        
+        .strength-medium {
+            background-color: #F59E0B;
+            width: 50%;
+        }
+        
+        .strength-strong {
+            background-color: #10B981;
+            width: 100%;
+        }
+        
+        .success-animation {
+            animation: successPulse 2s ease;
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .data-preview {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            display: none;
+            border-left: 4px solid #66B2E4;
+        }
+        
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .data-label {
+            font-weight: 600;
+            color: #4b5563;
+        }
+        
+        .data-value {
+            color: #1f2937;
+        }
+        
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+        
+        .phone-input-container:focus-within {
+            border-color: #66B2E4;
+            box-shadow: 0 0 0 3px rgba(102, 178, 228, 0.1);
+        }
+        
+        .country-code {
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            background-color: #f9fafb;
+            border-right: 1px solid #d1d5db;
+            height: 48px;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .phone-input-field {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 12px 16px;
+            font-size: 16px;
+            background-color: white;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: #10B981;
+        }
+        
+        .notification.error {
+            background-color: #EF4444;
+        }
+        
+        .error-message {
+            color: #EF4444;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+        
+        .input-error {
+            border-color: #EF4444 !important;
+        }
+        
+        @media (max-width: 640px) {
+            .input-icon, .password-toggle {
+                font-size: 14px;
+            }
+            
+            .input-field {
+                padding-left: 36px !important;
+                padding-right: 36px !important;
+            }
+            
+            .notification {
+                left: 20px;
+                right: 20px;
+                transform: translateY(-150%);
+            }
+            
+            .notification.show {
+                transform: translateY(0);
+            }
+        }
+        .logo {
+            width: 170px;
+            height: 50px;
+            margin: 0 auto;
+            
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="min-h-screen flex flex-col">
+        <!-- Notification container -->
+        <div id="notificationContainer"></div>
+        
+        <main class="flex-1 flex items-center justify-center px-6 py-12">
+            <div class="w-full max-w-md">
+                <!-- Progress bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="progress-text" id="progressText">0%</div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 transition-all duration-300 hover:shadow-form">
+                    <div class="text-center mb-8">
+                        <img class="logo" src="/static/img/logo.png" alt="">
+                        <h1 class="text-2xl font-bold text-gray-900 mb-2">Hisobingizni Yarating</h1>
+                        <p class="text-gray-600 text-sm">Platformamizga ishonadigan minglab foydalanuvchilarga qo'shiling</p>
+                    </div>
+
+                    <!-- Django Messages -->
+                   
+
+                    <form method="POST" action="{% url 'signup' %}" class="space-y-6" id="registrationForm">
+                        {% csrf_token %}
+
+                        <!-- Username va First Name -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Ism -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Ism</label>
+                                <div class="input-container">
+                                    <div class="input-icon">
+                                        <i class="ri-user-line"></i>
+                                    </div>
+                                    <input type="text" name="firstName" id="firstName" class="input-field w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" placeholder="Mohloroy" required>
+                                </div>
+                                <div class="error-message" id="firstNameError">Iltimos, ismingizni kiriting</div>
+                            </div>
+                            
+                            <!-- Familya -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Familya</label>
+                                <div class="input-container">
+                                    <div class="input-icon">
+                                        <i class="ri-account-circle-line"></i>
+                                    </div>
+                                    <input type="text" name="lastName" id="lastName" class="input-field w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" placeholder="Rustamjonova" required>
+                                </div>
+                                <div class="error-message" id="lastNameError">Iltimos, familyangizni kiriting</div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Elektron Pochta</label>
+                            <div class="input-container">
+                                <div class="input-icon">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <input type="email" name="email" id="email" class="input-field w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" placeholder="rstm1va@gmail.com" required>
+                            </div>
+                            <div class="error-message" id="emailError">Iltimos, to'g'ri elektron pochtani kiriting</div>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Parol</label>
+                            <div class="input-container">
+                                <div class="input-icon">
+                                    <i class="ri-lock-line"></i>
+                                </div>
+                                <input type="password" name="password" id="password" class="input-field w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" placeholder="Parol" required>
+                                <button type="button" id="togglePassword" class="password-toggle">
+                                    <i class="ri-eye-off-line"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength"></div>
+                            <div class="error-message" id="passwordError">Parol kamida 8 ta belgi, bitta katta harf va raqam bo'lishi kerak</div>
+                        </div>
+
+                        <!-- Date of Birth -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tug'ilgan Sana</label>
+                            <div class="input-container">
+                                <div class="input-icon">
+                                    <i class="ri-calendar-line"></i>
+                                </div>
+                                <input type="date" name="birthDate" id="birthDate" class="input-field w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" required>
+                            </div>
+                            <div class="error-message" id="birthDateError">Iltimos, tug'ilgan sanangizni kiriting</div>
+                        </div>
+                        
+                        <!-- Telefon raqam -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Telefon raqam</label>
+                            <div class="phone-input-container">
+                                <div class="country-code">
+                                    +998
+                                </div>
+                                <input type="tel" name="phone" id="phone" class="phone-input-field" placeholder="50 572 00 00 " required>
+                            </div>
+                            <div class="error-message" id="phoneError">Iltimos, to'g'ri telefon raqamini kiriting</div>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="flex items-start space-x-3">
+                            <input type="checkbox" id="terms" name="terms" class="custom-checkbox mt-0.5" required>
+                            <label for="terms" class="text-sm text-gray-600 leading-relaxed">
+                                Men <a href="#" class="text-primary hover:text-secondary font-medium transition-colors">Foydalanish shartlari</a> va <a href="#" class="text-primary hover:text-secondary font-medium transition-colors">Maxfiylik siyosatiga</a> roziman
+                            </label>
+                        </div>
+                        <div class="error-message" id="termsError">Iltimos, foydalanish shartlariga roziligingizni bildiring</div>
+
+                        <!-- Register Link -->
+                    <!-- login.html faylida -->
+<div class="text-center mt-6">
+    <p class="text-sm text-gray-600">
+        Hisobingiz bormi?
+        <a href="{% url 'login' %}" class="text-primary hover:text-secondary font-medium transition-colors">
+            Kirish
+        </a>
+    </p>
+</div>
+
+                        <!-- Submit Button -->
+                        
+                        <button type="submit" id="submitButton" class="w-full bg-primary hover:bg-secondary text-white font-medium py-3 px-4 rounded-button transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md">
+                            Hisob Yaratish
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Footer Links -->
+                <div class="mt-8 text-center">
+                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-500">
+                        <a href="https://t.me/xumoyun731" class="hover:text-primary transition-colors">Yordam markazi</a>
+                        <span class="hidden sm:inline">•</span>
+                        <a href="https://t.me/xumoyun731" class="hover:text-primary transition-colors">Qo'llab-quvvatlash xizmatiga murojaat qiling</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Progress bar
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const formFields = document.querySelectorAll('input[required]');
+            const totalFields = formFields.length;
+            
+            // Password toggle functionality
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.getElementById('togglePassword');
+            const toggleIcon = toggleButton.querySelector('i');
+            
+            // Password strength indicator
+            const passwordStrength = document.getElementById('passwordStrength');
+            
+            // Telefon operatorlari ro'yxati
+            const operators = [
+                { code: '33', name: 'Humans', color: '#FF6B6B' },
+                { code: '50', name: 'Ucell', color: '#4ECDC4' },
+                { code: '55', name: 'Ucell', color: '#4ECDC4' },
+                { code: '77', name: 'Uzmobile', color: '#45B7D1' },
+                { code: '88', name: 'Uzmobile', color: '#45B7D1' },
+                { code: '90', name: 'Beeline', color: '#FFE66D' },
+                { code: '91', name: 'Beeline', color: '#FFE66D' },
+                { code: '93', name: 'Ucell', color: '#4ECDC4' },
+                { code: '94', name: 'Ucell', color: '#4ECDC4' },
+                { code: '95', name: 'Uzmobile', color: '#45B7D1' },
+                { code: '97', name: 'Mobiuz', color: '#6A0572' },
+                { code: '98', name: 'Perfectum', color: '#AB83A1' },
+                { code: '99', name: 'Uzmobile', color: '#45B7D1' }
+            ];
+
+            // Password toggle
+            toggleButton.addEventListener('click', function() {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                toggleIcon.className = isPassword ? 'ri-eye-line' : 'ri-eye-off-line';
+            });
+
+            // Telefon raqam formati
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
+                // Faqat raqamlarga ruxsat berish
+                let value = e.target.value.replace(/[^\d]/g, '');
+                
+                // Formatlash: 90 123 45 67
+                let formattedValue = '';
+                
+                if (value.length > 0) {
+                    formattedValue = value.substring(0, 2);
+                }
+                
+                if (value.length > 2) {
+                    formattedValue += ' ' + value.substring(2, 5);
+                }
+                
+                if (value.length > 5) {
+                    formattedValue += ' ' + value.substring(5, 7);
+                }
+                
+                if (value.length > 7) {
+                    formattedValue += ' ' + value.substring(7, 9);
+                }
+                
+                e.target.value = formattedValue;
+            });
+
+            // Progress bar yangilash
+            function updateProgressBar() {
+                let filledFields = 0;
+                
+                formFields.forEach(field => {
+                    if (field.value.trim() !== '') {
+                        filledFields++;
+                    }
+                });
+                
+                // Shartnoma ham hisobga olinadi
+                const termsChecked = document.getElementById('terms').checked;
+                if (termsChecked) filledFields++;
+                
+                const progressPercentage = (filledFields / (totalFields + 1)) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${Math.round(progressPercentage)}%`;
+            }
+            
+            // Input maydonlariga progress bar yangilash
+            formFields.forEach(field => {
+                field.addEventListener('input', function() {
+                    updateProgressBar();
+                    hideError(this.id + 'Error');
+                    this.classList.remove('input-error');
+                });
+                field.addEventListener('change', function() {
+                    updateProgressBar();
+                    hideError(this.id + 'Error');
+                    this.classList.remove('input-error');
+                });
+            });
+            
+            // Shartnoma checkbox'ini kuzatish
+            document.getElementById('terms').addEventListener('change', function() {
+                updateProgressBar();
+                hideError('termsError');
+            });
+            
+            // Parol kuchini tekshirish
+            passwordInput.addEventListener('input', function() {
+                const value = this.value;
+                let strength = 0;
+                
+                // Parol uzunligi
+                if (value.length >= 8) strength += 1;
+                
+                // Katta harf mavjudligi
+                if (/[A-Z]/.test(value)) strength += 1;
+                
+                // Raqam mavjudligi
+                if (/[0-9]/.test(value)) strength += 1;
+                
+                // Maxsus belgi mavjudligi
+                if (/[^A-Za-z0-9]/.test(value)) strength += 1;
+                
+                // Parol kuchini ko'rsatish
+                passwordStrength.className = 'password-strength';
+                
+                if (value.length > 0) {
+                    if (strength <= 1) {
+                        passwordStrength.classList.add('strength-weak');
+                    } else if (strength <= 2) {
+                        passwordStrength.classList.add('strength-medium');
+                    } else {
+                        passwordStrength.classList.add('strength-strong');
+                    }
+                }
+            });
+
+            // Notification funksiyasi
+            function showNotification(message, type = 'success') {
+                const notificationContainer = document.getElementById('notificationContainer');
+                const notificationId = 'notification-' + Date.now();
+                
+                const notification = document.createElement('div');
+                notification.id = notificationId;
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="ri-${type === 'success' ? 'check-line' : 'error-warning-line'} mr-2"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                notificationContainer.appendChild(notification);
+                
+                // Ko'rsatish
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 100);
+                
+                // Yashirish
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 5000);
+            }
+            
+            // Xatolikni ko'rsatish
+            function showError(fieldId, message) {
+                const errorElement = document.getElementById(fieldId + 'Error');
+                const inputElement = document.getElementById(fieldId);
+                
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+                
+                if (inputElement) {
+                    inputElement.classList.add('input-error');
+                }
+            }
+            
+            // Xatolikni yashirish
+            function hideError(fieldId) {
+                const errorElement = document.getElementById(fieldId);
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                }
+            }
+
+            // Form submission
+            const form = document.getElementById('registrationForm');
+            const submitButton = document.getElementById('submitButton');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // Ismni tekshirish
+                const firstName = document.getElementById('firstName').value.trim();
+                if (!firstName) {
+                    showError('firstName', 'Iltimos, ismingizni kiriting');
+                    isValid = false;
+                }
+                
+                // Familyani tekshirish
+                const lastName = document.getElementById('lastName').value.trim();
+                if (!lastName) {
+                    showError('lastName', 'Iltimos, familyangizni kiriting');
+                    isValid = false;
+                }
+                
+                // Emailni tekshirish
+                const email = document.getElementById('email').value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email) {
+                    showError('email', 'Iltimos, elektron pochtangizni kiriting');
+                    isValid = false;
+                } else if (!emailRegex.test(email)) {
+                    showError('email', 'Iltimos, to\'g\'ri elektron pochtani kiriting');
+                    isValid = false;
+                }
+                
+                // Parolni tekshirish
+                const password = passwordInput.value;
+                const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+                if (!password) {
+                    showError('password', 'Iltimos, parolni kiriting');
+                    isValid = false;
+                } else if (!passwordRegex.test(password)) {
+                    showError('password', 'Parol kamida 8 ta belgi, bitta katta harf va raqam bo\'lishi kerak');
+                    isValid = false;
+                }
+                
+                // Tug'ilgan sanani tekshirish
+                const birthDate = document.getElementById('birthDate').value;
+                if (!birthDate) {
+                    showError('birthDate', 'Iltimos, tug\'ilgan sanangizni kiriting');
+                    isValid = false;
+                }
+                
+                // Telefon raqamni tekshirish
+                const phoneValue = phoneInput.value.replace(/\s/g, '');
+                if (phoneValue.length !== 9) {
+                    showError('phone', 'Iltimos, to\'g\'ri telefon raqamini kiriting (90 123 45 67 formatida)');
+                    isValid = false;
+                } else {
+                    // Operator kodini olish
+                    const operatorCode = phoneValue.substring(0, 2);
+                    const operator = operators.find(op => op.code === operatorCode);
+                    
+                    if (!operator) {
+                        showError('phone', 'Iltimos, O\'zbekistonda amal qiladigan telefon raqamini kiriting');
+                        isValid = false;
+                    }
+                }
+                
+                // Shartnomani tekshirish
+                const termsChecked = document.getElementById('terms').checked;
+                if (!termsChecked) {
+                    showError('terms', 'Iltimos, foydalanish shartlariga roziligingizni bildiring');
+                    isValid = false;
+                }
+                
+                if (!isValid) {
+                    showNotification('Iltimos, barcha maydonlarni to\'g\'ri to\'ldiring', 'error');
+                    return;
+                }
+                
+                // Agar barcha tekshiruvlar muvaffaqiyatli bo'lsa, formani serverga yuborish
+                form.submit();
+            });
+            
+            // Dastlabki progress bar yangilash
+            updateProgressBar();
+        });
+    </script>
+</body>
+</html>

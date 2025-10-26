@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>404 Animation — export uchun</title>
+<style>
+  :root{--w:1280px; --h:720px}
+  html,body{height:100%;margin:0;background:#050217;display:flex;align-items:center;justify-content:center;font-family:Inter, system-ui, sans-serif}
+  /* Stage */
+  .stage{
+    width:100vw; height:100vh; overflow:hidden; background:#050217; display:flex;align-items:center;justify-content:center;
+  }
+
+  .frame{
+    width: 100%;
+    height: 100dvh;
+    aspect-ratio:16/9; position:relative; overflow:hidden;
+    border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,0.6);
+    background:radial-gradient(ellipse at 10% 10%, rgba(30,40,90,0.25), transparent 10%),
+               radial-gradient(ellipse at 90% 90%, rgba(10,20,40,0.25), transparent 10%);
+  }
+
+  /* Background image (slightly larger for pan/zoom) */
+  .bg{
+    position:absolute; inset:0; background-image:url('background.png');
+    background-size:cover; background-position:center;
+    transform-origin:center;
+    animation: bgZoom 10s ease-in-out infinite;
+    filter:contrast(1.05) saturate(1.05);
+   width: 100%;
+   height: 100dvh;
+  }
+  @keyframes bgZoom{
+    0%{ transform: scale(1.08) translateX(-3%); }
+    50%{ transform: scale(1.12) translateX(3%); }
+    100%{ transform: scale(1.08) translateX(-3%); }
+  }
+
+  /* soft spotlight beams (CSS gradients) */
+  .beam{
+    position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(1000px 200px at 25% 40%, rgba(50,130,255,0.08), transparent 20%),
+      radial-gradient(900px 220px at 75% 35%, rgba(60,200,255,0.06), transparent 18%);
+    mix-blend-mode:screen;
+    animation: beamMove 12s linear infinite;
+  }
+  @keyframes beamMove{
+    0%{filter:blur(6px) brightness(1);}
+    50%{filter:blur(8px) brightness(1.06);}
+    100%{filter:blur(6px) brightness(1);}
+  }
+
+  /* Stars layer */
+  .stars{position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen;}
+  .stars span{
+    position:absolute; width:4px; height:4px; border-radius:50%;
+    background:linear-gradient(180deg,#fff9,#bfe6ff);
+    opacity:0.9; transform:translateZ(0);
+    animation: twinkle 3s infinite ease-in-out;
+    box-shadow:0 0 8px rgba(120,200,255,0.25);
+  }
+  @keyframes twinkle{
+    0%{opacity:.1; transform:scale(.4) translateY(0);}
+    50%{opacity:1; transform:scale(1.15) translateY(-6px);}
+    100%{opacity:.1; transform:scale(.4) translateY(0);}
+  }
+
+  /* Oops text + subtitle + button */
+  .center{
+    position:absolute; left:50%; top:55%; transform:translate(-50%,-50%);
+    text-align:center; color:#a8d2ff; 
+ z-index: 5555555599999999999999;
+  }
+  .center h1{
+    margin:0;font-size:64px;letter-spacing:2px;color:#89b5ff;text-shadow:0 10px 30px rgba(8,12,30,0.6);
+    transform-origin:center;
+    animation: textPop 6s ease-in-out infinite;
+  }
+  @keyframes textPop{
+    0%{ transform: translateY(8px) scale(0.98); opacity:0;}
+    8%{ transform: translateY(0) scale(1); opacity:1;}
+    40%{ transform: translateY(-6px) scale(1.02);}
+    80%{ transform: translateY(0) scale(1);}
+    100%{ transform: translateY(8px) scale(0.98); opacity:0;}
+  }
+  .center p{ margin:10px 0 20px; color:rgba(200,220,255,0.8); font-size:14px; opacity:0.95 }
+
+  /* small CTA for preview (not printed in export if you crop) */
+  .controls{ position:absolute; right:12px; bottom:12px; z-index:50; display:flex; gap:8px}
+  .controls button{ padding:10px 12px; border-radius:8px; border:none; background:#0b63ff; color:white; cursor:pointer; box-shadow:0 6px 18px rgba(11,99,255,0.18)}
+  .controls button.secondary{ background:rgba(255,255,255,0.06); color: #dbeeff; box-shadow:none }
+
+  /* subtle foreground floating person placeholder (optional) */
+  .person{
+    position:absolute; right:18%; top:12%; width:140px; height:220px; transform:skewX(-6deg);
+    background:linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    border-radius:12px; filter:blur(0.6px);
+    animation: floaty 6.5s ease-in-out infinite;
+    mix-blend-mode:screen;
+    box-shadow:0 30px 60px rgba(5,10,30,0.45);
+  }
+  @keyframes floaty{
+    0%{ transform: translateY(0) scale(1) rotate(-0.6deg) }
+    50%{ transform: translateY(-12px) scale(1.02) rotate(0.8deg) }
+    100%{ transform: translateY(0) scale(1) rotate(-0.6deg) }
+  }
+
+  /* responsive tweaks */
+  @media (max-width:700px){
+    .center {
+      width: 90%;
+    }
+    .center h1{ font-size:30px }
+    .frame{ border-radius:6px }
+  }
+  .glow{
+    color: #fff;
+    text-shadow: 0 0 8px #fff, 0 0 12px #fff, 0 0 16px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 55px #fff, 0 0 75px #fff;
+  }
+  .secondary {
+    color: #a8d2ff;
+    text-shadow: 0 0 8px #a8d2ff, 0 0 12px #a8d2ff, 0 0 16px #a8d2ff, 0 0 20px #a8d2ff, 0 0 30px #a8d2ff, 0 0 40px #a8d2ff, 0 0 55px #a8d2ff, 0 0 75px #a8d2ff;
+    background-color: #050217;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    z-index:5555555599999999999999;
+   cursor: pointer;
+   position: relative;
+   border: 1px solid #a8d2ff;
+  
+  }
+  .secondary:hover {
+    color: #fff;
+    text-shadow: 0 0 8px #fff, 0 0 12px #fff, 0 0 16px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 55px #fff, 0 0 75px #fff;
+
+    box-shadow: 0 0 20px #a8d2ff, 0 0 40px #a8d2ff, 0 0 60px #a8d2ff, 0 0 80px #a8d2ff;
+  }
+</style>
+</head>
+<body>
+
+  <div class="stage">
+    
+    <div class="frame" id="frame">
+      
+      <div class="bg" aria-hidden="true"></div>
+      <div class="beam" aria-hidden="true"></div>
+
+      <div class="stars" id="stars" aria-hidden="true"></div>
+
+      <div class="person" aria-hidden="true"></div>
+
+      <div class="center" aria-hidden="true">
+        <h1 class="glow">404</h1>
+        <h1>Page Not Found</h1>
+        <p>Siz qidirayotgan sahifani topa olmadik.</p>
+        <div style="height:10px"></div>
+        <a href="/">
+          <button class="secondary">Bosh sahifa</button>
+        </a>
+      </div>
+
+ 
+    </div>
+  </div>
+
+<script>
+  // Create many stars with random positions & animation delays
+  const starsEl = document.getElementById('stars');
+  const STAR_COUNT = 36;
+  for(let i=0;i<STAR_COUNT;i++){
+    const s = document.createElement('span');
+    const size = (Math.random()*3 + 1.2).toFixed(1);
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = (Math.random()*100).toFixed(2) + '%';
+    s.style.top = (Math.random()*100).toFixed(2) + '%';
+    const d = (Math.random()*3 + 1.5).toFixed(2);
+    s.style.animationDuration = d + 's';
+    s.style.opacity = (0.6 + Math.random()*0.4).toFixed(2);
+    s.style.transform = 'translateZ(0)';
+    s.style.filter = 'blur(' + (Math.random()*1.8).toFixed(2) + 'px)';
+    s.style.boxShadow = '0 0 ' + (Math.random()*6+2).toFixed(1) + 'px rgba(140,200,255,0.18)';
+    s.style.animationDelay = (Math.random()*2).toFixed(2) + 's';
+    starsEl.appendChild(s);
+  }
+
+  // Fullscreen button
+  document.getElementById('fullscreen').addEventListener('click', async ()=>{
+    const el = document.getElementById('frame');
+    if (el.requestFullscreen) await el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
+  });
+
+  // Record tip button (we cannot reliably record only the element programmatically in all browsers).
+  // We open a short helpful prompt that explains options.
+  document.getElementById('record').addEventListener('click', ()=>{
+    alert(
+      "Videoga yozish uchun tavsiyalar:\n\n" +
+      "1) Oddiy usul: brauzerni to'liq ekran qiling (To'liq ekran tugmasi) va keyin tizim ekran yozuvchisidan (Windows: Win+G, macOS: Cmd+Shift+5) yoki OBS dasturidan yozib oling.\n\n" +
+      "2) Agar brauzerda to'g'ridan-to'g'ri yozishni hohlasangiz: OBS yoki brauzer ekranni yozuvchi plaginlardan foydalaning.\n\n" +
+      "3) Agar yordam kerak bo'lsa, menga ayting — men sizga OBS sozlamalari (resolutsiya, fps, bitrate) uchun tayyor konfiguratsiya beraman."
+    );
+  });
+</script>
+</body>
+</html>
+                      

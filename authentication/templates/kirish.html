@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tizimga Kirish</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#66B2E4',
+                        secondary: '#4A90C2',
+                        success: '#10B981',
+                        error: '#EF4444',
+                        warning: '#F59E0B'
+                    },
+                    borderRadius: {
+                        'button': '8px'
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+                        'form': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        /* Input'larni ko'rinadigan qilish */
+        input[type="text"], 
+        input[type="email"], 
+        input[type="password"] {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+            font-size: 18px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transition: color 0.2s ease;
+            z-index: 10;
+        }
+        
+        .input-field {
+            padding-left: 44px !important;
+            padding-right: 44px !important;
+            width: 100%;
+            height: 48px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #66B2E4;
+            box-shadow: 0 0 0 3px rgba(102, 178, 228, 0.1);
+        }
+        
+        .input-field:focus + .input-icon {
+            color: #66B2E4;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+            font-size: 18px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+            transition: color 0.2s ease;
+            z-index: 10;
+        }
+        
+        .password-toggle:hover {
+            color: #66B2E4;
+        }
+        
+        .custom-checkbox {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        
+        .custom-checkbox:hover {
+            border-color: #66B2E4;
+        }
+        
+        .custom-checkbox:checked {
+            background-color: #66B2E4;
+            border-color: #66B2E4;
+        }
+        
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: #10B981;
+        }
+        
+        .notification.error {
+            background-color: #EF4444;
+        }
+        
+        .notification.info {
+            background-color: #66B2E4;
+        }
+        
+        .error-message {
+            color: #EF4444;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+        
+        .input-error {
+            border-color: #EF4444 !important;
+        }
+        
+        /* 3 soniyalik xabar uchun yangi style */
+        .welcome-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, #66B2E4 0%, #4A90C2 100%);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(102, 178, 228, 0.3);
+            font-weight: 600;
+            z-index: 1001;
+            text-align: center;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            max-width: 90%;
+            width: auto;
+        }
+        
+        .welcome-message.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        .welcome-message.hide {
+            transform: translateX(-50%) translateY(-100px);
+            opacity: 0;
+        }
+        
+        @media (max-width: 640px) {
+            .input-icon, .password-toggle {
+                font-size: 16px;
+            }
+            
+            .input-field {
+                padding-left: 40px !important;
+                padding-right: 40px !important;
+            }
+            
+            .notification {
+                left: 20px;
+                right: 20px;
+                transform: translateY(-150%);
+            }
+            
+            .notification.show {
+                transform: translateY(0);
+            }
+            
+            .welcome-message {
+                width: 90%;
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+        }
+
+        .logo {
+            width: 185px;
+            height: 70px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Yangi qo'shilgan CSS */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .form-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .input-field::placeholder {
+            color: #9CA3AF;
+            opacity: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #66B2E4 0%, #4A90C2 100%);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4A90C2 0%, #66B2E4 100%);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-gray-100 min-h-screen">
+    <!-- 3 soniyalik xabar -->
+    <div id="welcomeMessage" class="welcome-message">
+        <div class="flex items-center justify-center">
+     
+            <span>Tizimga xush kelibsiz! Iltimos, hisobingizga kiring.</span>
+        </div>
+    </div>
+    
+    <div class="min-h-screen flex items-center justify-center px-4 py-8">
+        <!-- Notification container -->
+        <div id="notificationContainer"></div>
+        
+        <div class="w-full max-w-md">
+            <div class="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 transition-all duration-300 hover:shadow-form">
+                <!-- Logo -->
+                <div class="text-center mb-8">
+                    <div class="logo">
+                        <img src="{% static 'img/logo.png' %}" alt="Tez Sot Logo" 
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTg1IiBoZWlnaHQ9IjcwIiB2aWV3Qm94PSIwIDAgMTg1IDcwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxODUiIGhlaWdodD0iNzAiIHJ4PSI4IiBmaWxsPSIjNjZCMkU0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJQYWNpZmljbyIgZm9udC1zaXplPSIyNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPlRleiBTb3Q8L3RleHQ+PC9zdmc+'">
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">Tizimga Kirish</h1>
+                    <p class="text-gray-600 text-sm">Mavjud hisobingizga kiring</p>
+                </div>
+
+                <!-- Django Messages -->
+              
+                <form method="POST" action="{% url 'login' %}" class="space-y-6" id="loginForm" autocomplete="off">
+                    {% csrf_token %}
+
+                    <!-- Username yoki Email -->
+                    <div>
+                        <label for="loginUsername" class="block text-sm font-medium text-gray-700 mb-2">
+                            Ism yoki elektron pochta
+                        </label>
+                        <div class="input-container">
+                            <div class="input-icon">
+                                <i class="ri-user-line"></i>
+                            </div>
+                            <input type="text" 
+                                   name="username" 
+                                   id="loginUsername" 
+                                   class="input-field w-full px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" 
+                                   placeholder="Ism yoki elektron pochta" 
+                                   required
+                                   autocomplete="username">
+                        </div>
+                        <div class="error-message" id="loginUsernameError">
+                            Iltimos, foydalanuvchi nomi yoki elektron pochtani kiriting
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                            Parol
+                        </label>
+                        <div class="input-container">
+                            <div class="input-icon">
+                                <i class="ri-lock-line"></i>
+                            </div>
+                            <input type="password" 
+                                   name="password" 
+                                   id="loginPassword" 
+                                   class="input-field w-full px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" 
+                                   placeholder="Parol" 
+                                   required
+                                   autocomplete="current-password">
+                            <button type="button" id="toggleLoginPassword" class="password-toggle">
+                                <i class="ri-eye-off-line"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="loginPasswordError">
+                            Iltimos, parolni kiriting
+                        </div>
+                    </div>
+
+                    <!-- Remember me and Forgot password -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="rememberMe" name="remember_me" class="custom-checkbox">
+                            <label for="rememberMe" class="text-sm text-gray-600 cursor-pointer">Eslab qolish</label>
+                        </div>
+                        <a href="#" class="text-sm text-primary hover:text-secondary font-medium transition-colors">
+                            Parolni unutdingizmi?
+                        </a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                            id="loginSubmitButton" 
+                            class="w-full btn-primary text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md">
+                        Tizimga Kirish
+                    </button>
+                    
+                    <!-- Register Link -->
+                    <div class="text-center mt-6 pt-6 border-t border-gray-200">
+                        <p class="text-sm text-gray-600">
+                            Hisobingiz yo'qmi? 
+                            <a href="{% url 'signup' %}" class="text-primary hover:text-secondary font-medium transition-colors ml-1">
+                                Ro'yxatdan o'ting
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer Links -->
+            <div class="mt-8 text-center">
+                <div class="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-500">
+                    <a href="https://t.me/xumoyun731" class="hover:text-primary transition-colors">Yordam markazi</a>
+                    <span class="hidden sm:inline">•</span>
+                    <a href="https://t.me/xumoyun731" class="hover:text-primary transition-colors">Qo'llab-quvvatlash xizmatiga murojaat qiling</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 3 soniyalik xabar funksiyasi
+            function showWelcomeMessage() {
+                const welcomeMessage = document.getElementById('welcomeMessage');
+                
+                // Xabarni ko'rsatish
+                setTimeout(() => {
+                    welcomeMessage.classList.add('show');
+                }, 500);
+                
+                // 3 soniyadan keyin xabarni yashirish
+                setTimeout(() => {
+                    welcomeMessage.classList.remove('show');
+                    welcomeMessage.classList.add('hide');
+                    
+                    // Animatsiya tugagach elementni olib tashlash
+                    setTimeout(() => {
+                        if (welcomeMessage.parentNode) {
+                            welcomeMessage.parentNode.removeChild(welcomeMessage);
+                        }
+                    }, 500);
+                }, 3500);
+            }
+            
+            // Sahifa yuklanganda xabarni ko'rsatish
+            showWelcomeMessage();
+            
+            // Form va inputlarni tozalash
+            function clearForm() {
+                const form = document.getElementById('loginForm');
+                if (form) {
+                    form.reset();
+                }
+                
+                const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+                
+                // Error messagelarni yashirish
+                const errorMessages = document.querySelectorAll('.error-message');
+                errorMessages.forEach(error => {
+                    error.style.display = 'none';
+                });
+                
+                // Input error classlarini olib tashlash
+                const errorInputs = document.querySelectorAll('.input-error');
+                errorInputs.forEach(input => {
+                    input.classList.remove('input-error');
+                });
+            }
+            
+            // Sahifa yuklanganda formani tozalash
+            clearForm();
+            
+            // Password toggle functionality
+            const loginPasswordInput = document.getElementById('loginPassword');
+            const toggleLoginButton = document.getElementById('toggleLoginPassword');
+            const toggleLoginIcon = toggleLoginButton.querySelector('i');
+            
+            // Notification funksiyasi
+            function showNotification(message, type = 'success') {
+                const notificationContainer = document.getElementById('notificationContainer');
+                const notificationId = 'notification-' + Date.now();
+                
+                const notification = document.createElement('div');
+                notification.id = notificationId;
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="ri-${type === 'success' ? 'check-line' : 'error-warning-line'} mr-2"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                notificationContainer.appendChild(notification);
+                
+                // Ko'rsatish
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 100);
+                
+                // Yashirish
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 5000);
+            }
+            
+            // Xatolikni ko'rsatish
+            function showError(fieldId, message) {
+                const errorElement = document.getElementById(fieldId + 'Error');
+                const inputElement = document.getElementById(fieldId);
+                
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+                
+                if (inputElement) {
+                    inputElement.classList.add('input-error');
+                }
+            }
+            
+            // Xatolikni yashirish
+            function hideError(fieldId) {
+                const errorElement = document.getElementById(fieldId);
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                }
+            }
+
+            // Password toggle
+            toggleLoginButton.addEventListener('click', function() {
+                const isPassword = loginPasswordInput.type === 'password';
+                loginPasswordInput.type = isPassword ? 'text' : 'password';
+                toggleLoginIcon.className = isPassword ? 'ri-eye-line' : 'ri-eye-off-line';
+            });
+            
+            // Input validation
+            const loginUsernameInput = document.getElementById('loginUsername');
+            
+            loginUsernameInput.addEventListener('input', function() {
+                hideError('loginUsername');
+                this.classList.remove('input-error');
+            });
+            
+            loginPasswordInput.addEventListener('input', function() {
+                hideError('loginPassword');
+                this.classList.remove('input-error');
+            });
+            
+            // Login Form submission
+            const loginForm = document.getElementById('loginForm');
+            const loginSubmitButton = document.getElementById('loginSubmitButton');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // Username tekshirish
+                const username = loginUsernameInput.value.trim();
+                if (!username) {
+                    showError('loginUsername', 'Iltimos, foydalanuvchi nomi yoki elektron pochtani kiriting');
+                    isValid = false;
+                }
+                
+                // Parolni tekshirish
+                const password = loginPasswordInput.value;
+                if (!password) {
+                    showError('loginPassword', 'Iltimos, parolni kiriting');
+                    isValid = false;
+                }
+                
+                if (!isValid) {
+                    showNotification('Iltimos, barcha maydonlarni to\'g\'ri to\'ldiring', 'error');
+                    return;
+                }
+                
+                // Yuklanish effekti
+                const originalText = loginSubmitButton.innerHTML;
+                loginSubmitButton.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i> Kirish amalga oshirilmoqda...';
+                loginSubmitButton.disabled = true;
+                
+                // 1 soniyadan so'ng formani yuborish (animation uchun)
+                setTimeout(() => {
+                    this.submit();
+                }, 1000);
+            });
+            
+            // Forgot password link
+            document.querySelector('a[href="#"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification('Parolni tiklash sahifasiga yo\'naltirilmoqda...', 'success');
+            });
+            
+            // Browser back/forward button lar uchun
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    clearForm();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

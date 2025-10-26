@@ -12,9 +12,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&*0@&h#k5ut#s(!r-2gbjs&&1y_)k%pch(6o(7%v*7qj*0m5@*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# settings.py
 
-ALLOWED_HOSTS = []
+DEBUG = False  # Productionda False qiling
+
+ALLOWED_HOSTS = ['*']  # Yoki domayingizni qo'shing
+
+# 404 sahifasini ko'rsatish
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Application definition
@@ -26,8 +32,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fronend',
+
+    'fronend',        # Frontend app
+    'authentication',  # Authentication app
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

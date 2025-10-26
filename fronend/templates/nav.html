@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="uz">
-  {% load static %}
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 </head>
 <body class="">
     <div class="container max-w-6xl mx-auto px-4">
-        <nav class="py-6 flex  items-center justify-between">
+        <nav class="py-6 flex items-center justify-between">
             <div class="flex items-center">
                 <h1 class="font-bold text-4xl text-blue-600 mb-[5px] font-['Poppins', sans-serif]">Tez Sot</h1>
                 <div class="flex ml-[10px] items-center cursor-pointer group" id="locationSelector">
@@ -19,27 +19,54 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M19.768 2.693c.956-.344 1.88.58 1.536 1.535l-6.04 16.777c-.375 1.043-1.842 1.063-2.246.03l-2.829-7.228-7.228-2.828c-1.032-.404-1.012-1.871.03-2.247l16.777-6.04z"></path>
                     </svg>
                     <span class="ml-2 font-semibold text-gray-700" id="currentLocation">Andijon</span>
-             
                 </div>
             </div>
-            <div class="flex justify-end  gap-[40px]">
-              <span class="hover:text-blue-600 text-[#A7AFBC] flex items-center cursor-pointer gap-[10px] relative">
-                <i class="fa-regular fa-heart font-boldb hover:text-blue-600 absolute text-[18px]  left-[-25px] top-[13px]"></i>
-                <h1 class="font-bold hover:text-blue-600 text-[18px]" >Sevimlilar</h1>
-              </span>
-              <span class="hover:text-blue-600 flex items-center cursor-pointer gap-[10px] relative">
-                <i class="fa-regular fa-user font-boldb hover:text-blue-600 absolute text-[18px] text-[#A7AFBC]  left-[-25px] top-[13px]"></i>
-                <h1 class="font-bold hover:text-blue-600 text-[18px] text-[#A7AFBC]" >Tizimga Kirish</h1>
-              </span>
-              <span class="w-[150px] h-[40px] gap-[10px] bg-[#283940] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-blue-600">
-
-                <h1 class="text-white font-bold text-[18px]"> Elon berish</h1>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#27383F"><rect width="24" height="24" rx="12" fill="#fff"></rect><g clip-path="url(#plus-filled_svg__a)"><path d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z" fill="#27383F"></path></g><defs><clipPath id="plus-filled_svg__a"><path fill="#fff" d="M5.6 5.6h12.8v12.8H5.6z"></path></clipPath></defs></svg>
-              </span>
+            <div class="flex justify-end gap-[40px]">
+                <span class="hover:text-blue-600 text-[#A7AFBC] flex items-center cursor-pointer gap-[10px] relative">
+                    <i class="fa-regular fa-heart font-boldb hover:text-blue-600 absolute text-[18px] left-[-25px] top-[13px]"></i>
+                    <h1 class="font-bold hover:text-blue-600 text-[18px]">Sevimlilar</h1>
+                </span>
+                
+                {% if user.is_authenticated %}
+                    <!-- Foydalanuvchi kirgan -->
+                    <span class="hover:text-blue-600 flex items-center cursor-pointer gap-[10px] relative">
+                        <i class="fa-regular fa-user font-boldb hover:text-blue-600 absolute text-[18px] text-[#A7AFBC] left-[-25px] top-[13px]"></i>
+                        <h1 class="font-bold hover:text-blue-600 text-[18px] text-[#A7AFBC]">
+                            {{ user.first_name }} {{ user.last_name }}
+                        </h1>
+                    </span>
+                    <a href="{% url 'qosjso' %}">
+                        <span class="w-[150px] h-[40px] gap-[10px] bg-[#283940] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-blue-600">
+                            <h1 class="text-white">Chiqish</h1>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#27383F">
+                                <rect width="24" height="24" rx="12" fill="#fff"></rect>
+                                <g clip-path="url(#plus-filled_svg__a)"><path d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z" fill="#27383F"></path></g>
+                                <defs><clipPath id="plus-filled_svg__a"><path fill="#fff" d="M5.6 5.6h12.8v12.8H5.6z"></path></clipPath></defs>
+                            </svg>
+                        </span>
+                    </a>
+                {% else %}
+                    <!-- Foydalanuvchi kirmagan -->
+                    <span class="hover:text-blue-600 flex items-center cursor-pointer gap-[10px] relative">
+                        <i class="fa-regular fa-user font-boldb hover:text-blue-600 absolute text-[18px] text-[#A7AFBC] left-[-25px] top-[13px]"></i>
+                        <h1 class="font-bold hover:text-blue-600 text-[18px] text-[#A7AFBC]">Hisob</h1>
+                    </span>
+                    <a href="{% url 'login' %}">
+                        <span class="w-[150px] h-[40px] gap-[10px] bg-[#283940] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-blue-600">
+                            <h1 class="text-white">Kirish</h1>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#27383F">
+                                <rect width="24" height="24" rx="12" fill="#fff"></rect>
+                                <g clip-path="url(#plus-filled_svg__a)"><path d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z" fill="#27383F"></path></g>
+                                <defs><clipPath id="plus-filled_svg__a"><path fill="#fff" d="M5.6 5.6h12.8v12.8H5.6z"></path></clipPath></defs>
+                            </svg>
+                        </span>
+                    </a>
+                {% endif %}
             </div>
         </nav>
     </div>
 
+    <!-- Qolgan JavaScript kodlari o'zgarishsiz -->
     <div id="locationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl w-full max-w-md">
             <div class="p-4 border-b flex justify-between items-center">
@@ -56,7 +83,7 @@
                 </div>
                 
                 <div class="max-h-64 overflow-y-auto" id="locationList">
-                 
+                    <!-- Joylashuvlar ro'yxati -->
                 </div>
             </div>
         </div>
@@ -77,14 +104,11 @@
         const locationList = document.getElementById('locationList');
 
         document.addEventListener('DOMContentLoaded', function() {
-         
             getCurrentLocation();
-            
             populateLocationList(regions);
             
             locationSelector.addEventListener('click', openLocationModal);
             closeModal.addEventListener('click', closeLocationModal);
-            
             locationSearch.addEventListener('input', filterLocations);
             
             window.addEventListener('click', function(event) {
@@ -107,18 +131,16 @@
             }
         }
 
-       
         function openLocationModal() {
             locationModal.classList.remove('hidden');
             locationModal.classList.add('flex');
         }
 
-      
         function closeLocationModal() {
             locationModal.classList.add('hidden');
             locationModal.classList.remove('flex');
             locationSearch.value = '';
-            filterLocations(); 
+            filterLocations();
         }
 
         function populateLocationList(items) {
