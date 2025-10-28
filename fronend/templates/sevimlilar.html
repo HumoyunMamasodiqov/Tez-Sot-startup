@@ -201,11 +201,11 @@ border-color: #fecaca !important;
                     <button class="flex-1 bg-primary text-white px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-medium hover:bg-blue-600 transition-colors whitespace-nowrap !rounded-button">
                         Sotib olish
                     </button>
-                  
-                    <form method="POST" action="{% url 'sevimlidan_ochirish' sevimli.id %}" class="flex-1">
+                 
+                     <form method="POST" action="{% url 'sevimlidan_ochirish' sevimli.id %}" class="flex-1">
                         {% csrf_token %}
-                        <button type="submit" class="delete-button px-2 sm:px-3 py-2 border border-gray-200 rounded-lg text-xs sm:text-sm text-gray-600 hover:bg-gray-50 transition-colors whitespace-nowrap !rounded-button`">
-                            <i class="ri-delete-bin-line"></i>
+                        <button type="submit" class="btn btn-danger w-full px-2 sm:px-3 py-2 border border-gray-200 rounded-lg text-xs sm:text-sm text-gray-600 hover:bg-gray-50 transition-colors whitespace-nowrap !rounded-button">
+                            <i class="fas fa-trash"></i>
                             O'chirish
                         </button>
                     </form>
