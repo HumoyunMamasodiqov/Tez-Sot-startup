@@ -17,6 +17,11 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 # Render uchun allowed hosts
 ALLOWED_HOSTS = ['tezsot-x2zv.onrender.com', 'localhost', '127.0.0.1']
 
+# Render external hostname
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 # === Dasturlar ===
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,8 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Mening applarim - PAPKA NOMINI TEKSHIRING!
-    'fronend',      # yoki 'frontend'
+    # Mening applarim - VAQTINCHA IZOHGA OLING
+    'fronend',
     'authentication',
 ]
 
@@ -106,3 +111,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # === Avtomatik ID ===
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# === Qo'shimcha ===
+# PORT sozlamasi
+PORT = os.environ.get('PORT', 8000)
