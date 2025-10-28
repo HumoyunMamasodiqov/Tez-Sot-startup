@@ -1,15 +1,22 @@
 from pathlib import Path
 import os
+import dj_database_url
+from decouple import config  # ixtiyoriy, lekin tavsiya etiladi
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # === Asosiy xavfsizlik ===
-SECRET_KEY = 'django-insecure-&*0@&h#k5ut#s(!r-2gbjs&&1y_)k%pch(6o(7%v*7qj*0m5@*'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-&*0@&h#k5ut#s(!r-2gbjs&&1y_)k%pch(6o(7%v*7qj*0m5@*')
 
-# LOCALDA TEST UCHUN HAR DOIM TRUE
-DEBUG = True
+# PRODUCTIONDA HAR DOIM FALSE
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = []  # localda kerak emas, serverda domen yoziladi
+# Render uchun allowed hosts
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+ALLOWED_HOSTS = []
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    ALLOWED_HOSTS.append('.onrender.com')
 
 # === Dasturlar ===
 INSTALLED_APPS = [
@@ -19,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',  # Whitenoise qo'shildi
 
     'fronend',
     'authentication',
@@ -27,6 +35,7 @@ INSTALLED_APPS = [
 # === Middleware ===
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Whitenoise middleware qo'shildi
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -41,7 +50,6 @@ ROOT_URLCONF = 'beckend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # templates papkangizni bu yerga yozamiz
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -64,6 +72,13 @@ DATABASES = {
     }
 }
 
+# Agar Renderda PostgreSQL bo'lsa
+if os.environ.get('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+
 # === Parol tekshiruvi ===
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -83,7 +98,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-# STATIC_ROOT localda kerak emas, serverda qo‘shiladi
+
+# Production uchun STATIC_ROOT
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # === MEDIA ===
 MEDIA_URL = '/media/'
