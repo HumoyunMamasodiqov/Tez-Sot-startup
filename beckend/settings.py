@@ -96,9 +96,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # === Til va vaqt ===
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'  # O'zgartirildi
+TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
-USE_TZ = False     # O'zgartirildi
+USE_TZ = True
 
 # === STATIC SOZLAMALARI ===
 STATIC_URL = '/static/'
