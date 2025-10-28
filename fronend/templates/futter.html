@@ -1,3 +1,189 @@
-<h1>
-    futter
-</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1;
+        }
+        
+        footer {
+            background-color: #111827;
+            color: white;
+            padding: 2.5rem 0;
+            margin-top: auto;
+        }
+        
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .footer-links, .footer-social {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .footer-links {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-social {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-links h3, .footer-social h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fbbf24;
+        }
+        
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: inline-block;
+            padding: 0.25rem 0;
+        }
+        
+        .footer-links a:hover {
+            color: #fbbf24;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #374151;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: #fbbf24;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive dizayn */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+        }
+        
+        @media (min-width: 576px) {
+            .container {
+                max-width: 540px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Asosiy kontent (misol uchun) -->
+    <main>
+        <div style="padding: 2rem; text-align: center;">
+            <h1>Asosiy kontent</h1>
+            <p>Bu yerda saytning asosiy kontenti bo'ladi</p>
+        </div>
+    </main>
+    
+    <!-- Futer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <h3>Tez havolalar</h3>
+                    <a href="{% url 'boglanish' %}">Qo'llab-quvvatlash</a>
+                    <a href="{% url 'boglanish' %}">Yordam markazi</a>
+                    <a href="{% url 'biz_haqimizda' %}">Biz haqimizda</a>
+                </div>
+                
+                <div class="footer-social">
+                    <h3>Ijtimoiy tarmoqlar</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2025 BirBir. Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

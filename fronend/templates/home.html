@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Barcha mahsulotlar - Tez Sot</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
       :root {
         --primary-color: #4a6cf7;
@@ -61,20 +62,21 @@
 
       .products-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 2fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 20px;
       }
 
       .product-card {
         cursor: pointer;
-
-        width: 300px;
         background: white;
         border-radius: var(--border-radius);
         overflow: hidden;
         box-shadow: var(--shadow);
         transition: var(--transition);
         position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
       }
 
       .product-card:hover {
@@ -88,6 +90,7 @@
         height: 180px;
         overflow: hidden;
         position: relative;
+        flex-shrink: 0;
       }
 
       .product-image img {
@@ -111,10 +114,14 @@
         border-radius: 15px;
         font-size: 0.7rem;
         font-weight: 600;
+        z-index: 2;
       }
 
       .product-content {
         padding: 1rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
       }
 
       .product-price {
@@ -130,13 +137,17 @@
         margin-bottom: 0.5rem;
         line-height: 1.3;
         color: var(--text-dark);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
 
       .product-details {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 0.8rem;
+        margin-top: auto;
         padding-top: 0.8rem;
         border-top: 1px solid #e5e7eb;
       }
@@ -160,6 +171,7 @@
         display: flex;
         justify-content: space-between;
         margin-top: 1rem;
+        gap: 0.5rem;
       }
 
       .btn {
@@ -170,13 +182,16 @@
         transition: var(--transition);
         border: none;
         font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
       }
 
       .btn-primary {
         background: var(--primary-color);
         color: white;
         flex: 1;
-        margin-right: 0.5rem;
       }
 
       .btn-primary:hover {
@@ -187,6 +202,7 @@
         background: transparent;
         color: var(--primary-color);
         border: 1px solid var(--primary-color);
+        flex: 1;
       }
 
       .btn-secondary:hover {
@@ -201,60 +217,20 @@
         font-size: 1.2rem;
       }
 
-      /* Media so'rovlari */
-      /* Planshetlar uchun 3 ustun */
-      @media (min-width: 768px) {
-        .products-grid {
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
-        }
-
-        .product-image {
-          height: 200px;
-        }
-
-        .product-content {
-          padding: 1.25rem;
-        }
-
-        .product-price {
-          font-size: 1.5rem;
-        }
-
-        .product-name {
-          font-size: 1.1rem;
-        }
-
-        .btn {
-          padding: 0.6rem 1.2rem;
-          font-size: 0.9rem;
-        }
-      }
-
-      /* Kompyuterlar uchun 4 ustun */
-      @media (min-width: 1024px) {
-        .products-grid {
-          grid-template-columns: repeat(4, 1fr);
-        }
-
-        .product-image {
-          height: 220px;
-        }
-      }
-
-      /* Juda kichik ekranlar uchun 1 ustun */
+      /* Kichik telefonlar uchun 1 ustun */
       @media (max-width: 480px) {
         .products-grid {
-          grid-template-columns: 1fr;
-          gap: 10px;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
         }
-
+        
         .product-image {
-          height: 200px;
+          height: 140px;
         }
 
         .page-title {
           font-size: 1.8rem;
+          margin-bottom: 1.5rem;
         }
 
         .product-content {
@@ -262,24 +238,30 @@
         }
 
         .product-price {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
         }
 
         .product-name {
-          font-size: 0.9rem;
+          font-size: 0.85rem;
         }
 
         .btn {
-          padding: 0.5rem 0.8rem;
-          font-size: 0.8rem;
+          padding: 0.4rem 0.6rem;
+          font-size: 0.75rem;
+        }
+        
+        .product-details {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
         }
       }
 
-      /* O'rta telefonlar uchun 2 ustun (asosiy sozlamalar) */
-      @media (min-width: 481px) and (max-width: 767px) {
+      /* O'rta telefonlar uchun 2 ustun (481px - 639px) */
+      @media (min-width: 481px) and (max-width: 639px) {
         .products-grid {
           grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
+          gap: 15px;
         }
 
         .product-image {
@@ -299,8 +281,73 @@
         }
 
         .btn {
-          padding: 0.4rem 0.7rem;
+          padding: 0.5rem 0.7rem;
           font-size: 0.75rem;
+        }
+      }
+
+      /* Katta telefonlar uchun 2 ustun (640px - 767px) */
+      @media (min-width: 640px) and (max-width: 767px) {
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+
+        .product-image {
+          height: 180px;
+        }
+      }
+
+      /* Planshetlar uchun 3 ustun (768px - 1023px) */
+      @media (min-width: 768px) and (max-width: 1023px) {
+        .products-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+
+        .product-image {
+          height: 200px;
+        }
+
+        .product-content {
+          padding: 1.25rem;
+        }
+
+        .product-price {
+          font-size: 1.4rem;
+        }
+
+        .product-name {
+          font-size: 1.05rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      /* Kichik kompyuterlar uchun 4 ustun (1024px - 1279px) */
+      @media (min-width: 1024px) and (max-width: 1279px) {
+        .products-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+
+        .product-image {
+          height: 200px;
+        }
+      }
+
+      /* Katta kompyuterlar uchun 4 ustun (1280px+) */
+      @media (min-width: 1280px) {
+        .products-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 24px;
+        }
+
+        .product-image {
+          height: 220px;
         }
       }
     </style>
@@ -310,118 +357,131 @@
 
     <div class="wrapper">
       <h1 class="page-title">Barcha e'lonlar</h1>
-
+     
       <div class="products-grid">
         {% for product in mahsulotlar %}
         <div class="product-card">
-          <div class="product-image">
-            {% if product.asosiyimg %}
-            <img src="{{ product.asosiyimg.url }}" alt="{{ product.name }}" />
-            {% else %}
-            <div
-              style="
-                background: #f0f0f0;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #999;
-              "
-            >
-              Rasm mavjud emas
-            </div>
-            {% endif %}
-
-            <!-- Sotilgan/Yangi belgilari -->
-            {% if product.sotilgan %}
-            <span class="product-badge" style="background: #ef4444"
-              >🔴 Sotilgan</span
-            >
-            {% else %}
-            <span class="product-badge" style="background: #10b981"
-              >🟢 Yangi</span
-            >
-            {% endif %}
-          </div>
-
-          <div class="product-content">
-            <div class="product-price">{{ product.narx }} so'm</div>
-            <h3 class="product-name">{{ product.name }}</h3>
-            <p
-              style="
-                font-size: 0.8rem;
-                color: var(--text-light);
-                margin-bottom: 0.5rem;
-              "
-            >
-              {{ product.mahsulotturi }}
-            </p>
-
-            <div class="product-details">
-              <div class="product-location">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                {{ product.viloyat|title }}
-              </div>
-              <div class="product-date">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                {{ product.sana }}
-              </div>
-            </div>
-
-            <div class="product-actions">
-              <button class="btn btn-primary">Batafsil</button>
-              <!-- index.html va home.html da "Saqlash" tugmasi o'rniga -->
-              <form
-                method="POST"
-                action="{% url 'sevimliga_qoshish' product.id %}"
-                class="flex-1"
+          <a href="{% url 'mahsulot_detail' product.id %}" class="block h-full">
+            <div class="product-image">
+              {% if product.asosiyimg %}
+              <img src="{{ product.asosiyimg.url }}" alt="{{ product.name }}" />
+              {% else %}
+              <div
+                style="
+                  background: #f0f0f0;
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #999;
+                "
               >
-                {% csrf_token %}
-                <button
-                  type="submit"
-                  class="btn btn-secondary w-full flex items-center justify-center gap-2"
-                >
-                  <i class="fas fa-heart"></i>
-                  Saqlash
-                </button>
-              </form>
+                <i class="fas fa-image text-2xl"></i>
+              </div>
+              {% endif %}
+
+              <!-- Sotilgan/Yangi belgilari -->
+              {% if product.sotilgan %}
+              <span class="product-badge" style="background: #ef4444"
+                >🔴 Sotilgan</span
+              >
+              {% else %}
+              <span class="product-badge" style="background: #10b981"
+                >🟢 Yangi</span
+              >
+              {% endif %}
             </div>
+
+            <div class="product-content">
+              <div class="product-price">{{ product.narx_formatted }}</div>
+              <h3 class="product-name">{{ product.name }}</h3>
+              <p
+                style="
+                  font-size: 0.8rem;
+                  color: var(--text-light);
+                  margin-bottom: 0.5rem;
+                "
+              >
+                {{ product.mahsulotturi }}
+              </p>
+
+              <div class="product-details">
+                <div class="product-location">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  {{ product.get_viloyat_display }}
+                </div>
+                <div class="product-date">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  {{ product.sana }}
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <div class="product-actions">
+            <a href="{% url 'mahsulot_detail' product.id %}" class="btn btn-primary">
+              <i class="fas fa-info-circle mr-1"></i>
+              Batafsil
+            </a>
+            
+            {% if user.is_authenticated %}
+            <form
+              method="POST"
+              action="{% url 'sevimliga_qoshish' product.id %}"
+              class="flex-1"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="btn btn-secondary w-full flex items-center justify-center gap-1"
+              >
+                <i class="fas fa-heart"></i>
+                Saqlash
+              </button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-secondary flex items-center justify-center gap-1 flex-1">
+              <i class="fas fa-heart"></i>
+              Saqlash
+            </a>
+            {% endif %}
           </div>
         </div>
         {% empty %}
         <div class="empty-state">
-          <p>Hozircha mahsulotlar mavjud emas 😔</p>
+          <i class="fas fa-box-open text-5xl mb-4 text-gray-400"></i>
+          <p class="text-xl mb-4">Hozircha mahsulotlar mavjud emas 😔</p>
           <p style="margin-top: 10px; font-size: 1rem">
             <a
               href="{% url 'elon_qoshish' %}"

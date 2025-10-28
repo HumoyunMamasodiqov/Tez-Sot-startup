@@ -41,12 +41,29 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 30px;
-        gap: 15px;
+        gap: 10px;
         font-size: 14px;
         width: 100%;
-      
       }
       
+      /* Bosh sahifaga qaytish tugmasi */
+      .back-to-home {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #27383f;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        background-color: #f0f2f5;
+      }
+
+      .back-to-home:hover {
+        background-color: #e0e2e5;
+        transform: translateX(-3px);
+      }
 
       .bars {
         display: none;
@@ -127,10 +144,27 @@
         overflow: hidden;
       }
 
+      /* Sevimlilar soni ko'rsatgichi */
+      .sevimli-soni {
+        background-color: #dc3545;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        margin-left: 8px;
+      }
+
       /* Main Content */
       .intro_ao {
+    
         display: flex;
         gap: 20px;
+        display: none;
       }
 
       /* Sidebar */
@@ -201,6 +235,7 @@
       .menu_ao {
         list-style: none;
         margin: 16px 0;
+        flex: 1;
       }
 
       .menu_ao hr {
@@ -266,6 +301,22 @@
 
       .svg_6 span {
         background-color: #f5f6f7;
+      }
+
+      .svg_7 span {
+        background-color: #ffd700;
+      }
+
+      .svg_8 span {
+        background-color: #9c27b0;
+      }
+
+      .svg_9 span {
+        background-color: #4caf50;
+      }
+
+      .svg_10 span {
+        background-color: #ff9800;
       }
 
       .logout_ao {
@@ -428,7 +479,7 @@
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 998;
       }
-
+  
       /* Mobile Styles */
       @media only screen and (max-width: 768px) {
         .wrapper_oa {
@@ -437,10 +488,28 @@
 
         .wrapper_oa nav {
           margin-bottom: 20px;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .back-to-home {
+          order: 1;
+          margin-right: auto;
         }
 
         .bars {
           display: block;
+          order: 2;
+        }
+
+        .logo {
+          order: 3;
+          margin: 0 auto;
+        }
+
+        .gul_ao {
+          display: block;
+          order: 4;
         }
 
         .wrapper_oa nav ul,
@@ -449,12 +518,10 @@
           display: none;
         }
 
-        .gul_ao {
-          display: block;
-        }
-
         .intro_ao {
           flex-direction: column;
+          display: block;
+      
         }
 
         .sidebar_ao {
@@ -518,11 +585,64 @@
         .right_bottom_ao {
           padding: 30px 20px;
         }
+
+        /* Mobil uchun sevimlilar soni */
+        .sevimli-soni {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          width: 18px;
+          height: 18px;
+          font-size: 10px;
+        }
+
+        /* Mobil sidebar stil */
+        .sidebar_ao .profile_ao {
+          padding: 15px;
+          margin-bottom: 15px;
+        }
+
+        .sidebar_ao .avatar_ao {
+          width: 50px;
+          height: 50px;
+        }
+
+        .sidebar_ao .name_ao {
+          font-size: 15px;
+        }
+
+        .sidebar_ao .phone_ao {
+          font-size: 12px;
+        }
+
+        .sidebar_ao .menu_item_ao {
+          padding: 10px;
+          font-size: 14px;
+        }
+
+        .sidebar_ao .menu_item_ao span {
+          width: 28px;
+          height: 28px;
+        }
+
+        .sidebar_ao .logout_ao {
+          padding: 10px;
+          font-size: 14px;
+        }
       }
 
       @media only screen and (max-width: 480px) {
         .wrapper_oa {
           padding: 12px;
+        }
+
+        .back-to-home {
+          padding: 6px 12px;
+          font-size: 13px;
+        }
+
+        .back-to-home span {
+          display: none;
         }
 
         .right_top_ao,
@@ -542,7 +662,34 @@
           padding: 10px 14px;
           font-size: 12px;
         }
+
+        /* Kichik ekranlarda sidebar */
+        .sidebar_ao {
+          width: 90%;
+          max-width: 300px;
+        }
+
+        .sidebar_ao .profile_ao {
+          flex-direction: column;
+          text-align: center;
+          padding: 10px;
+        }
+
+        .sidebar_ao .avatar_ao {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+
+        .sidebar_ao .profile-info_ao {
+          align-items: center;
+        }
+
+        .sidebar_ao .menu_item_ao {
+          font-size: 13px;
+          padding: 8px 10px;
+        }
       }
+
       .logo {
         width: 158px;
         height: 43px;
@@ -553,9 +700,11 @@
   <body>
     <div class="wrapper_oa">
       <nav>
-        <a class="bars" href="#">
-          <i class="fa-solid fa-bars"></i>
-        </a>
+        <!-- Bosh sahifaga qaytish tugmasi -->
+        
+
+ 
+        
         <a href="/">
           <img class="logo"
             src="{% static 'img/logo.png' %}"
@@ -564,6 +713,8 @@
             height="28"
           />
         </a>
+      
+<!--         
         <a class="hudud_ao" href="#">
           <svg
             width="24"
@@ -580,37 +731,16 @@
             />
           </svg>
           Barcha hududlar
-        </a>
+        </a> -->
+        
         <ul>
-          <li><a href="#">Biz haqimizda</a></li>
-          <li><a href="#">Qo'llab-quvvatlash</a></li>
+          <li><a href="{% url 'biz_haqimizda' %}">Biz haqimizda</a></li>
+          <li><a href="{% url 'boglanish' %}">Qo'llab-quvvatlash</a></li>
           <li>
-            <a href="#">
-              <img
-                src="{% static 'img/uzb_flag.png' %}"
-                alt="uzb_flag"
-                width="24"
-                height="24"
-              />
-              UZ
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M12.756 15.695a1.056 1.056 0 01-1.486 0L5.32 9.793a1.043 1.043 0 01-.243-1.145 1.043 1.043 0 01.575-.57 1.059 1.059 0 011.155.24l5.205 5.164 5.205-5.164a1.056 1.056 0 011.474.013 1.039 1.039 0 01.013 1.462l-5.949 5.902z"
-                  fill="#a7afbc"
-                />
-              </svg>
-            </a>
+        
           </li>
           <li>
-            <a href="#">
+            <a href="{% url 'home' %}">
               <svg
                 width="24"
                 height="24"
@@ -623,37 +753,29 @@
                   fill="#a7afbc"
                 />
               </svg>
-              Xabarlar
+              Bosh sahifa
             </a>
           </li>
           <li>
-            <!-- nav.html yoki asosiy sahifadagi navigatsiyada -->
+            <!-- Sevimlilar linki -->
             {% if user.is_authenticated %}
-<li>
-  <a href="{% url 'sevimlilarim' %}">
-      <i class="fas fa-heart"></i>
-      Sevimlilar
-      <span class="bg-red-500 text-white rounded-full px-2 py-1 text-xs ml-2">
-          {{ request.user.sevimli_set.count }}
-      </span>
-  </a>
-</li>
+            <a href="{% url 'sevimlilarim' %}" style="position: relative;">
+              <i class="fas fa-heart"></i>
+              Sevimlilar
+              {% if request.user.sevimli_set.count > 0 %}
+              <span class="sevimli-soni">{{ request.user.sevimli_set.count }}</span>
+              {% endif %}
+            </a>
             {% else %}
-<li>
-  <a href="{% url 'kirish' %}">
-      <i class="fas fa-heart"></i>
-      Sevimlilar
-      <span class="bg-red-500 text-white rounded-full px-2 py-1 text-xs ml-2">
-          {{ request.user.sevimli_set.count }}
-      </span>
-  </a>
-</li>
+            <a href="{% url 'kirish' %}" style="position: relative;">
+              <i class="fas fa-heart"></i>
+              Sevimlilar
+            </a>
             {% endif %} 
           </li>
           <li>
             {% if user.is_authenticated %}
-
-            <a href="{% url 'profil' %}">
+            <a href="{% url 'mening_elonlarim' %}">
               <img
                 src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
                 alt="profil"
@@ -681,6 +803,7 @@
             {% endif %}
           </li>
         </ul>
+        
         {% if user.is_authenticated %}
         <a class="qoyish_ao" href="{% url 'elon_qoshish' %}">
           Qo'yish
@@ -698,25 +821,30 @@
             />
           </svg>
         </a>
-          {% else %}
-          <a class="qoyish_ao" href="{% url 'signup' %}">
-            Qo'yish
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="24" height="24" rx="12" fill="#fff" />
-              <path
-                d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
-                fill="#27383F"
-              />
-            </svg>
-          </a>
+      <div style="display: flex; gap: 10px; align-items: center">
+        <a class="bars" href="#" style="margin-top: 10px;">
+          <i class="fa-solid fa-bars"></i>
+        </a>
+        {% else %}
+        <a class="qoyish_ao" href="{% url 'signup' %}">
+          Qo'yish
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="24" height="24" rx="12" fill="#fff" />
+            <path
+              d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+              fill="#27383F"
+            />
+          </svg>
+        </a>
         {% endif %}
-        <a class="gul_ao" href="{% url 'profil' %}">
+        
+        <a class="gul_ao" href="{% url 'mening_elonlarim' %}">
           <img
             src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
             alt="profil"
@@ -724,10 +852,152 @@
             height="40"
           />
         </a>
+      </div>
       </nav>
 
       <!-- Mobile Overlay -->
       <div class="overlay"></div>
+
+      <!-- Asosiy kontent qismi -->
+      <div class="intro_ao">
+        <!-- Sidebar -->
+        <aside class="sidebar_ao">
+          <div class="profile_ao">
+            <img src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png" alt="avatar" class="avatar_ao">
+            <div class="profile-info_ao">
+              <h3 class="name_ao">{{ user.first_name }} {{ user.last_name }}</h3>
+              <p class="phone_ao">
+                {% if user.profile.phone %}
+                  {{ user.profile.phone }}
+                {% else %}
+                  Telefon raqam kiritilmagan
+                {% endif %}
+              </p>
+            </div>
+          </div>
+          <!-- <a href="#" class="profile_link_ao">Profilim qanday ko'rinadi</a> -->
+
+          <ul class="menu_ao">
+            <!-- Shaxsiy bo'lim -->
+            <li>
+              <a class="menu_item_ao svg_1" href="{% url 'mening_elonlarim' %}">
+                <span>
+                  <i class="fas fa-id-card" style="color: #bd007d;"></i>
+                </span>
+                Profil
+              </a>
+            </li>
+            <li>
+              <a class="menu_item_ao active_ao" href="{% url 'mening_elonlarim' %}">
+                <span>
+                  <i class="fas fa-list" style="color: #fff;"></i>
+                </span>
+                Mening e'lonlarim
+              </a>
+            </li>
+            <hr>
+            
+            <!-- Sevimlilar -->
+            <li>
+              <a class="menu_item_ao svg_3" href="{% url 'sevimlilarim' %}">
+                <span>
+                  <i class="fas fa-heart" style="color: #dc3545;"></i>
+                </span>
+                Sevimlilar
+                {% if request.user.sevimli_set.count > 0 %}
+                <span style="margin-left: auto; background: #dc3545; color: white; border-radius: 10px; padding: 2px 8px; font-size: 12px;">
+                  {{ request.user.sevimli_set.count }}
+                </span>
+                {% endif %}
+              </a>
+            </li>
+            <hr>
+            
+            <!-- Aloqa va xabarlar -->
+            <li>
+              <a class="menu_item_ao svg_4" href="#">
+                <span>
+                  <i class="fas fa-comments" style="color: #fff; background-color: #7b7b7b;" ></i>
+                </span>
+                Chat  tez orada !
+              </a>
+            </li>
+           <li>
+              <a class="menu_item_ao svg_7" href="{% url 'biz_haqimizda' %}">
+                <span>
+                  <i class="fas fa-bell" style="color: #fff;"></i>
+                </span>
+                biz haqimizda
+              </a>
+            </li> 
+          
+            
+            <!-- Biznes bo'limi -->
+            <!-- <li>
+              <a class="menu_item_ao svg_5" href="#">
+                <span>
+                  <i class="fas fa-briefcase" style="color: #fff;"></i>
+                </span>
+                BirBir biznes uchun
+              </a>
+            </li>
+            <li>
+              <a class="menu_item_ao svg_8" href="#">
+                <span>
+                  <i class="fas fa-chart-line" style="color: #fff;"></i>
+                </span>
+                Statistika
+              </a>
+            </li>
+            <hr> -->
+            
+            <!-- Sozlamalar -->
+            <!-- <li>
+              <a class="menu_item_ao svg_9" href="#">
+                <span>
+                  <i class="fas fa-cog" style="color: #fff;"></i>
+                </span>
+                Sozlamalar
+              </a>
+            </li> -->
+            <!-- <li>
+              <a class="menu_item_ao svg_10" href="#">
+                <span>
+                  <i class="fas fa-shield-alt" style="color: #fff;"></i>
+                </span>
+                Xavfsizlik
+              </a>
+            </li> -->
+            <hr>
+            
+            <!-- Yordam va qo'llab-quvvatlash -->
+            
+            <li>
+              <a class="menu_item_ao" href="{% url 'boglanish' %}" style="background: #fafafa;">
+                <span>
+                  <i class="fas fa-question-circle" style="color: #18a0da;"></i>
+                </span>
+                Yordam markazi
+              </a>
+            </li>
+            <li>
+              <a class="menu_item_ao" href="{% url 'boglanish' %}" style="background: #fafafa;">
+                <span>
+                  <i class="fas fa-headset" style="color: #4caf50;"></i>
+                </span>
+                Qo'llab-quvvatlash
+              </a>
+            </li>
+          </ul>
+
+          <a href="{% url 'chiqish' %}" class="logout_ao">
+            <i class="fas fa-sign-out-alt"></i>
+            Chiqish
+          </a>
+        </aside>
+
+    
+      </div>
     </div>
 
     <script>
@@ -761,6 +1031,36 @@
             sidebar.classList.remove("sidebar-open");
             if (overlay) overlay.style.display = "none";
             document.body.style.overflow = "";
+          }
+        });
+
+        // Sidebar ichidagi linklarni bosganda sidebar yopiladi (mobil uchun)
+        const sidebarLinks = document.querySelectorAll('.sidebar_ao a');
+        sidebarLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+              sidebar.classList.remove('sidebar-open');
+              overlay.style.display = 'none';
+              document.body.style.overflow = '';
+            }
+          });
+        });
+
+        // Browserning orqaga tugmasi bosilganda bosh sahifaga qaytish
+        window.addEventListener('popstate', function(event) {
+          window.location.href = "{% url 'home' %}";
+        });
+
+        // Bosh sahifaga qaytish funksiyasi
+        function goToHomePage() {
+          window.location.href = "{% url 'home' %}";
+        }
+
+        // Ctrl + H bosilganda bosh sahifaga o'tish
+        document.addEventListener('keydown', function(e) {
+          if (e.ctrlKey && e.key === 'h') {
+            e.preventDefault();
+            goToHomePage();
           }
         });
       });

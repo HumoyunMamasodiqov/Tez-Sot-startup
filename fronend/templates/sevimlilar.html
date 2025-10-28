@@ -158,6 +158,7 @@ border-color: #fecaca !important;
     <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
         {% for sevimli in sevimlilar %}
         {% with product=sevimli.mahsulot %}
+        <a href="{% url 'mahsulot_detail' product.id %}">
         <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow" data-sevimli-id="{{ sevimli.id }}">
             <div class="relative">
                 {% if product.asosiyimg %}
@@ -212,6 +213,7 @@ border-color: #fecaca !important;
                 </div>
             </div>
         </div>
+    </a>
         {% endwith %}
         {% endfor %}
     </div>
@@ -222,9 +224,11 @@ border-color: #fecaca !important;
         </div>
         <h3 class="text-xl font-semibold text-gray-900 mb-2">Sevimlilar ro'yxati bo'sh</h3>
         <p class="text-gray-600 mb-6 max-w-md mx-auto">Hozircha hech qanday kontent saqlanmagan. Yoqtirgan kontentlaringizni saqlash uchun yurak belgisini bosing.</p>
-        <button class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-600 transition-colors whitespace-nowrap !rounded-button">
-            Katalogni ko'rish
-        </button>
+        <a href="{% url 'home' %}">
+            <button class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-600 transition-colors whitespace-nowrap !rounded-button">
+                Katalogni ko'rish
+            </button>
+        </a>
     </div>
     {% endif %}
 </div>

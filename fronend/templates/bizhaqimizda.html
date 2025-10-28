@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+    {% load static %}
+<head><script src="https://static.readdy.ai/static/e.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biz haqimizda - Tez Sot</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+{% include 'nav.html' %}
+
+    <!-- Hero Section -->
+    <section class="relative min-h-96 flex items-center justify-center" style="background-image: url('https://readdy.ai/api/search-image?query=Modern%20digital%20marketplace%20office%20building%20with%20glass%20facade%20and%20professional%20corporate%20environment%2C%20clean%20white%20background%20on%20left%20side%20for%20text%20overlay%2C%20contemporary%20business%20architecture%2C%20blue%20and%20white%20color%20scheme%2C%20professional%20lighting&width=1200&height=400&seq=hero-about&orientation=landscape'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-2xl">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Biz haqimizda</h1>
+                <p class="text-xl text-gray-700 mb-8">Tez Sot - O'zbekistondagi eng ishonchli va tezkor onlayn savdo platformasi. Biz 2025 yildan beri mijozlarimizga sifatli xizmat ko'rsatib kelmoqdamiz.</p>
+                <div class="flex items-center space-x-6">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-primary">10,000+</div>
+                        <div class="text-sm text-gray-600">Faol foydalanuvchi</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-primary">15,000+</div>
+                        <div class="text-sm text-gray-600">Sotuvchi</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-primary">1M+</div>
+                        <div class="text-sm text-gray-600">Mahsulot</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company History Timeline -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Bizning tariximiz</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Tez Sot platformasining rivojlanish yo'li va muhim yutuqlarimiz</p>
+            </div>
+            
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-primary"></div>
+                
+                <div class="space-y-12">
+                    <!-- 2019 -->
+                    <div class="relative flex items-center">
+                        <div class="flex-1 pr-8 text-right">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">2019 yil - Boshlanish</h3>
+                                <p class="text-gray-600">Tez Sot platformasi Toshkentda 5 kishilik jamoa tomonidan yaratildi. Dastlabki maqsad - mahalliy bizneslarni onlayn olib chiqish edi.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-white"></div>
+                        <div class="flex-1 pl-8"></div>
+                    </div>
+                    
+                    <!-- 2020 -->
+                    <div class="relative flex items-center">
+                        <div class="flex-1 pr-8"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-white"></div>
+                        <div class="flex-1 pl-8">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">2025 yil - Kengayish</h3>
+                                <p class="text-gray-600">Pandemiyadagi yuqori talab tufayli platformaga 1000 dan ortiq sotuvchi qo'shildi. Mobil ilova ishga tushirildi.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2021 -->
+                    <div class="relative flex items-center">
+                        <div class="flex-1 pr-8 text-right">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">2025 yil - Investitsiya</h3>
+                                <p class="text-gray-600">Xalqaro investorlardan 2 million dollar mablag' jalb qilindi. Viloyatlarga kengayish boshlandi.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-white"></div>
+                        <div class="flex-1 pl-8"></div>
+                    </div>
+                    
+                    <!-- 2022 -->
+                    <div class="relative flex items-center">
+                        <div class="flex-1 pr-8"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-white"></div>
+                        <div class="flex-1 pl-8">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">2025 yil - Texnologik yangilanish</h3>
+                                <p class="text-gray-600">AI va machine learning texnologiyalari joriy etildi. Mahsulot tavsiya tizimi ishga tushirildi.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2023 -->
+                    <div class="relative flex items-center">
+                        <div class="flex-1 pr-8 text-right">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">2025 yil - Milliy lider</h3>
+                                <p class="text-gray-600">O'zbekistondagi eng yirik e-commerce platformasiga aylandi. 10,000 dan ortiq sotuvchi faoliyat yuritmoqda.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-white"></div>
+                        <div class="flex-1 pl-8"></div>
+                    </div>
+                    
+                    <!-- 2024 -->
+                    <div class="relative flex items-center">
+                        <div class="flex-1 pr-8"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-secondary rounded-full border-4 border-white"></div>
+                        <div class="flex-1 pl-8">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">2025 yil - Xalqaro kengayish</h3>
+                                <p class="text-gray-600">Qo'shni davlatlarga kengayish rejalari e'lon qilindi. Yangi logistika markazlari ochildi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Bizning jamoa</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Tez Sot platformasini boshqaruvchi professional mutaxassislar</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- CEO -->
+                <div class="text-center">
+                    <div class="relative mb-4">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20business%20executive%20portrait%2C%20middle-aged%20Uzbek%20businessman%20in%20modern%20suit%2C%20confident%20smile%2C%20clean%20white%20studio%20background%2C%20corporate%20headshot%20style%2C%20professional%20lighting&width=300&height=300&seq=ceo-portrait&orientation=squarish" alt="Bosh direktor" class="w-32 h-32 rounded-full mx-auto object-cover object-top">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-1">Abdurahim Orinboyev</h3>
+                    <p class="text-primary font-medium mb-2">Frontend direktori</p>
+                    <p class="text-sm text-gray-600">5 yillik IT sohasidagi tajriba IT House bitiruvchisi.</p>
+                </div>
+                
+                <!-- CTO -->
+                <div class="text-center">
+                    <div class="relative mb-4">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20tech%20executive%20portrait%2C%20young%20Uzbek%20technology%20leader%20in%20casual%20business%20attire%2C%20confident%20expression%2C%20clean%20white%20studio%20background%2C%20modern%20corporate%20style&width=300&height=300&seq=cto-portrait&orientation=squarish" alt="Texnologiya direktori" class="w-32 h-32 rounded-full mx-auto object-cover object-top">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-1">Bahodirov Diyorbek</h3>
+                    <p class="text-primary font-medium mb-2">Backend Dasturlash direktori</p>
+                    <p class="text-sm text-gray-600">IT House  da o'qigan, Web Storm va Tez Sot ishchisi.</p>
+                </div>
+                
+                <!-- Marketing Director -->
+                <div class="text-center">
+                    <div class="relative mb-4">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20marketing%20executive%20portrait%2C%20confident%20Uzbek%20businesswoman%20in%20elegant%20business%20suit%2C%20warm%20smile%2C%20clean%20white%20studio%20background%2C%20corporate%20headshot%20style&width=300&height=300&seq=marketing-director&orientation=squarish" alt="Marketing direktori" class="w-32 h-32 rounded-full mx-auto object-cover object-top">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-1">Humoyun Mamasodiqov</h3>
+                    <p class="text-primary font-medium mb-2">Tez sot  direktori</p>
+                    <p class="text-sm text-gray-600">Full stack developer  Web Storm va Tez Sot Asoschisi</p>
+                </div>
+                
+                <!-- Operations Director -->
+                <div class="text-center">
+                    <div class="relative mb-4">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20operations%20executive%20portrait%2C%20experienced%20Uzbek%20business%20leader%20in%20formal%20suit%2C%20professional%20demeanor%2C%20clean%20white%20studio%20background%2C%20corporate%20style%20photography&width=300&height=300&seq=operations-director&orientation=squarish" alt="Operatsiyalar direktori" class="w-32 h-32 rounded-full mx-auto object-cover object-top">
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-1">Valiyev Abduhalil</h3>
+                    <p class="text-primary font-medium mb-2">Frontend Dasturlash direktori</p>
+                    <p class="text-sm text-gray-600">3 yillik IT sohasidagi tajriba IT House bitiruvchisi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Bizning missiyamiz</h2>
+                    <p class="text-lg text-gray-700 mb-6">O'zbekiston xalqiga eng sifatli va qulay onlayn savdo tajribasini taqdim etish. Har bir mijozimiz uchun xavfsiz, tez va ishonchli xarid qilish imkoniyatini yaratish.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-check-line text-secondary text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Sifat kafolati</h4>
+                                <p class="text-gray-600">Barcha mahsulotlar sifat nazoratidan o'tadi</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-check-line text-secondary text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Tez yetkazib berish</h4>
+                                <p class="text-gray-600">24 soat ichida yetkazib berish xizmati</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-check-line text-secondary text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">24/7 qo'llab-quvvatlash</h4>
+                                <p class="text-gray-600">Har doim mijozlar xizmatida</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <img src="https://readdy.ai/api/search-image?query=Modern%20e-commerce%20team%20working%20together%20in%20bright%20office%20space%2C%20diverse%20group%20of%20professionals%20collaborating%20on%20digital%20projects%2C%20laptops%20and%20modern%20technology%2C%20clean%20professional%20environment%2C%20natural%20lighting&width=600&height=400&seq=mission-image&orientation=landscape" alt="Bizning jamoa" class="rounded-lg shadow-lg object-cover object-top w-full h-80">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements & Statistics -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Bizning yutuqlarimiz</h2>
+                <p class="text-lg text-gray-600">Raqamlar orqali bizning muvaffaqiyatimiz</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-user-line text-2xl text-primary"></i>
+                    </div>
+                
+                    <div class="text-3xl font-bold text-gray-900 mb-2">10 000+</div>
+                   
+                    <div class="text-sm text-gray-600">Faol mijozlar</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-store-line text-2xl text-secondary"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-2">15,000+</div>
+                    <div class="text-sm text-gray-600">Sotuvchilar</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-shopping-bag-line text-2xl text-primary"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-2">1M+</div>
+                    <div class="text-sm text-gray-600">Mahsulotlar</div>
+                </div>
+                
+             
+            </div>
+            
+            <!-- Awards -->
+          
+        </div>
+    </section>
+
+    <!-- Media Gallery -->
+    <!-- <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Media galereyasi</h2>
+                <p class="text-lg text-gray-600">Bizning faoliyatimiz va yutuqlarimizdan lavhalar</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="relative group">
+                    <img src="https://readdy.ai/api/search-image?query=Modern%20office%20workspace%20with%20employees%20working%20on%20computers%2C%20bright%20and%20clean%20environment%2C%20professional%20business%20atmosphere%2C%20team%20collaboration%2C%20contemporary%20office%20design&width=400&height=300&seq=office-1&orientation=landscape" alt="Ofis muhiti" class="w-full h-48 object-cover object-top rounded-lg">
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                        <span class="text-white font-medium">Bizning ofis muhiti</span>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <img src="https://readdy.ai/api/search-image?query=Business%20conference%20presentation%20with%20executives%20speaking%20to%20audience%2C%20professional%20corporate%20event%2C%20modern%20conference%20room%20setting%2C%20business%20meeting%20atmosphere&width=400&height=300&seq=conference-1&orientation=landscape" alt="Konferentsiya" class="w-full h-48 object-cover object-top rounded-lg">
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                        <span class="text-white font-medium">Yillik konferentsiya 2023</span>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <img src="https://readdy.ai/api/search-image?query=Team%20building%20event%20with%20happy%20employees%2C%20corporate%20celebration%2C%20group%20photo%20of%20diverse%20team%20members%2C%20positive%20workplace%20culture%2C%20modern%20office%20background&width=400&height=300&seq=team-event&orientation=landscape" alt="Jamoa tadbirlari" class="w-full h-48 object-cover object-top rounded-lg">
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                        <span class="text-white font-medium">Jamoa bilan tadbir</span>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <img src="https://readdy.ai/api/search-image?query=Modern%20warehouse%20and%20logistics%20center%2C%20organized%20storage%20facility%2C%20delivery%20trucks%20and%20packages%2C%20efficient%20supply%20chain%20operations%2C%20clean%20industrial%20environment&width=400&height=300&seq=warehouse&orientation=landscape" alt="Logistika markazi" class="w-full h-48 object-cover object-top rounded-lg">
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                        <span class="text-white font-medium">Logistika markazi</span>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <img src="https://readdy.ai/api/search-image?query=Award%20ceremony%20with%20business%20executives%20receiving%20recognition%2C%20professional%20corporate%20event%2C%20trophy%20presentation%2C%20formal%20business%20attire%2C%20celebration%20atmosphere&width=400&height=300&seq=award-ceremony&orientation=landscape" alt="Mukofot marosimi" class="w-full h-48 object-cover object-top rounded-lg">
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                        <span class="text-white font-medium">Mukofot marosimi</span>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <img src="https://readdy.ai/api/search-image?query=Technology%20innovation%20showcase%2C%20modern%20digital%20displays%20and%20computers%2C%20high-tech%20development%20environment%2C%20software%20development%20team%20at%20work%2C%20innovative%20workspace&width=400&height=300&seq=tech-innovation&orientation=landscape" alt="Texnologik yangiliklar" class="w-full h-48 object-cover object-top rounded-lg">
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                        <span class="text-white font-medium">Texnologik yangiliklar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Contact Information -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Biz bilan bog'laning</h2>
+                <p class="text-lg text-gray-600">Savollaringiz bo'lsa, biz bilan bog'laning</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-map-pin-line text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Manzil</h3>
+                    <p class="text-gray-600">Andijon Viloyati, Izboskan tumani,<br>OLtin vodiy ko'chasi 198-uy</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-phone-line text-2xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Telefon</h3>
+                    <p class="text-gray-600">+998 33 026 00 38<br>+998 33 492 02 34</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-mail-line text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Email</h3>
+                    <p class="text-gray-600"><br>tezsot@gmail.com</p>
+                </div>
+            </div>
+            
+            <!-- Social Media -->
+            <div class="mt-12 text-center">
+                <h3 class="text-xl font-semibold text-gray-900 mb-6">Ijtimoiy tarmoqlarda kuzating</h3>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                        <i class="ri-facebook-fill text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-blue-400 text-white rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">
+                        <i class="ri-twitter-fill text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-pink-600 text-white rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">
+                        <i class="ri-instagram-fill text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-blue-800 text-white rounded-full flex items-center justify-center hover:bg-blue-900 transition-colors">
+                        <i class="ri-linkedin-fill text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
+                        <i class="ri-youtube-fill text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'futter.html' %}
+
+</html>

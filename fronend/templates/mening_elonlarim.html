@@ -1,524 +1,1287 @@
 <!DOCTYPE html>
 <html lang="uz">
-    {% load static %}
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mening e'lonlarim - BirBir</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #4a6cf7;
-            --secondary-color: #6b7280;
-            --accent-color: #f59e0b;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
-            --bg-light: #f9fafb;
-            --border-radius: 12px;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-            0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --transition: all 0.3s ease;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f5f6f7;
+            color: #27383f;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Wrapper */
+        .wrapper_oa {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 30px 16px;
+        }
+
+        /* Navigation */
+        .wrapper_oa nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .bars {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bars i {
+            font-size: 22px;
+            color: #27383f;
+        }
+
+        .hudud_ao {
+            color: #a7afbc;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .hudud_ao:hover {
+            color: #424f55;
+            background-color: #f0f2f5;
+        }
+
+        .hudud_ao svg {
+            margin-right: 8px;
+        }
+
+        .wrapper_oa nav ul {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .wrapper_oa nav ul li a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #27383f;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .wrapper_oa nav ul li a:hover {
+            background-color: #f0f2f5;
+        }
+
+        .qoyish_ao {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 12px 20px;
+            gap: 8px;
+            border-radius: 50px;
+            color: #fff;
+            background-color: #27383f;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .qoyish_ao:hover {
+            background-color: #1a2529;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .gul_ao {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        /* Main Content */
+        .intro_ao {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar_ao {
+            width: 308px;
+            background-color: #fff;
+            padding: 16px;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile_ao {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .profile_ao:hover {
+            background-color: #f8f9fa;
+        }
+
+        .avatar_ao {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+        }
+
+        .profile-info_ao {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name_ao {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .phone_ao {
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        .profile_link_ao {
+            color: #18a0da;
+            text-decoration: none;
+            margin: 16px 0;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .profile_link_ao:hover {
+            background-color: #e6f7ff;
+            color: #0d8bc7;
+        }
+
+        .menu_ao {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .menu_ao hr {
+            border: none;
+            height: 1px;
+            background-color: #f0f2f5;
+            margin: 8px 0;
+        }
+
+        .menu_item_ao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #fafafa;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .menu_item_ao:hover {
+            background: #e8f0ff;
+            transform: translateX(5px);
+        }
+
+        .active_ao {
+            background: #e0ecff !important;
+            color: #0056d6;
+            font-weight: 500;
+        }
+
+        .menu_item_ao span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+
+        .svg_1 span {
+            background-color: #c1e6ff;
+        }
+
+        .active_ao span {
+            background-color: #29C840;
+        }
+
+        .svg_3 span {
+            background-color:#66B2E4 ;
+            color: rgb(243, 100, 100);
+        }
+
+        .svg_4 span {
+            background-color: #18A0DA;
+        }
+
+        .svg_5 span {
+            background-color: #27383F;
+        }
+
+        .svg_6 span {
+            background-color: #F5F6F7;
+        }
+
+        .logout_ao {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+            padding: 12px;
+            background: #f1f1f1;
+            border-radius: 8px;
+            color: #333;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        .logout_ao:hover {
+            background: #e0e0e0;
+            color: #d32f2f;
+        }
+
+        /* Right Content */
+        .right_ao {
+            flex: 1;
+        }
+
+        .right_top_ao {
+            background-color: #fff;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-radius: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .right_top_ao h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .right_top_img_ao {
+            display: flex;
             gap: 16px;
         }
 
-        .product-card {
-            cursor: pointer;
-            background: white;
-            border-radius: var(--border-radius);
+        .right_top_img_ao img {
+            flex: 1;
+            border-radius: 12px;
+            height: 144px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .right_top_img_ao img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .right_center_ao {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .right_center_ao h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .right_center_right_ao {
+            display: flex;
+            gap: 12px;
+        }
+
+        .right_center_right_ao a {
+            padding: 12px 16px;
+            border-radius: 16px;
+            background-color: #f0f2f5;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .right_center_right_ao a:hover {
+            background-color: #e0e2e5;
+        }
+
+        .faol_ao {
+            color: #fff;
+            background-color: #27383f !important;
+        }
+
+        .faol_ao:hover {
+            background-color: #1a2529 !important;
+        }
+
+        /* Xabarlar */
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+        }
+
+        /* Elonlar ro'yxati */
+        .elonlar_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .elon_card {
+            background: #fff;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
-        .product-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1),
-            0 4px 10px -2px rgba(0, 0, 0, 0.05);
+        .elon_card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .product-image {
+        .elon_img {
             width: 100%;
             height: 200px;
-            overflow: hidden;
-            position: relative;
-            background: #f8fafc;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
-            transition: var(--transition);
         }
 
-        .product-card:hover .product-image img {
+        .elon_content {
+            padding: 16px;
+        }
+
+        .elon_narx {
+            font-size: 18px;
+            font-weight: 700;
+            color: #27383f;
+            margin-bottom: 8px;
+        }
+
+        .elon_nomi {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .elon_info {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 12px;
+        }
+
+        .elon_holat {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .holat_yangi {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .holat_sotilgan {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .elon_actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .elon_btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn_sotilgan {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn_sotilgan:hover {
+            background-color: #388e3c;
+        }
+
+        .btn_ochirish {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn_ochirish:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Bo'sh e'lonlar uchun */
+        .right_bottom_ao {
+            text-align: center;
+            background-color: #fff;
+            padding: 60px 20px;
+            border-radius: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .right_bottom_ao:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .right_div_ao {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background-color: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .right_bottom_ao:hover .right_div_ao {
+            background-color: #e0e2e5;
             transform: scale(1.05);
         }
 
-        .product-content {
-            padding: 1.25rem;
+        .right_div_ao i {
+            font-size: 48px;
+            color: #a7afbc;
         }
 
-        .product-price {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
+        .right_bottom_ao p {
+            color: #6c757d;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-size: 16px;
         }
 
-        .product-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-            color: var(--text-dark);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .product-category {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            background: #f1f5f9;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        .product-details {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .product-location,
-        .product-date {
-            display: flex;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-light);
-            gap: 0.25rem;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1.25rem;
-        }
-
-        .btn {
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            font-size: 0.85rem;
-            flex: 1;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #3a56d4;
-            transform: translateY(-1px);
-        }
-
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-1px);
-        }
-
-        .btn-success {
-            background: #10b981;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #059669;
-            transform: translateY(-1px);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-light);
-            font-size: 1.1rem;
-            background: white;
-            border-radius: var(--border-radius);
-            border: 2px dashed #e5e7eb;
-        }
-
-        .status-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .status-new {
-            background: rgba(16, 185, 129, 0.95);
-            color: white;
-        }
-
-        .status-sold {
-            background: rgba(239, 68, 68, 0.95);
-            color: white;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: var(--transition);
+        .right_bottom_qoyish_ao {
+            color: #fff;
+            background-color: #27383f;
+            padding: 12px 24px;
+            border-radius: 16px;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        .filter-btn.active {
-            background: #8b5cf6;
-            color: white;
+        .right_bottom_qoyish_ao:hover {
+            background-color: #1a2529;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #fff;
         }
 
-        .filter-btn:not(.active) {
-            background: white;
-            color: #6b7280;
-            border: 2px solid #e5e7eb;
-        }
-
-        .filter-btn:not(.active):hover {
-            border-color: #8b5cf6;
-            color: #8b5cf6;
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .product-image {
-                height: 180px;
-            }
-            
-            .product-content {
-                padding: 1rem;
-            }
-            
-            .product-actions {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .btn {
-                padding: 0.75rem 1rem;
-                font-size: 0.9rem;
-            }
-
-            .filter-buttons {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-            
-            .filter-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.85rem;
-                flex: 1;
-                min-width: calc(50% - 0.5rem);
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container-padding {
-                padding: 1rem;
-            }
-            
-            .product-image {
-                height: 160px;
-            }
-            
-            .product-price {
-                font-size: 1.3rem;
-            }
-            
-            .product-name {
-                font-size: 1rem;
-            }
-        }
-
-        /* Tablet Styles */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.25rem;
-            }
-            
-            .product-image {
-                height: 180px;
-            }
-        }
-
-        /* Desktop Styles */
-        @media (min-width: 1025px) {
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-            
-            .product-image {
-                height: 220px;
-            }
-        }
-
-        /* Pagination Styles */
+        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
+            margin-top: 30px;
+            gap: 8px;
         }
 
-        .page-link {
-            padding: 0.75rem 1rem;
-            border: 2px solid #e5e7eb;
+        .pagination a, .pagination span {
+            padding: 8px 16px;
             border-radius: 8px;
             text-decoration: none;
-            color: #6b7280;
-            font-weight: 600;
-            transition: var(--transition);
+            color: #27383f;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid #f0f2f5;
         }
 
-        .page-link:hover {
-            border-color: #8b5cf6;
-            color: #8b5cf6;
+        .pagination a:hover {
+            background-color: #f0f2f5;
         }
 
-        .page-link.active {
-            background: #8b5cf6;
-            border-color: #8b5cf6;
-            color: white;
+        .pagination .current {
+            background-color: #27383f;
+            color: #fff;
+            border-color: #27383f;
+        }
+
+        /* Mobile Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        /* Mobile Styles */
+        @media only screen and (max-width: 768px) {
+            .wrapper_oa {
+                padding: 16px;
+            }
+
+            .wrapper_oa nav {
+                margin-bottom: 20px;
+            }
+
+            .bars {
+                display: block;
+            }
+
+            .wrapper_oa nav ul,
+            .hudud_ao,
+            .qoyish_ao {
+                display: none;
+            }
+
+            .gul_ao {
+                display: block;
+            }
+
+            .intro_ao {
+                flex-direction: column;
+            }
+
+            .sidebar_ao {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 85%;
+                max-width: 320px;
+                z-index: 999;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                border-radius: 0;
+                padding-top: 60px;
+                overflow-y: auto;
+            }
+
+            .sidebar-open {
+                transform: translateX(0) !important;
+                display: flex !important;
+            }
+
+            .right_top_ao {
+                padding: 20px;
+            }
+
+            .right_top_ao h3 {
+                font-size: 20px;
+            }
+
+            .right_top_img_ao {
+                flex-direction: column;
+            }
+
+            .right_top_img_ao img {
+                height: 120px;
+            }
+
+            .right_center_ao {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .right_center_ao h3 {
+                font-size: 20px;
+            }
+
+            .right_center_right_ao {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+
+            .right_center_right_ao a {
+                white-space: nowrap;
+                font-size: 13px;
+            }
+
+            .right_bottom_ao {
+                padding: 40px 20px;
+            }
+
+            /* YANGI: Mobile uchun 1 ta mahsulot bir qatorda */
+            .elonlar_grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px;
+            }
+
+            .elon_card {
+                width: 100%;
+                margin-bottom: 0;
+            }
+
+            .elon_actions {
+                flex-direction: column;
+            }
+
+            /* YANGI: Sidebar mobil holatda to'g'ri ishlashi */
+            .sidebar_ao .profile_ao {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .sidebar_ao .avatar_ao {
+                width: 50px;
+                height: 50px;
+            }
+
+            .sidebar_ao .name_ao {
+                font-size: 15px;
+            }
+
+            .sidebar_ao .phone_ao {
+                font-size: 12px;
+            }
+
+            .sidebar_ao .menu_item_ao {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .sidebar_ao .menu_item_ao span {
+                width: 28px;
+                height: 28px;
+            }
+
+            .sidebar_ao .logout_ao {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+
+        /* Kichik ekranlar uchun (480px dan kichik) */
+        @media only screen and (max-width: 480px) {
+            .wrapper_oa {
+                padding: 12px;
+            }
+
+            .right_top_ao,
+            .right_bottom_ao {
+                border-radius: 16px;
+            }
+
+            .right_top_img_ao img {
+                height: 100px;
+            }
+
+            .right_center_right_ao {
+                gap: 8px;
+            }
+
+            .right_center_right_ao a {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+
+            .pagination a, .pagination span {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+
+            /* YANGI: Kichik ekranlarda elon kartalari */
+            .elon_card {
+                margin: 0 5px;
+            }
+
+            .elon_img {
+                height: 180px;
+            }
+
+            .elon_content {
+                padding: 12px;
+            }
+
+            .elon_narx {
+                font-size: 16px;
+            }
+
+            .elon_nomi {
+                font-size: 15px;
+            }
+
+            /* YANGI: Kichik ekranlarda sidebar */
+            .sidebar_ao {
+                width: 90%;
+                max-width: 300px;
+            }
+
+            .sidebar_ao .profile_ao {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .sidebar_ao .avatar_ao {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .sidebar_ao .profile-info_ao {
+                align-items: center;
+            }
+
+            .sidebar_ao .menu_item_ao {
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+        }
+
+        /* O'rta ekranlar uchun (768px - 1024px) */
+        @media only screen and (min-width: 769px) and (max-width: 1024px) {
+            .elonlar_grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        /* Katta ekranlar uchun (1024px+) */
+        @media only screen and (min-width: 1025px) {
+            .elonlar_grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        .logo {
+            width: 158px;
+            height: 43px;
+        }
+        .bg {
+            background-color: #cacaca;
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    {% include 'nav.html' %}
-    
-    <div class="max-w-6xl mx-auto container-padding">
-        <!-- Sarlavha -->
-        <div class="mb-8 text-center">
-            <h1 class="text-4xl font-bold text-gray-900 mb-3">Mening e'lonlarim</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Sizning barcha e'lonlaringiz ro'yxati. E'lonlaringizni boshqaring va yangilarini qo'shing</p>
-        </div>
 
-        <!-- Xabarlar -->
-        
-        <!-- Filtrlash va yangi e'lon -->
-        <div class="mb-8 bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-                <div class="flex flex-wrap gap-3 filter-buttons">
-                    <a href="{% url 'mening_elonlarim' %}" 
-                       class="filter-btn {% if not request.GET.status %}active{% endif %}">
-                        <i class="fas fa-layer-group"></i>
-                        Barchasi ({{ mahsulotlar.paginator.count }})
-                    </a>
-                    <a href="{% url 'mening_elonlarim' %}?status=yangi" 
-                       class="filter-btn {% if request.GET.status == 'yangi' %}active{% endif %}">
-                        <i class="fas fa-tag"></i>
-                        Yangi e'lonlar
-                    </a>
-                    <a href="{% url 'mening_elonlarim' %}?status=sotilgan" 
-                       class="filter-btn {% if request.GET.status == 'sotilgan' %}active{% endif %}">
-                        <i class="fas fa-check-circle"></i>
-                        Sotilganlar
-                    </a>
-                </div>
-                <a href="{% url 'elon_qoshish' %}" 
-                   class="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 font-semibold transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2">
-                    <i class="fas fa-plus"></i>
-                    Yangi e'lon qo'shish
+<body>
+    <div class="wrapper_oa">
+        <nav>
+            <a class="bars" href="#">
+              <i class="fa-solid fa-bars"></i>
+            </a>
+            <a href="/">
+              <img class="logo"
+                src="{% static 'img/logo.png' %}"
+                alt="BirBir logo"
+                width="88"
+                height="28"
+              />
+            </a>
+            <!-- <a class="hudud_ao" href="#">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M19.768 2.693c.956-.344 1.88.58 1.536 1.535l-6.04 16.777c-.375 1.043-1.842 1.063-2.246.03l-2.829-7.228-7.228-2.828c-1.032-.404-1.012-1.871.03-2.247l16.777-6.04z"
+                  fill="#a7afbc"
+                />
+              </svg>
+              Barcha hududlar
+            </a> -->
+            <ul>
+              <li><a href="{% url 'biz_haqimizda' %}">Biz haqimizda</a></li>
+              <li><a href="{% url 'boglanish' %}">Qo'llab-quvvatlash</a></li>
+              <!-- <li>
+                <a href="#">
+                  <img
+                    src="{% static 'img/uzb_flag.png' %}"
+                    alt="uzb_flag"
+                    width="24"
+                    height="24"
+                  />
+                  UZ
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12.756 15.695a1.056 1.056 0 01-1.486 0L5.32 9.793a1.043 1.043 0 01-.243-1.145 1.043 1.043 0 01.575-.57 1.059 1.059 0 011.155.24l5.205 5.164 5.205-5.164a1.056 1.056 0 011.474.013 1.039 1.039 0 01.013 1.462l-5.949 5.902z"
+                      fill="#a7afbc"
+                    />
+                  </svg>
                 </a>
-            </div>
-        </div>
-
-        <!-- Mahsulotlar grid -->
-        <div class="products-grid">
-            {% for product in mahsulotlar %}
-            <div class="product-card">
-                <div class="product-image">
-                    {% if product.asosiyimg %}
-                        <img src="{{ product.asosiyimg.url }}" alt="{{ product.name }}" />
-                    {% else %}
-                        <div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400">
-                            <i class="fas fa-image text-5xl"></i>
-                        </div>
-                    {% endif %}
-                    
-                    <!-- Status badge -->
-                    {% if product.sotilgan %}
-                        <span class="status-badge status-sold">
-                            <i class="fas fa-check mr-1"></i>
-                            Sotilgan
-                        </span>
-                    {% else %}
-                        <span class="status-badge status-new">
-                            <i class="fas fa-bolt mr-1"></i>
-                            Yangi
-                        </span>
-                    {% endif %}
-                </div>
-
-                <div class="product-content">
-                    <div class="product-price">{{ product.narx|floatformat:0 }} so'm</div>
-                    <h3 class="product-name">{{ product.name }}</h3>
-                    <div class="product-category">
-                        <i class="fas fa-tag mr-1"></i>
-                        {{ product.get_category_display }}
-                    </div>
-
-                    <div class="product-details">
-                        <div class="product-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            {{ product.viloyat|title }}
-                        </div>
-                        <div class="product-date">
-                            <i class="fas fa-calendar"></i>
-                            {{ product.sana }}
-                        </div>
-                    </div>
-
-                    <div class="product-actions">
-                        {% if not product.sotilgan %}
-                            <form method="POST" action="{% url 'sotilgan_qilish' product.id %}" class="flex-1">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-check"></i>
-                                    Sotildi
-                                </button>
-                            </form>
-                        {% else %}
-                            <button class="btn btn-success" disabled>
-                                <i class="fas fa-check-double"></i>
-                                Sotilgan
-                            </button>
-                        {% endif %}
-                        
-                        <form method="POST" action="{% url 'elon_ochirish' product.id %}" class="flex-1">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger" 
-                                    onclick="return confirm('Haqiqatan ham \"{{ product.name }}\" e\'lonini o\'chirmoqchimisiz?')">
-                                <i class="fas fa-trash"></i>
-                                O'chirish
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="empty-state">
-                <div class="text-6xl mb-4">📭</div>
-                <h3 class="text-2xl font-bold text-gray-700 mb-3">E'lonlar topilmadi</h3>
-                <p class="text-gray-500 mb-6 max-w-md mx-auto">Sizda hali e'lonlar mavjud emas. Birinchi e'loningizni qo'shish orqali soting!</p>
-                <a href="{% url 'elon_qoshish' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl hover:from-purple-700 hover:to-purple-800 font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                    <i class="fas fa-plus"></i>
-                    Birinchi e'lonni qo'shish
+              </li> -->
+              <li>
+                <a href="#">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 01-5-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
+                      fill="#a7afbc"
+                    />
+                  </svg>
+                  Xabarlar
                 </a>
-            </div>
-            {% endfor %}
-        </div>
-
-        <!-- Pagination -->
-        {% if mahsulotlar.has_other_pages %}
-        <div class="pagination">
-            {% if mahsulotlar.has_previous %}
-                <a href="?page={{ mahsulotlar.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="page-link">
-                    <i class="fas fa-chevron-left mr-2"></i>
-                    Oldingi
+              </li>
+              <li>
+                <a href="{% url 'profil' %}">
+                  <img
+                    src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
+                    alt="profil"
+                    width="32"
+                    height="32"
+                  />
+                  Mening profilim
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12.756 15.695a1.056 1.056 0 01-1.486 0L5.32 9.793a1.043 1.043 0 01-.243-1.145 1.043 1.043 0 01.575-.57 1.059 1.059 0 011.155.24l5.205 5.164 5.205-5.164a1.056 1.056 0 011.474.013 1.039 1.039 0 01.013 1.462l-5.949 5.902z"
+                      fill="#a7afbc"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+            {% if user.is_authenticated %}
+                <a class="qoyish_ao" href="{% url 'elon_qoshish' %}">
+                  Qo'yish
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="24" height="24" rx="12" fill="#fff" />
+                    <path
+                      d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+                      fill="#27383F"
+                    />
+                  </svg>
+                </a>
+            {% else %}
+                <a class="qoyish_ao" href="{% url 'signup' %}">
+                  Qo'yish
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="24" height="24" rx="12" fill="#fff" />
+                    <path
+                      d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+                      fill="#27383F"
+                    />
+                  </svg>
                 </a>
             {% endif %}
+            <a class="gul_ao" href="#">
+              <img
+                src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
+                alt="profil"
+                width="40"
+                height="40"
+              />
+            </a>
+          </nav>
 
-            {% for num in mahsulotlar.paginator.page_range %}
-                {% if mahsulotlar.number == num %}
-                    <span class="page-link active">{{ num }}</span>
-                {% else %}
-                    <a href="?page={{ num }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="page-link">{{ num }}</a>
+        <!-- Mobile Overlay -->
+        <div class="overlay"></div>
+
+        <div class="intro_ao">
+            <!-- Sidebar -->
+            <aside class="sidebar_ao">
+                <div class="profile_ao">
+                    <img src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png" alt="avatar" class="avatar_ao">
+                    <div class="profile-info_ao">
+                        <h3 class="name_ao">{{ user.first_name }} {{ user.last_name }}</h3>
+                        <p class="phone_ao">
+                            {% if user.profile.phone %}
+                                {{ user.profile.phone }}
+                            {% else %}
+                                Telefon raqam kiritilmagan
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <!-- <a href="#" class="profile_link_ao">Profilim qanday ko'rinadi</a> -->
+
+                <ul class="menu_ao">
+                    <!-- <li>
+                        <a class="menu_item_ao svg_1" href="#">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M4 4.495a3.333 3.333 0 116.667 0 3.333 3.333 0 01-6.667 0zm-.785 5.114c1.068-.652 2.522-1.114 4.118-1.114.298 0 .592.016.878.046a.667.667 0 01.48 1.038A3.979 3.979 0 008 11.828c0 .613.138 1.193.383 1.711a.667.667 0 01-.593.952l-.457.004c-1.486 0-2.89-.094-3.942-.372-.523-.139-1.016-.338-1.389-.638-.395-.317-.669-.76-.669-1.324 0-.524.239-1.015.563-1.426.33-.416.785-.8 1.319-1.126zm8.118 4.219a.667.667 0 01.589-.662l.08-.005a.666.666 0 01.077 1.329l-.079.005a.666.666 0 01-.667-.667zm.378-3.167a.334.334 0 01.622.167c0 .09-.032.17-.214.320l-.096.076-.074.055c-.049.036-.108.08-.162.124l-.092.077a1.134 1.134 0 00-.326.465.666.666 0 001.224.521l.064-.051.238-.18.072-.058.12-.105c.271-.25.58-.645.58-1.244a1.667 1.667 0 00-3.108-.838.667.667 0 101.152.671z"
+                                        fill="#bd007d" />
+                                </svg>
+                            </span>
+                            ID tasdiqlashdan o'ting
+                        </a>
+                    </li> -->
+                    <li>
+                        <a class="menu_item_ao active_ao" href="{% url 'mening_elonlarim' %}">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.782 1.847a.833.833 0 011.234.732v11.432a.833.833 0 01-1.234.732c-.758-.416-3.002-1.628-4.346-2.162-.833-.336-1.7-.582-2.584-.733l-.516 2.578a.668.668 0 01-1.308-.262l.496-2.476c-.18-.014-.36-.025-.54-.033-1.068-.05-1.968-.913-1.968-2.027V6.962c0-1.114.9-1.978 1.968-2.027.237-.011.47-.026.698-.045v6.072h.023a.666.666 0 011.155 0h.156V4.714c.828-.154 1.638-.39 2.42-.705 1.344-.534 3.588-1.747 4.346-2.162z"
+                                        fill="#fff" />
+                                </svg>
+                            </span>
+                            Mening e'lonlarim
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="menu_item_ao svg_3" href="{% url 'sevimlilarim' %}">
+                            <span>
+                               <i class="fa-solid fa-heart" style="color: #dc3545;"></i>
+                            </span>
+                            Sevimlilar
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="menu_item_ao" href="{% url 'boglanish' %}" style="background: #fafafa;">
+                          <span>
+                            <i class="fas fa-question-circle" style="color: #18a0da;"></i>
+                          </span>
+                          Yordam markazi
+                        </a>
+                      </li>
+                      <li>
+                        <a class="menu_item_ao" href="{% url 'boglanish' %}" style="background: #fafafa;">
+                          <span>
+                            <i class="fas fa-headset" style="color: #4caf50;"></i>
+                          </span>
+                          Qo'llab-quvvatlash
+                        </a>
+                      </li>
+                    <li>
+                        <a class="menu_item_ao svg_4 bg" href="#">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 01-5-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
+                                        fill="#fff" />
+                                </svg>
+                            </span>
+                           <div class="tezorqada">
+                            !
+                           </div>
+                            Chat  tez orqada 
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="menu_item_ao svg_5 bg" href="#">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M18.842 2A3.158 3.158 0 0122 5.158v13.684A3.158 3.158 0 0118.842 22h-3.158v-6.316a3.158 3.158 0 00-3.157-3.157h-1.053a3.158 3.158 0 00-3.158 3.157V22H5.158A3.158 3.158 0 012 18.842V5.158A3.158 3.158 0 015.158 2h13.684zm-6.315 12.632a1.052 1.052 0 011.045.93l.007.122V22h-3.158v-6.316a1.053 1.053 0 01.93-1.045l.123-.007h1.053zm6.315-10.526H5.158a1.053 1.053 0 00-1.045.93l-.007.122v1.053a2.105 2.105 0 004.147.516l.034-.164a1.053 1.053 0 01.945-.874l.137-.004a1.053 1.053 0 011.045.929l.007.123a1.579 1.579 0 003.15.152l.008-.152a1.053 1.053 0 01.93-1.045l.142-.007a1.053 1.053 0 011.035.76l.028.118a2.105 2.105 0 004.176-.195l.005-.157V5.158a1.053 1.053 0 00-.93-1.045l-.123-.007z"
+                                        fill="#fff" />
+                                </svg>
+                                
+                            </span>
+                           ! BirBir biznes uchun
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="menu_item_ao svg_6" href="#">
+                            <span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M18 2a2 2 0 012 2v11.586A2 2 0 0119.414 17L15 21.414a2 2 0 01-1.414.586H6a2 2 0 01-2-2V4a2 2 0 012-2h12zm0 2H6v16h6v-4.5a1.5 1.5 0 011.5-1.5H18V4zm-.414 12H14v3.586L17.586 16zM10 11a1 1 0 010 2H9a1 1 0 010-2h1zm5-4a1 1 0 110 2H9a1 1 0 010-2h6z"
+                                        fill="#a7afbc" />
+                                </svg>
+                            </span>
+                            Platforma qoidalari
+                        </a>
+                    </li>
+                    <hr>
+                </ul>
+
+                <a href="{% url 'chiqish' %}" class="logout_ao">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 3a1 1 0 01.117 1.993L12 5H7a1 1 0 00-.993.883L6 6v12a1 1 0 00.883.993L7 19h4.5a1 1 0 01.117 1.993L11.5 21H7a3 3 0 01-2.995-2.824L4 18V6a3 3 0 012.824-2.995L7 3h5zm5.707 5.464l2.828 2.829a1 1 0 010 1.414l-2.828 2.829a1 1 0 11-1.414-1.415L17.414 13H12a1 1 0 010-2h5.414l-1.121-1.121a1 1 0 011.414-1.415z"
+                            fill="#a7afbc" />
+                    </svg>
+                    Chiqish
+                </a>
+            </aside>
+
+            <!-- Right Content -->
+            <div class="right_ao">
+                <div class="right_top_ao">
+                    <h3>Siz uchun foydali</h3>
+                    <div class="right_top_img_ao">
+                        <img src="{% static 'img/qollanma.jpg' %}" alt="qo'llanma">
+                        <img src="{% static 'img/qollanma2.png' %}" alt="qo'llanma2">
+                    </div>
+                </div>
+
+                <!-- Xabarlarni ko'rsatish -->
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
                 {% endif %}
-            {% endfor %}
 
-            {% if mahsulotlar.has_next %}
-                <a href="?page={{ mahsulotlar.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="page-link">
-                    Keyingi
-                    <i class="fas fa-chevron-right ml-2"></i>
-                </a>
-            {% endif %}
+                <div class="right_center_ao">
+                    <h3>Mening e'lonlarim</h3>
+                    <div class="right_center_right_ao">
+                        <a class="faol_ao" href="{% url 'mening_elonlarim' %}">Barchasi</a>
+                        <a href="{% url 'mening_elonlarim' %}?status=yangi">Yangi</a>
+                        <a href="{% url 'mening_elonlarim' %}?status=sotilgan">Sotilgan</a>
+                    </div>
+                </div>
+
+                <!-- E'lonlar ro'yxati -->
+                {% if mahsulotlar %}
+                <div class="elonlar_grid">
+                    {% for mahsulot in mahsulotlar %}
+                    <div class="elon_card">
+                        <img src="{{ mahsulot.asosiyimg.url }}" alt="{{ mahsulot.name }}" class="elon_img">
+                        <div class="elon_content">
+                            <div class="elon_narx">{{ mahsulot.narx_formatted }}</div>
+                            <div class="elon_nomi">{{ mahsulot.name }}</div>
+                            <div class="elon_info">
+                                {{ mahsulot.get_viloyat_display }} • 
+                                {{ mahsulot.sana|date:"d.m.Y" }}
+                            </div>
+                            
+                            <div class="elon_holat {% if mahsulot.sotilgan %}holat_sotilgan{% else %}holat_yangi{% endif %}">
+                                {% if mahsulot.sotilgan %}
+                                    ✅ Sotilgan
+                                {% else %}
+                                    🆕 Yangi
+                                {% endif %}
+                            </div>
+                            
+                            <div class="elon_actions">
+                                {% if not mahsulot.sotilgan %}
+                                <form method="POST" action="{% url 'sotilgan_qilish' mahsulot.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="elon_btn btn_sotilgan">Sotilgan qilish</button>
+                                </form>
+                                {% endif %}
+                                <form method="POST" action="{% url 'elon_ochirish' mahsulot.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="elon_btn btn_ochirish" 
+                                            onclick="return confirm('Haqiqatan ham \"{{ mahsulot.name }}\" e\'lonini o\'chirmoqchimisiz?')">
+                                        O'chirish
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if page_obj.paginator.num_pages > 1 %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">&laquo; Boshiga</a>
+                        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Oldingi</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Sahifa {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Keyingi</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Oxiriga &raquo;</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% else %}
+                <!-- Hech qanday e'lon yo'q bo'lsa -->
+                <div class="right_bottom_ao">
+                    <div class="right_div_ao">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <p>Hozircha hech qanday e'lon yo'q<br>Birinchisini qo'shing!</p>
+                    <a class="right_bottom_qoyish_ao" href="{% url 'elon_qoshish' %}">
+                        <i class="fas fa-plus"></i> E'lon qo'yish
+                    </a>
+                </div>
+                {% endif %}
+            </div>
         </div>
-        {% endif %}
     </div>
 
     <script>
-        // Status filtrlash
         document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const status = urlParams.get('status');
+            const sidebar = document.querySelector('.sidebar_ao');
+            const barsIcon = document.querySelector('.bars');
+            const overlay = document.querySelector('.overlay');
             
-            // Sahifa yuklanganida filtrlash tugmalarini faollashtirish
-            const filterLinks = document.querySelectorAll('.filter-btn');
-            filterLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            if (status) {
-                const activeLink = document.querySelector(`a[href*="status=${status}"]`);
-                if (activeLink) {
-                    activeLink.classList.add('active');
-                }
-            } else {
-                const allLink = document.querySelector('a[href="{% url 'mening_elonlarim' %}"]');
-                if (allLink) {
-                    allLink.classList.add('active');
-                }
+            // Bars ikonkasini bosganda sidebar ochiladi
+            if (barsIcon) {
+                barsIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sidebar.classList.add('sidebar-open');
+                    overlay.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
             }
+            
+            // Overlay bosganda sidebar yopiladi
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('sidebar-open');
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Ekran o'lchami o'zgarganda sidebar holatini boshqarish
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('sidebar-open');
+                    if (overlay) overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Xabarlarni avtomatik yopish
+            setTimeout(function() {
+                const messages = document.querySelector('.messages');
+                if (messages) {
+                    messages.style.display = 'none';
+                }
+            }, 5000);
+
+            // Sidebar ichidagi linklarni bosganda sidebar yopiladi (mobil uchun)
+            const sidebarLinks = document.querySelectorAll('.sidebar_ao a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('sidebar-open');
+                        overlay.style.display = 'none';
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
         });
     </script>
 </body>

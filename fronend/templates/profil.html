@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="uz">
-    {% load static %}
+{% load static %}
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BirBir - O'rinboyev Abdurahim</title>
+    <title>Mening e'lonlarim - BirBir</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
@@ -32,7 +32,6 @@
             max-width: 1480px;
             margin: 0 auto;
             padding: 30px 16px;
-
         }
 
         /* Navigation */
@@ -337,7 +336,6 @@
         .right_center_right_ao {
             display: flex;
             gap: 12px;
-            
         }
 
         .right_center_right_ao a {
@@ -345,14 +343,13 @@
             border-radius: 16px;
             background-color: #f0f2f5;
             text-decoration: none;
-    
             transition: all 0.3s ease;
             font-size: 14px;
             font-weight: 500;
         }
 
         .right_center_right_ao a:hover {
-            background-color: #f0f2f5;
+            background-color: #e0e2e5;
         }
 
         .faol_ao {
@@ -364,10 +361,146 @@
             background-color: #1a2529 !important;
         }
 
+        /* Xabarlar */
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+        }
+
+        /* Elonlar ro'yxati */
+        .elonlar_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .elon_card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .elon_card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .elon_img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .elon_content {
+            padding: 16px;
+        }
+
+        .elon_narx {
+            font-size: 18px;
+            font-weight: 700;
+            color: #27383f;
+            margin-bottom: 8px;
+        }
+
+        .elon_nomi {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .elon_info {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 12px;
+        }
+
+        .elon_holat {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .holat_yangi {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .holat_sotilgan {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .elon_actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .elon_btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn_sotilgan {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn_sotilgan:hover {
+            background-color: #388e3c;
+        }
+
+        .btn_ochirish {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn_ochirish:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Bo'sh e'lonlar uchun */
         .right_bottom_ao {
             text-align: center;
             background-color: #fff;
-            padding: 40px 20px;
+            padding: 60px 20px;
             border-radius: 24px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
@@ -379,17 +512,25 @@
         }
 
         .right_div_ao {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             margin: 0 auto 20px;
             border-radius: 50%;
-            background-color: #e3e3e3;
+            background-color: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
         }
 
         .right_bottom_ao:hover .right_div_ao {
-            background-color: #d0d0d0;
+            background-color: #e0e2e5;
             transform: scale(1.05);
+        }
+
+        .right_div_ao i {
+            font-size: 48px;
+            color: #a7afbc;
         }
 
         .right_bottom_ao p {
@@ -405,7 +546,9 @@
             padding: 12px 24px;
             border-radius: 16px;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             transition: all 0.3s ease;
             font-weight: 500;
         }
@@ -414,6 +557,36 @@
             background-color: #1a2529;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 8px;
+        }
+
+        .pagination a, .pagination span {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #27383f;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid #f0f2f5;
+        }
+
+        .pagination a:hover {
+            background-color: #f0f2f5;
+        }
+
+        .pagination .current {
+            background-color: #27383f;
+            color: #fff;
+            border-color: #27383f;
         }
 
         /* Mobile Overlay */
@@ -515,10 +688,26 @@
             }
 
             .right_bottom_ao {
-                padding: 30px 20px;
+                padding: 40px 20px;
+            }
+
+            /* YANGI: Mobile uchun 1 ta mahsulot bir qatorda */
+            .elonlar_grid {
+                grid-template-columns: repeat(2, minmax(150px, 1fr)) !important;
+                gap: 15px;
+            }
+
+            .elon_card {
+                width: 100%;
+                margin-bottom: 0;
+            }
+
+            .elon_actions {
+                flex-direction: column;
             }
         }
 
+        /* Kichik ekranlar uchun (480px dan kichik) */
         @media only screen and (max-width: 480px) {
             .wrapper_oa {
                 padding: 12px;
@@ -541,10 +730,57 @@
                 padding: 10px 14px;
                 font-size: 12px;
             }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+
+            .pagination a, .pagination span {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+
+            /* YANGI: Kichik ekranlarda elon kartalari */
+            .elon_card {
+                margin: 0 5px;
+            }
+
+            .elon_img {
+                height: 180px;
+            }
+
+            .elon_content {
+                padding: 12px;
+            }
+
+            .elon_narx {
+                font-size: 16px;
+            }
+
+            .elon_nomi {
+                font-size: 15px;
+            }
         }
+
+        /* O'rta ekranlar uchun (768px - 1024px) */
+        @media only screen and (min-width: 769px) and (max-width: 1024px) {
+            .elonlar_grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+        }
+
+        /* Katta ekranlar uchun (1024px+) */
+        @media only screen and (min-width: 1025px) {
+            .elonlar_grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+        
         .logo {
             width: 158px;
-        height: 43px;
+            height: 43px;
         }
     </style>
 </head>
@@ -558,7 +794,7 @@
             <a href="/">
               <img class="logo"
                 src="{% static 'img/logo.png' %}"
-                alt="ishlamadi"
+                alt="BirBir logo"
                 width="88"
                 height="28"
               />
@@ -581,7 +817,7 @@
               Barcha hududlar
             </a>
             <ul>
-              <li><a href="#">Biz haqimizda</a></li>
+                <li><a href="{% url 'biz_haqimizda' %}">Biz haqimizda</a></li>
               <li><a href="#">Qo'llab-quvvatlash</a></li>
               <li>
                 <a href="#">
@@ -618,7 +854,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 015-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
+                      d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 01-5-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
                       fill="#a7afbc"
                     />
                   </svg>
@@ -626,11 +862,7 @@
                 </a>
               </li>
               <li>
-                <!-- nav.html yoki asosiy sahifadagi navigatsiyada -->
-
-              </li>
-              <li>
-                <a href="{% url 'profil' %}">
+                <a href="{% url 'mening_elonlarim' %}">
                   <img
                     src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
                     alt="profil"
@@ -655,42 +887,42 @@
                 </a>
               </li>
             </ul>
-           {% if user.is_authenticated %}
-        <a class="qoyish_ao" href="{% url 'elon_qoshish' %}">
-          Qo'yish
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect width="24" height="24" rx="12" fill="#fff" />
-            <path
-              d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
-              fill="#27383F"
-            />
-          </svg>
-        </a>
-          {% else %}
-          <a class="qoyish_ao" href="{% url 'signup' %}">
-            Qo'yish
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="24" height="24" rx="12" fill="#fff" />
-              <path
-                d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
-                fill="#27383F"
-              />
-            </svg>
-          </a>
-        {% endif %}
-            <a class="gul_ao" href="#">
+            {% if user.is_authenticated %}
+                <a class="qoyish_ao" href="{% url 'elon_qoshish' %}">
+                  Qo'yish
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="24" height="24" rx="12" fill="#fff" />
+                    <path
+                      d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+                      fill="#27383F"
+                    />
+                  </svg>
+                </a>
+            {% else %}
+                <a class="qoyish_ao" href="{% url 'signup' %}">
+                  Qo'yish
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="24" height="24" rx="12" fill="#fff" />
+                    <path
+                      d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+                      fill="#27383F"
+                    />
+                  </svg>
+                </a>
+            {% endif %}
+            <a class="gul_ao" href="">
               <img
                 src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
                 alt="profil"
@@ -719,10 +951,10 @@
                         </p>
                     </div>
                 </div>
-                <a href="#" class="profile_link_ao">Profilim qanday ko'rinadi</a>
+                <!-- <a href="#" class="profile_link_ao">Profilim qanday ko'rinadi</a> -->
 
                 <ul class="menu_ao">
-                    <li>
+                    <!-- <li>
                         <a class="menu_item_ao svg_1" href="#">
                             <span>
                                 <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -733,9 +965,9 @@
                             </span>
                             ID tasdiqlashdan o'ting
                         </a>
-                    </li>
+                    </li> -->
                     <li>
-                        <a class="menu_item_ao active_ao" href="#">
+                        <a class="menu_item_ao active_ao" href="{% url 'mening_elonlarim' %}">
                             <span>
                                 <svg width="20" height="20" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -748,15 +980,12 @@
                     </li>
                     <hr>
                     <li>
-                       <!-- nav.html yoki asosiy sahifadagi navigatsiyada -->
-<li>
-    <a class="menu_item_ao svg_3" href="{% url 'sevimlilarim' %}">
-        <span>
-           <i class="fa-solid fa-heart"></i>
-        </span>
-        Sevimlilar
-    </a>
-</li>
+                        <a class="menu_item_ao svg_3" href="{% url 'sevimlilarim' %}">
+                            <span>
+                               <i class="fa-solid fa-heart" style="color: #dc3545;"></i>
+                            </span>
+                            Sevimlilar
+                        </a>
                     </li>
                     <hr>
                     <li>
@@ -764,7 +993,7 @@
                             <span>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
-                                        d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 015-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
+                                        d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 01-5-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
                                         fill="#fff" />
                                 </svg>
                             </span>
@@ -819,28 +1048,107 @@
                         <img src="{% static 'img/qollanma2.png' %}" alt="qo'llanma2">
                     </div>
                 </div>
+
+                <!-- Xabarlarni ko'rsatish -->
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
                 <div class="right_center_ao">
                     <h3>Mening e'lonlarim</h3>
                     <div class="right_center_right_ao">
-                        <a class="faol_ao" href="#">Faollar</a>
-                        <a href="#">Qoralamalar</a>
-                        <a href="{% url 'mening_elonlarim' %}">Harakat kutmoqda</a>
-                        <a href="#">Arxiv</a>
+                        <a class="faol_ao" href="{% url 'mening_elonlarim' %}">Barchasi</a>
+                        <a href="{% url 'mening_elonlarim' %}?status=yangi">Yangi</a>
+                        <a href="{% url 'mening_elonlarim' %}?status=sotilgan">Sotilgan</a>
                     </div>
                 </div>
-                <div class="right_bottom_ao">
-                    <div class="right_div_ao"></div>
-                    <p>Bu yerga sizning e'lonlaringiz <br> joylashadi</p>
-                   
-<a class="right_bottom_qoyish_ao" href="{% url 'elon_qoshish' %}">E'lon qo'yish</a>
+
+                <!-- E'lonlar ro'yxati -->
+                {% if mahsulotlar %}
+                <div class="elonlar_grid">
+                    {% for mahsulot in mahsulotlar %}
+                    <div class="elon_card">
+                        <img src="{{ mahsulot.asosiyimg.url }}" alt="{{ mahsulot.name }}" class="elon_img">
+                        <div class="elon_content">
+                            <div class="elon_narx">{{ mahsulot.narx_formatted }}</div>
+                            <div class="elon_nomi">{{ mahsulot.name }}</div>
+                            <div class="elon_info">
+                                {{ mahsulot.get_viloyat_display }} • 
+                                {{ mahsulot.sana|date:"d.m.Y" }}
+                            </div>
+                            
+                            <div class="elon_holat {% if mahsulot.sotilgan %}holat_sotilgan{% else %}holat_yangi{% endif %}">
+                                {% if mahsulot.sotilgan %}
+                                    ✅ Sotilgan
+                                {% else %}
+                                    🆕 Yangi
+                                {% endif %}
+                            </div>
+                            
+                            <div class="elon_actions">
+                                {% if not mahsulot.sotilgan %}
+                                <form method="POST" action="{% url 'sotilgan_qilish' mahsulot.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="elon_btn btn_sotilgan">Sotilgan qilish</button>
+                                </form>
+                                {% endif %}
+                                <form method="POST" action="{% url 'elon_ochirish' mahsulot.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="elon_btn btn_ochirish" 
+                                            onclick="return confirm('Haqiqatan ham \"{{ mahsulot.name }}\" e\'lonini o\'chirmoqchimisiz?')">
+                                        O'chirish
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
+
+                <!-- Pagination -->
+                {% if page_obj.paginator.num_pages > 1 %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">&laquo; Boshiga</a>
+                        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Oldingi</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Sahifa {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Keyingi</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Oxiriga &raquo;</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% else %}
+                <!-- Hech qanday e'lon yo'q bo'lsa -->
+                <div class="right_bottom_ao">
+                    <div class="right_div_ao">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <p>Hozircha hech qanday e'lon yo'q<br>Birinchisini qo'shing!</p>
+                    <a class="right_bottom_qoyish_ao" href="{% url 'elon_qoshish' %}">
+                        <i class="fas fa-plus"></i> E'lon qo'yish
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar_ao');
+            const sidebar = document.querySelector('.sidebar_oa');
             const barsIcon = document.querySelector('.bars');
             const overlay = document.querySelector('.overlay');
             
@@ -871,8 +1179,15 @@
                     document.body.style.overflow = '';
                 }
             });
+
+            // Xabarlarni avtomatik yopish
+            setTimeout(function() {
+                const messages = document.querySelector('.messages');
+                if (messages) {
+                    messages.style.display = 'none';
+                }
+            }, 5000);
         });
     </script>
 </body>
-
 </html>

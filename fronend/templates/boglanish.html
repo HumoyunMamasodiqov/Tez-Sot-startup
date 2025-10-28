@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="uz">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qo'llab-quvvatlash - Tez Sot</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#8B5CF6'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+        
+        /* Animatsiyalar */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Maxsus gradientlar */
+        .gradient-primary {
+            background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+        }
+        
+        .gradient-secondary {
+            background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+        }
+        
+        .gradient-accent {
+            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+        }
+        
+        /* Hover effektlari */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Telegram usernamesi uchun maxsus stil */
+        .telegram-input {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='%233B82F6' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.78 5.42-.9 6.8-.06.67-.36.89-.89.56-2.45-1.83-3.57-2.98-5.79-4.78-.51-.42-.87-.64-.81-.94.05-.28.48-.29.85-.51 3.47-1.53 5.79-2.55 8.14-3.78.39-.2.75-.12.6.31z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 12px center;
+            background-size: 20px 20px;
+            padding-left: 40px;
+        }
+        
+        /* Call button animation */
+        .call-button {
+            transition: all 0.3s ease;
+        }
+        
+        .call-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Floating action button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modal styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+   {% include 'nav.html' %}
+    <!-- Hero Section -->
+    <section class="gradient-primary py-16 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center animate-fadeIn">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Qo'llab-quvvatlash markazi</h1>
+                <p class="text-xl opacity-90 mb-8 max-w-3xl mx-auto">Sizga yordam berish uchun har doim tayyormiz. Savol-javoblarni topish yoki mutaxassislarimiz bilan bog'lanish uchun quyidagi resurslardan foydalaning.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="openTelegramBot()" class="bg-white text-primary px-8 py-3 rounded-lg !rounded-button whitespace-nowrap hover:bg-gray-100 transition-all cursor-pointer inline-flex items-center justify-center space-x-2 shadow-lg call-button">
+                        <i class="ri-telegram-fill text-lg"></i>
+                        <span>Telegram orqali yozing</span>
+                    </button>
+                    <button onclick="showCallModal()" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-lg !rounded-button whitespace-nowrap hover:bg-white/10 transition-all cursor-pointer inline-flex items-center justify-center space-x-2 call-button">
+                        <i class="ri-phone-line text-lg"></i>
+                        <span>Qo'ng'iroq qilish</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Options -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 animate-fadeIn">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Biz bilan bog'laning</h2>
+                <p class="text-lg text-gray-600">Sizga qulay bo'lgan usulni tanlang</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border card-hover cursor-pointer" onclick="openTelegramBot()">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-telegram-fill text-2xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">Telegram Bot</h3>
+                    <p class="text-gray-600 text-center text-sm mb-2">@tezsot_support_bot</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Tezkor javob</span>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border card-hover cursor-pointer" onclick="showCallModal()">
+                    <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-phone-line text-2xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">Telefon orqali</h3>
+                    <p class="text-gray-600 text-center text-sm mb-2">Qo'ng'iroq qilish</p>
+                    <div class="text-center">
+                        <span class="text-xs text-gray-500">Operator sizga qayta qo'ng'iroq qiladi</span>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border card-hover cursor-pointer" onclick="openTelegramBot()">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-telegram-fill text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">24/7 Qo'llab-quvvatlash</h3>
+                    <p class="text-gray-600 text-center text-sm mb-2">@tezsot_support_bot</p>
+                    <div class="text-center">
+                        <span class="text-xs text-gray-500">Har qanday vaqtda yordam</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Call Section -->
+    <section class="py-12 bg-gradient-to-r from-primary to-accent text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-slow">
+                    <i class="ri-phone-fill text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Tezkor qo'ng'iroq qilish</h2>
+                <p class="mb-6 max-w-2xl mx-auto">Telefon raqamingizni kiriting va biz sizga 5 daqiqa ichida qayta qo'ng'iroq qilamiz</p>
+                <div class="max-w-md mx-auto bg-white/20 rounded-xl p-6 backdrop-blur-sm">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="tel" id="quickCallPhone" placeholder="+998 __ ___ __ __" class="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
+                        <button onclick="quickCallBack()" class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all call-button">
+                            Qo'ng'iroq qiling
+                        </button>
+                    </div>
+                    <p class="text-white/80 text-sm mt-3">Operatorlarimiz tez orada siz bilan bog'lanadi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 animate-fadeIn">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Bizga murojaat qiling</h2>
+                <p class="text-lg text-gray-600">Javobingizni topa olmadingizmi? Bizga yozing, tez orada javob beramiz</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-8 card-hover shadow-sm">
+                <form class="space-y-6" onsubmit="handleContactForm(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-900 mb-2">Ismingiz</label>
+                            <input type="text" placeholder="Ismingizni kiriting" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-900 mb-2">Telegram Username</label>
+                            <input type="text" placeholder="@username" class="w-full px-4 py-3 border border-gray-300 rounded-lg telegram-input focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-900 mb-2">Telefon raqam</label>
+                        <input type="tel" id="contactPhone" placeholder="+998 33 026 00 38" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-900 mb-2">Mavzu</label>
+                        <div class="relative">
+                            <select class="w-full px-4 py-3 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none bg-white transition-all" required>
+                                <option value="">Mavzuni tanlang</option>
+                                <option>Buyurtma masalasi</option>
+                                <option>To'lov muammosi</option>
+                                <option>Yetkazib berish</option>
+                                <option>Qaytarish/Almashtirish</option>
+                                <option>Hisob sozlamalari</option>
+                                <option>Boshqa</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                                <i class="ri-arrow-down-s-line text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-900 mb-2">Xabar matni</label>
+                        <textarea rows="5" placeholder="Muammoingizni batafsil yozing..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none transition-all" required></textarea>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <input type="checkbox" id="privacy" class="opacity-0 absolute" required>
+                            <label for="privacy" class="flex items-center cursor-pointer">
+                                <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center mr-3 bg-white transition-all">
+                                    <i class="ri-check-line text-white text-sm opacity-0 transition-opacity"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">Men <a href="#" class="text-primary hover:underline">maxfiylik siyosati</a>ni qabul qilaman</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full gradient-primary text-white py-3 px-6 rounded-lg !rounded-button whitespace-nowrap hover:opacity-90 transition-all cursor-pointer font-medium shadow-lg call-button">
+                        Xabar yuborish
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Support -->
+    <section class="py-12 bg-red-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="ri-alarm-warning-line text-3xl text-red-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Shoshilinch yordam kerakmi?</h2>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">Agar sizga darhol yordam kerak bo'lsa yoki jiddiy muammo yuzaga kelgan bo'lsa, quyidagi usullar orqali bizga murojaat qiling</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="showCallModal()" class="bg-red-600 text-white px-8 py-3 rounded-lg !rounded-button whitespace-nowrap hover:bg-red-700 transition-all inline-flex items-center justify-center space-x-2 cursor-pointer shadow-lg call-button">
+                        <i class="ri-phone-line text-lg"></i>
+                        <span>Qo'ng'iroq qilish</span>
+                    </button>
+                    <a href="https://t.me/tezsot_support_bot" target="_blank" class="bg-blue-500 text-white px-8 py-3 rounded-lg !rounded-button whitespace-nowrap hover:bg-blue-600 transition-all inline-flex items-center justify-center space-x-2 cursor-pointer shadow-lg call-button">
+                        <i class="ri-telegram-fill text-lg"></i>
+                        <span>Telegram Bot orqali</span>
+                    </a>
+                </div>
+                <div class="mt-6 text-sm text-gray-500">
+                    <p>Shoshilinch xizmat 24/7 ishlaydi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Working Hours -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Ish vaqtimiz</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                            <span class="font-medium text-gray-900">Dushanba - Juma</span>
+                            <span class="text-primary font-semibold">09:00 - 21:00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                            <span class="font-medium text-gray-900">Shanba</span>
+                            <span class="text-primary font-semibold">10:00 - 18:00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                            <span class="font-medium text-gray-900">Yakshanba</span>
+                            <span class="text-gray-500">Dam olish kuni</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                            <span class="font-medium text-gray-900">Telegram Bot</span>
+                            <span class="text-secondary font-semibold">24/7</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3">
+                            <span class="font-medium text-gray-900">Shoshilinch yordam</span>
+                            <span class="text-red-600 font-semibold">24/7</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-6 bg-primary/5 rounded-xl border border-primary/20">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 flex items-center justify-center mt-0.5">
+                                <i class="ri-information-line text-primary text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-1">Muhim eslatma</h4>
+                                <p class="text-sm text-gray-600">Bayram kunlarida ish vaqti o'zgarishi mumkin. Tezkor bog'lanish uchun Telegram: <strong>@tezsot_support_bot</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-primary to-secondary rounded-2xl p-8 text-white h-96 flex flex-col justify-center">
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i class="ri-customer-service-2-line text-3xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4">24/7 Qo'llab-quvvatlash</h3>
+                            <p class="text-white/90 mb-6">Biz sizga har qanday vaqtda yordam berishga tayyormiz</p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Telefon qo'ng'iroq:</span>
+                                    <span class="font-semibold">Qayta qo'ng'iroq</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Telegram Bot:</span>
+                                    <span class="font-semibold">@tezsot_support_bot</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Qo'llab-quvvatlash:</span>
+                                    <span class="font-semibold">24/7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'futter.html' %}
+    <!-- Floating Action Button -->
+    <button onclick="openTelegramBot()" class="fab gradient-primary text-white w-16 h-16 rounded-full flex items-center justify-center call-button animate-pulse-slow">
+        <i class="ri-telegram-fill text-2xl"></i>
+    </button>
+
+    <!-- Call Modal -->
+    <div id="callModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="ri-phone-line text-2xl text-primary"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Qo'ng'iroq qilish</h3>
+                <p class="text-gray-600 mb-4">Telefon raqamingizni kiriting, operator sizga qayta qo'ng'iroq qiladi</p>
+                <input type="tel" id="modalPhone" placeholder="+998 __ ___ __ __" class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                <div class="flex gap-3">
+                    <button onclick="hideCallModal()" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-400 transition-all">
+                        Bekor qilish
+                    </button>
+                    <button onclick="submitCallRequest()" class="flex-1 gradient-primary text-white py-3 rounded-lg font-medium hover:opacity-90 transition-all">
+                        Jo'natish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Telegram Bot JavaScript -->
+    <script>
+        // Modalni ko'rsatish funksiyasi
+        function showCallModal() {
+            document.getElementById('callModal').classList.remove('hidden');
+        }
+
+        // Modalni yashirish funksiyasi
+        function hideCallModal() {
+            document.getElementById('callModal').classList.add('hidden');
+        }
+
+        // Modal orqali qo'ng'iroq so'rovini yuborish
+        function submitCallRequest() {
+            const phoneInput = document.getElementById('modalPhone');
+            const phoneNumber = phoneInput.value.trim();
+            
+            if (!phoneNumber) {
+                showNotification('Iltimos, telefon raqamingizni kiriting', 'error');
+                return;
+            }
+            
+            if (!isValidPhoneNumber(phoneNumber)) {
+                showNotification('Iltimos, to\'g\'ri telefon raqamini kiriting', 'error');
+                return;
+            }
+            
+            const telegramMessage = `
+<b>📞 Qo'ng'iroq so'rovi</b>
+
+Foydalanuvchi qo'ng'iroq qilishni so'radi.
+
+<b>📱 Telefon raqam:</b> ${phoneNumber}
+<b>⏰ Vaqt:</b> ${new Date().toLocaleString('uz-UZ')}
+<b>🌐 Manzil:</b> ${window.location.href}
+            `;
+
+            sendToTelegram(telegramMessage);
+            
+            // Modalni yopish va maydonni tozalash
+            hideCallModal();
+            phoneInput.value = '';
+            
+            // Qo'shimcha bildirishnoma
+            showNotification('Operator tez orada sizga qayta qo\'ng\'iroq qiladi', 'info');
+        }
+
+        // Telegram botga xabar yuborish funksiyasi
+        function sendToTelegram(message) {
+            const botToken = '7521102431:AAG6hFLjlpC3rHxecGTsAXcNlDUU9DE84w8';
+            const chatId = '7784678187'; // Sizning chat ID'ingiz
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Xabar muvaffaqiyatli yuborildi:', data);
+                showNotification('Xabaringiz muvaffaqiyatli yuborildi!', 'success');
+            })
+            .catch(error => {
+                console.error('Xatolik yuz berdi:', error);
+                showNotification('Xabar yuborishda xatolik yuz berdi', 'error');
+            });
+        }
+
+        // Telegram botni ochish funksiyasi
+        function openTelegramBot() {
+            window.open('https://t.me/tezsot_support_bot', '_blank');
+            showNotification('Telegram bot ochilmoqda...', 'info');
+        }
+
+        // Tezkor qayta qo'ng'iroq qilish funksiyasi
+        function quickCallBack() {
+            const phoneInput = document.getElementById('quickCallPhone');
+            const phoneNumber = phoneInput.value.trim();
+            
+            if (!phoneNumber) {
+                showNotification('Iltimos, telefon raqamingizni kiriting', 'error');
+                return;
+            }
+            
+            if (!isValidPhoneNumber(phoneNumber)) {
+                showNotification('Iltimos, to\'g\'ri telefon raqamini kiriting', 'error');
+                return;
+            }
+            
+            const telegramMessage = `
+<b>📞 Tezkor qayta qo'ng'iroq so'rovi</b>
+
+Foydalanuvchi tezkor qayta qo'ng'iroq qilishni so'radi.
+
+<b>📱 Telefon raqam:</b> ${phoneNumber}
+<b>⏰ Vaqt:</b> ${new Date().toLocaleString('uz-UZ')}
+<b>🌐 Manzil:</b> ${window.location.href}
+            `;
+
+            sendToTelegram(telegramMessage);
+            
+            // Telefon raqamini tozalash
+            phoneInput.value = '';
+            
+            // Qo'shimcha bildirishnoma
+            showNotification('Operator tez orada sizga qayta qo\'ng\'iroq qiladi', 'info');
+        }
+
+        // Telefon raqamini tekshirish funksiyasi
+        function isValidPhoneNumber(phone) {
+            const phoneRegex = /^\+998\d{9}$/;
+            return phoneRegex.test(phone.replace(/\s/g, ''));
+        }
+
+        // Kontakt formasi uchun Telegram yuborish funksiyasi
+        function handleContactForm(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const telegram = form.querySelector('input[placeholder="@username"]').value;
+            const phone = form.querySelector('#contactPhone').value;
+            const subject = form.querySelector('select').value;
+            const message = form.querySelector('textarea').value;
+            const privacy = form.querySelector('input[type="checkbox"]').checked;
+
+            if (!name || !telegram || !phone || !message || !privacy) {
+                showNotification('Iltimos, barcha maydonlarni to\'ldiring', 'error');
+                return;
+            }
+
+            // Telefon raqamini tekshirish
+            if (!isValidPhoneNumber(phone)) {
+                showNotification('Iltimos, to\'g\'ri telefon raqamini kiriting', 'error');
+                return;
+            }
+
+            // Telegramga yuboriladigan xabar formati
+            const telegramMessage = `
+<b>📩 Yangi murojaat</b>
+
+<b>👤 Ism:</b> ${name}
+<b>📱 Telegram:</b> ${telegram}
+<b>📞 Telefon:</b> ${phone}
+<b>📋 Mavzu:</b> ${subject}
+<b>💬 Xabar:</b> ${message}
+
+<b>⏰ Vaqt:</b> ${new Date().toLocaleString('uz-UZ')}
+<b>🌐 Manzil:</b> ${window.location.href}
+            `;
+
+            // Telegramga xabar yuborish
+            sendToTelegram(telegramMessage);
+
+            // Formani tozalash
+            form.reset();
+            const checkbox = form.querySelector('input[type="checkbox"]');
+            const checkBox = checkbox.nextElementSibling.querySelector('div');
+            const checkIcon = checkbox.nextElementSibling.querySelector('i');
+            checkBox.classList.remove('bg-primary', 'border-primary');
+            checkBox.classList.add('border-gray-300');
+            checkIcon.classList.add('opacity-0');
+            checkIcon.classList.remove('opacity-100');
+        }
+
+        // Bildirishnoma ko'rsatish funksiyasi
+        function showNotification(message, type = 'info') {
+            const colors = {
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500',
+                'info': 'bg-blue-500'
+            };
+            
+            const icons = {
+                'success': 'ri-check-line',
+                'error': 'ri-error-warning-line',
+                'warning': 'ri-alarm-warning-line',
+                'info': 'ri-information-line'
+            };
+
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center space-x-2 animate-fadeIn`;
+            notification.innerHTML = `
+                <i class="${icons[type]}"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // DOM yuklanganda funksiyalarni bog'lash
+        document.addEventListener('DOMContentLoaded', function() {
+            // Checkbox styling
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                const label = checkbox.nextElementSibling;
+                const checkIcon = label.querySelector('i');
+                const checkBox = label.querySelector('div');
+
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        checkBox.classList.add('bg-primary', 'border-primary');
+                        checkBox.classList.remove('border-gray-300');
+                        checkIcon.classList.remove('opacity-0');
+                        checkIcon.classList.add('opacity-100');
+                    } else {
+                        checkBox.classList.remove('bg-primary', 'border-primary');
+                        checkBox.classList.add('border-gray-300');
+                        checkIcon.classList.add('opacity-0');
+                        checkIcon.classList.remove('opacity-100');
+                    }
+                });
+            });
+
+            // Telefon raqamini formatlash
+            const phoneInputs = document.querySelectorAll('input[type="tel"]');
+            phoneInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.startsWith('998')) {
+                        value = '+' + value;
+                    } else if (!value.startsWith('+998') && value.length > 0) {
+                        value = '+998' + value;
+                    }
+                    
+                    // Format: +998 XX XXX XX XX
+                    if (value.length > 4) {
+                        value = value.substring(0, 4) + ' ' + value.substring(4);
+                    }
+                    if (value.length > 7) {
+                        value = value.substring(0, 7) + ' ' + value.substring(7);
+                    }
+                    if (value.length > 11) {
+                        value = value.substring(0, 11) + ' ' + value.substring(11);
+                    }
+                    if (value.length > 14) {
+                        value = value.substring(0, 14) + ' ' + value.substring(14);
+                    }
+                    
+                    e.target.value = value;
+                });
+            });
+
+            // Modal tashqarisini bosganda modalni yopish
+            document.getElementById('callModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideCallModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
