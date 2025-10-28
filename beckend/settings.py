@@ -62,7 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media',  # MEDIA uchun qo'shildi
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -96,9 +96,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # === Til va vaqt ===
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Tashkent'
+TIME_ZONE = 'UTC'  # O'zgartirildi
 USE_I18N = True
-USE_TZ = True
+USE_TZ = False     # O'zgartirildi
 
 # === STATIC SOZLAMALARI ===
 STATIC_URL = '/static/'
@@ -106,17 +106,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# === MEDIA SOZLAMALARI ===
+# === MEDIA ===
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # === Avtomatik ID ===
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# === Qo'shimcha xavfsizlik ===
-if not DEBUG:
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
