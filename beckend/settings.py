@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Mening applarim - VAQTINCHA IZOHGA OLING
+    # Mening applarim
     'fronend',
     'authentication',
 ]
@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # MEDIA uchun qo'shildi
             ],
         },
     },
@@ -105,13 +106,17 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# === MEDIA ===
+# === MEDIA SOZLAMALARI ===
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # === Avtomatik ID ===
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# === Qo'shimcha ===
-# PORT sozlamasi
-PORT = os.environ.get('PORT', 8000)
+# === Qo'shimcha xavfsizlik ===
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
