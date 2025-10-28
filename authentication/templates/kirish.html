@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="uz">
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -282,13 +282,66 @@
             background: linear-gradient(135deg, #4A90C2 0%, #66B2E4 100%);
             transform: translateY(-1px);
         }
+
+        /* Django messages styling */
+        .django-messages {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .django-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            text-align: center;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .django-message.error {
+            background-color: #FEE2E2;
+            color: #DC2626;
+            border: 1px solid #FECACA;
+        }
+        
+        .django-message.success {
+            background-color: #D1FAE5;
+            color: #065F46;
+            border: 1px solid #A7F3D0;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-gray-100 min-h-screen">
+    <!-- Django Messages -->
+    {% if messages %}
+    <div class="django-messages">
+        {% for message in messages %}
+        <div class="django-message {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- 3 soniyalik xabar -->
     <div id="welcomeMessage" class="welcome-message">
         <div class="flex items-center justify-center">
-     
             <span>Tizimga xush kelibsiz! Iltimos, hisobingizga kiring.</span>
         </div>
     </div>
@@ -300,45 +353,50 @@
         <div class="w-full max-w-md">
             <div class="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 transition-all duration-300 hover:shadow-form">
                 <!-- Logo -->
-                <div class="text-center mb-8">
+                <div class="text-center mb-8 relative">
                     <div class="logo">
-                        <img src="{% static 'img/logo.png' %}" alt="Tez Sot Logo" 
-                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTg1IiBoZWlnaHQ9IjcwIiB2aWV3Qm94PSIwIDAgMTg1IDcwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxODUiIGhlaWdodD0iNzAiIHJ4PSI4IiBmaWxsPSIjNjZCMkU0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJQYWNpZmljbyIgZm9udC1zaXplPSIyNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPlRleiBTb3Q8L3RleHQ+PC9zdmc+'">
+                        <img src="{% static 'img/logo.png' %}" alt="Logo" loading="lazy">
                     </div>
+                    <a class="text-primary hover:text-secondary font-medium transition-colors p-[2px] border border-primary pl-[8px] pr-[8px] absolute top-0 right-0" href="{% url 'home' %}">orqaga qaytish</a>
+                        
                     <h1 class="text-2xl font-bold text-gray-900 mb-2">Tizimga Kirish</h1>
                     <p class="text-gray-600 text-sm">Mavjud hisobingizga kiring</p>
                 </div>
 
-                <!-- Django Messages -->
-              
-                <form method="POST" action="{% url 'login' %}" class="space-y-6" id="loginForm" autocomplete="off">
+                <!-- Form -->
+                <form method="POST" action="{% url 'kirish' %}" class="space-y-6" id="loginForm" autocomplete="off">
                     {% csrf_token %}
 
-                    <!-- Username yoki Email -->
+                    <!-- Identifier (username, email yoki telefon) -->
                     <div>
-                        <label for="loginUsername" class="block text-sm font-medium text-gray-700 mb-2">
-                            Ism yoki elektron pochta
+                        <label for="identifier" class="block text-sm font-medium text-gray-700 mb-2">
+                            Ism, Email yoki Telefon Raqam
+
+                         
+                            
+                            
                         </label>
                         <div class="input-container">
                             <div class="input-icon">
                                 <i class="ri-user-line"></i>
                             </div>
                             <input type="text" 
-                                   name="username" 
-                                   id="loginUsername" 
+                                   name="identifier" 
+                                   id="identifier" 
                                    class="input-field w-full px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" 
-                                   placeholder="Ism yoki elektron pochta" 
+                                   placeholder="Ism, email yoki telefon raqam" 
                                    required
+                                   value="{{ identifier|default:'' }}"
                                    autocomplete="username">
                         </div>
-                        <div class="error-message" id="loginUsernameError">
-                            Iltimos, foydalanuvchi nomi yoki elektron pochtani kiriting
+                        <div class="error-message" id="identifierError">
+                            Iltimos, ism, email yoki telefon raqamini kiriting
                         </div>
                     </div>
 
                     <!-- Password -->
                     <div>
-                        <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
                             Parol
                         </label>
                         <div class="input-container">
@@ -347,16 +405,16 @@
                             </div>
                             <input type="password" 
                                    name="password" 
-                                   id="loginPassword" 
+                                   id="password" 
                                    class="input-field w-full px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm" 
                                    placeholder="Parol" 
                                    required
                                    autocomplete="current-password">
-                            <button type="button" id="toggleLoginPassword" class="password-toggle">
+                            <button type="button" id="togglePassword" class="password-toggle">
                                 <i class="ri-eye-off-line"></i>
                             </button>
                         </div>
-                        <div class="error-message" id="loginPasswordError">
+                        <div class="error-message" id="passwordError">
                             Iltimos, parolni kiriting
                         </div>
                     </div>
@@ -374,7 +432,7 @@
 
                     <!-- Submit Button -->
                     <button type="submit" 
-                            id="loginSubmitButton" 
+                            id="submitButton" 
                             class="w-full btn-primary text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md">
                         Tizimga Kirish
                     </button>
@@ -437,11 +495,6 @@
                     form.reset();
                 }
                 
-                const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
-                inputs.forEach(input => {
-                    input.value = '';
-                });
-                
                 // Error messagelarni yashirish
                 const errorMessages = document.querySelectorAll('.error-message');
                 errorMessages.forEach(error => {
@@ -455,13 +508,10 @@
                 });
             }
             
-            // Sahifa yuklanganda formani tozalash
-            clearForm();
-            
             // Password toggle functionality
-            const loginPasswordInput = document.getElementById('loginPassword');
-            const toggleLoginButton = document.getElementById('toggleLoginPassword');
-            const toggleLoginIcon = toggleLoginButton.querySelector('i');
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.getElementById('togglePassword');
+            const toggleIcon = toggleButton.querySelector('i');
             
             // Notification funksiyasi
             function showNotification(message, type = 'success') {
@@ -513,52 +563,56 @@
             
             // Xatolikni yashirish
             function hideError(fieldId) {
-                const errorElement = document.getElementById(fieldId);
+                const errorElement = document.getElementById(fieldId + 'Error');
+                const inputElement = document.getElementById(fieldId);
+                
                 if (errorElement) {
                     errorElement.style.display = 'none';
+                }
+                
+                if (inputElement) {
+                    inputElement.classList.remove('input-error');
                 }
             }
 
             // Password toggle
-            toggleLoginButton.addEventListener('click', function() {
-                const isPassword = loginPasswordInput.type === 'password';
-                loginPasswordInput.type = isPassword ? 'text' : 'password';
-                toggleLoginIcon.className = isPassword ? 'ri-eye-line' : 'ri-eye-off-line';
+            toggleButton.addEventListener('click', function() {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                toggleIcon.className = isPassword ? 'ri-eye-line' : 'ri-eye-off-line';
             });
             
             // Input validation
-            const loginUsernameInput = document.getElementById('loginUsername');
+            const identifierInput = document.getElementById('identifier');
             
-            loginUsernameInput.addEventListener('input', function() {
-                hideError('loginUsername');
-                this.classList.remove('input-error');
+            identifierInput.addEventListener('input', function() {
+                hideError('identifier');
             });
             
-            loginPasswordInput.addEventListener('input', function() {
-                hideError('loginPassword');
-                this.classList.remove('input-error');
+            passwordInput.addEventListener('input', function() {
+                hideError('password');
             });
             
             // Login Form submission
             const loginForm = document.getElementById('loginForm');
-            const loginSubmitButton = document.getElementById('loginSubmitButton');
+            const submitButton = document.getElementById('submitButton');
             
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 let isValid = true;
                 
-                // Username tekshirish
-                const username = loginUsernameInput.value.trim();
-                if (!username) {
-                    showError('loginUsername', 'Iltimos, foydalanuvchi nomi yoki elektron pochtani kiriting');
+                // Identifier tekshirish
+                const identifier = identifierInput.value.trim();
+                if (!identifier) {
+                    showError('identifier', 'Iltimos, ism, email yoki telefon raqamini kiriting');
                     isValid = false;
                 }
                 
                 // Parolni tekshirish
-                const password = loginPasswordInput.value;
+                const password = passwordInput.value;
                 if (!password) {
-                    showError('loginPassword', 'Iltimos, parolni kiriting');
+                    showError('password', 'Iltimos, parolni kiriting');
                     isValid = false;
                 }
                 
@@ -568,27 +622,18 @@
                 }
                 
                 // Yuklanish effekti
-                const originalText = loginSubmitButton.innerHTML;
-                loginSubmitButton.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i> Kirish amalga oshirilmoqda...';
-                loginSubmitButton.disabled = true;
+                const originalText = submitButton.innerHTML;
+                submitButton.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i> Kirish amalga oshirilmoqda...';
+                submitButton.disabled = true;
                 
-                // 1 soniyadan so'ng formani yuborish (animation uchun)
-                setTimeout(() => {
-                    this.submit();
-                }, 1000);
+                // Formani yuborish
+                this.submit();
             });
             
             // Forgot password link
             document.querySelector('a[href="#"]').addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification('Parolni tiklash sahifasiga yo\'naltirilmoqda...', 'success');
-            });
-            
-            // Browser back/forward button lar uchun
-            window.addEventListener('pageshow', function(event) {
-                if (event.persisted) {
-                    clearForm();
-                }
+                showNotification('Parolni tiklash funksiyasi tez orada qo\'shiladi', 'info');
             });
         });
     </script>

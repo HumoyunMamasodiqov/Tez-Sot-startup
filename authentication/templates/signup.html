@@ -317,8 +317,10 @@
                 </div>
                 
                 <div class="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 transition-all duration-300 hover:shadow-form">
-                    <div class="text-center mb-8">
+                    <div class="text-center mb-8 relative">
                         <img class="logo" src="/static/img/logo.png" alt="">
+                        <a class="text-primary hover:text-secondary font-medium transition-colors p-[2px] border border-primary pl-[8px] pr-[8px] absolute top-0 right-0" href="{% url 'home' %}">orqaga qaytish</a>
+                        
                         <h1 class="text-2xl font-bold text-gray-900 mb-2">Hisobingizni Yarating</h1>
                         <p class="text-gray-600 text-sm">Platformamizga ishonadigan minglab foydalanuvchilarga qo'shiling</p>
                     </div>
@@ -422,7 +424,7 @@
 <div class="text-center mt-6">
     <p class="text-sm text-gray-600">
         Hisobingiz bormi?
-        <a href="{% url 'login' %}" class="text-primary hover:text-secondary font-medium transition-colors">
+        <a href="{% url 'kirish' %}" class="text-primary hover:text-secondary font-medium transition-colors">
             Kirish
         </a>
     </p>

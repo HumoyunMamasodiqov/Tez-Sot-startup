@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yangi mahsulot qo'shish</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        .custom-input {
+            background-color: white;
+            border: 2px solid #C4B5FD;
+            color: #333333;
+            transition: all 0.3s ease;
+        }
+        .custom-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        .upload-zone {
+            border: 2px dashed #C4B5FD;
+            background-color: #F9FAFB;
+            transition: all 0.3s ease;
+        }
+        .upload-zone:hover {
+            border-color: #8B5CF6;
+            background-color: rgba(139, 92, 246, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-4xl mx-auto p-8">
+        <div class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-4xl font-bold text-purple-600 mb-2">Yangi mahsulot</h1>
+                <p class="text-lg text-gray-600">Yangi mahsulot ma'lumotlarini kiriting</p>
+            </div>
+            <a href="{% url 'home' %}">
+                <button type="button" class="w-[150px] h-[50px] rounded-lg border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white transition-all duration-300 font-medium">
+                    Orqaga qaytish
+                </button>
+            </a>
+        </div>
+
+        {% if messages %}
+            <div class="mb-6">
+                {% for message in messages %}
+                    <div class="p-4 rounded-lg {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-8">
+            {% csrf_token %}
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <!-- Mahsulot nomi -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-gray-800">Mahsulot nomi *</label>
+                        <input type="text" name="name" placeholder="Mahsulot nomini kiriting" 
+                               class="custom-input w-full px-4 py-3 rounded text-base" required>
+                    </div>
+
+                    <!-- Kategoriya -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-gray-800">Kategoriya *</label>
+                        <select name="category" class="custom-input w-full px-4 py-3 rounded text-base" required>
+                            <option value="">Kategoriyani tanlang</option>
+                            <option value="elektronika">Elektronika</option>
+                            <option value="uy_jihozlari">Uy jihozlari</option>
+                            <option value="kiyim">Kiyim-kechak</option>
+                            <option value="avto">Avto ehtiyot qismlar</option>
+                            <option value="boshqa">Boshqa</option>
+                        </select>
+                    </div>
+
+                    <!-- Mahsulot turi -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-gray-800">Mahsulot turi *</label>
+                        <input type="text" name="mahsulotturi" placeholder="Masalan: Smartfon, Mebel, Ko'ylak" 
+                               class="custom-input w-full px-4 py-3 rounded text-base" required>
+                    </div>
+
+                    <!-- Viloyat -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-gray-800">Viloyat *</label>
+                        <select name="viloyat" class="custom-input w-full px-4 py-3 rounded text-base" required>
+                            <option value="">Viloyatni tanlang</option>
+                            <option value="toshkent">Toshkent</option>
+                            <option value="samarqand">Samarqand</option>
+                            <option value="fargona">Farg'ona</option>
+                            <option value="andijon">Andijon</option>
+                            <option value="namangan">Namangan</option>
+                            <option value="buxoro">Buxoro</option>
+                            <option value="navoiy">Navoiy</option>
+                            <option value="xorazm">Xorazm</option>
+                            <option value="qashqadaryo">Qashqadaryo</option>
+                            <option value="surxondaryo">Surxondaryo</option>
+                            <option value="jizzax">Jizzax</option>
+                            <option value="sirdaryo">Sirdaryo</option>
+                            <option value="qoraqalpogiston">Qoraqalpog'iston</option>
+                        </select>
+                    </div>
+
+                    <!-- Narx -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-purple-600">Narx</h3>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-gray-800">Asosiy narx (so'm) *</label>
+                                <input type="number" name="narx" placeholder="0" 
+                                       class="custom-input w-full px-4 py-3 rounded text-base" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tavsif -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-gray-800">Tavsif</label>
+                        <textarea name="tavsif" rows="4" placeholder="Mahsulot tavsifini kiriting" 
+                                  class="custom-input w-full px-4 py-3 rounded text-base resize-none"></textarea>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Asosiy rasm -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-purple-600">Asosiy rasm *</h3>
+                        <div class="upload-zone rounded-lg p-8 text-center cursor-pointer" 
+                             onclick="document.getElementById('asosiyimg').click()">
+                            <div id="mainImagePreview" class="hidden">
+                                <img id="mainImageImg" class="w-full h-48 object-cover rounded-lg mb-4">
+                                <button type="button" onclick="removeMainImage()" 
+                                        class="text-red-500 hover:text-red-700 text-sm font-medium">
+                                    <i class="ri-delete-bin-line mr-1"></i>O'chirish
+                                </button>
+                            </div>
+                            <div id="mainImagePlaceholder">
+                                <i class="ri-image-add-line ri-3x text-purple-600 mb-4"></i>
+                                <p class="text-lg font-medium text-purple-600 mb-2">Rasm yuklash</p>
+                                <p class="text-sm text-gray-600">JPG, PNG formatida, maksimal 5MB</p>
+                            </div>
+                            <input type="file" name="asosiyimg" id="asosiyimg" accept="image/*" 
+                                   class="hidden" onchange="previewMainImage(this)" required>
+                        </div>
+                    </div>
+
+                    <!-- Qo'shimcha rasmlar -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-purple-600">Qo'shimcha rasmlar</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <!-- 1-rasm -->
+                            <div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" 
+                                 onclick="document.getElementById('birimg').click()">
+                                <div id="additionalPreview1" class="hidden w-full h-full">
+                                    <img id="additionalImg1" class="w-full h-full object-cover rounded">
+                                </div>
+                                <div id="additionalPlaceholder1" class="flex flex-col items-center">
+                                    <i class="ri-add-line ri-xl text-purple-600 mb-1"></i>
+                                    <span class="text-xs text-gray-600">1-rasm</span>
+                                </div>
+                                <input type="file" name="birimg" id="birimg" accept="image/*" 
+                                       class="hidden" onchange="previewAdditionalImage(this, 1)">
+                            </div>
+
+                            <!-- 2-rasm -->
+                            <div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" 
+                                 onclick="document.getElementById('ikkiimg').click()">
+                                <div id="additionalPreview2" class="hidden w-full h-full">
+                                    <img id="additionalImg2" class="w-full h-full object-cover rounded">
+                                </div>
+                                <div id="additionalPlaceholder2" class="flex flex-col items-center">
+                                    <i class="ri-add-line ri-xl text-purple-600 mb-1"></i>
+                                    <span class="text-xs text-gray-600">2-rasm</span>
+                                </div>
+                                <input type="file" name="ikkiimg" id="ikkiimg" accept="image/*" 
+                                       class="hidden" onchange="previewAdditionalImage(this, 2)">
+                            </div>
+
+                            <!-- 3-rasm -->
+                            <div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" 
+                                 onclick="document.getElementById('uchuimg').click()">
+                                <div id="additionalPreview3" class="hidden w-full h-full">
+                                    <img id="additionalImg3" class="w-full h-full object-cover rounded">
+                                </div>
+                                <div id="additionalPlaceholder3" class="flex flex-col items-center">
+                                    <i class="ri-add-line ri-xl text-purple-600 mb-1"></i>
+                                    <span class="text-xs text-gray-600">3-rasm</span>
+                                </div>
+                                <input type="file" name="uchuimg" id="uchuimg" accept="image/*" 
+                                       class="hidden" onchange="previewAdditionalImage(this, 3)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Qo'shimcha fayl -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-purple-600">Qo'shimcha fayl</h3>
+                        <input type="file" name="toltirish" 
+                               class="custom-input w-full px-4 py-3 rounded text-base">
+                        <p class="text-sm text-gray-600 mt-2">PDF, Word yoki boshqa fayl formatlari</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between pt-8 border-t border-gray-200">
+                <a href="{% url 'home' %}">
+                    <button type="button" class="px-8 py-3 rounded-lg border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white transition-all duration-300 font-medium">
+                        Bekor qilish
+                    </button>
+                </a>
+                <button type="submit" class="px-8 py-3 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-all duration-300 font-medium">
+                    Saqlash
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Asosiy rasmni ko'rsatish
+        function previewMainImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('mainImageImg').src = e.target.result;
+                    document.getElementById('mainImagePreview').classList.remove('hidden');
+                    document.getElementById('mainImagePlaceholder').classList.add('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeMainImage() {
+            document.getElementById('asosiyimg').value = '';
+            document.getElementById('mainImagePreview').classList.add('hidden');
+            document.getElementById('mainImagePlaceholder').classList.remove('hidden');
+        }
+
+        // Qo'shimcha rasmlarni ko'rsatish
+        function previewAdditionalImage(input, index) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('additionalImg' + index).src = e.target.result;
+                    document.getElementById('additionalPreview' + index).classList.remove('hidden');
+                    document.getElementById('additionalPlaceholder' + index).classList.add('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Form yuborilganda tekshirish
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '#C4B5FD';
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('Iltimos, barcha majburiy maydonlarni to\'ldiring!');
+            }
+        });
+    </script>
+</body>
+</html>

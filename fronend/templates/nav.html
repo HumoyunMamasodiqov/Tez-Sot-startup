@@ -1,178 +1,769 @@
 <!DOCTYPE html>
 <html lang="uz">
-{% load static %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tez Sot - Joylashuv</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-</head>
-<body class="">
-    <div class="container max-w-6xl mx-auto px-4">
-        <nav class="py-6 flex items-center justify-between">
-            <div class="flex items-center">
-                <h1 class="font-bold text-4xl text-blue-600 mb-[5px] font-['Poppins', sans-serif]">Tez Sot</h1>
-                <div class="flex ml-[10px] items-center cursor-pointer group" id="locationSelector">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-gray-500 group-hover:text-blue-600">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.768 2.693c.956-.344 1.88.58 1.536 1.535l-6.04 16.777c-.375 1.043-1.842 1.063-2.246.03l-2.829-7.228-7.228-2.828c-1.032-.404-1.012-1.871.03-2.247l16.777-6.04z"></path>
-                    </svg>
-                    <span class="ml-2 font-semibold text-gray-700" id="currentLocation">Andijon</span>
-                </div>
-            </div>
-            <div class="flex justify-end gap-[40px]">
-                <span class="hover:text-blue-600 text-[#A7AFBC] flex items-center cursor-pointer gap-[10px] relative">
-                    <i class="fa-regular fa-heart font-boldb hover:text-blue-600 absolute text-[18px] left-[-25px] top-[13px]"></i>
-                    <h1 class="font-bold hover:text-blue-600 text-[18px]">Sevimlilar</h1>
-                </span>
-                
-                {% if user.is_authenticated %}
-                    <!-- Foydalanuvchi kirgan -->
-                    <span class="hover:text-blue-600 flex items-center cursor-pointer gap-[10px] relative">
-                        <i class="fa-regular fa-user font-boldb hover:text-blue-600 absolute text-[18px] text-[#A7AFBC] left-[-25px] top-[13px]"></i>
-                        <h1 class="font-bold hover:text-blue-600 text-[18px] text-[#A7AFBC]">
-                            {{ user.first_name }} {{ user.last_name }}
-                        </h1>
-                    </span>
-                    <a href="{% url 'qosjso' %}">
-                        <span class="w-[150px] h-[40px] gap-[10px] bg-[#283940] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-blue-600">
-                            <h1 class="text-white">Chiqish</h1>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#27383F">
-                                <rect width="24" height="24" rx="12" fill="#fff"></rect>
-                                <g clip-path="url(#plus-filled_svg__a)"><path d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z" fill="#27383F"></path></g>
-                                <defs><clipPath id="plus-filled_svg__a"><path fill="#fff" d="M5.6 5.6h12.8v12.8H5.6z"></path></clipPath></defs>
-                            </svg>
-                        </span>
-                    </a>
-                {% else %}
-                    <!-- Foydalanuvchi kirmagan -->
-                    <span class="hover:text-blue-600 flex items-center cursor-pointer gap-[10px] relative">
-                        <i class="fa-regular fa-user font-boldb hover:text-blue-600 absolute text-[18px] text-[#A7AFBC] left-[-25px] top-[13px]"></i>
-                        <h1 class="font-bold hover:text-blue-600 text-[18px] text-[#A7AFBC]">Hisob</h1>
-                    </span>
-                    <a href="{% url 'login' %}">
-                        <span class="w-[150px] h-[40px] gap-[10px] bg-[#283940] rounded-[10px] flex items-center justify-center cursor-pointer hover:bg-blue-600">
-                            <h1 class="text-white">Kirish</h1>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#27383F">
-                                <rect width="24" height="24" rx="12" fill="#fff"></rect>
-                                <g clip-path="url(#plus-filled_svg__a)"><path d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z" fill="#27383F"></path></g>
-                                <defs><clipPath id="plus-filled_svg__a"><path fill="#fff" d="M5.6 5.6h12.8v12.8H5.6z"></path></clipPath></defs>
-                            </svg>
-                        </span>
-                    </a>
-                {% endif %}
-            </div>
-        </nav>
-    </div>
+    {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BirBir - O'rinboyev Abdurahim</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-    <!-- Qolgan JavaScript kodlari o'zgarishsiz -->
-    <div id="locationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl w-full max-w-md">
-            <div class="p-4 border-b flex justify-between items-center">
-                <h2 class="text-lg font-bold">Joylashuvingizni tanlang</h2>
-                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="p-4">
-                <div class="relative mb-4">
-                    <input type="text" id="locationSearch" placeholder="Qidirish..." class="w-full p-3 border rounded-lg pl-10">
-                    <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
-                </div>
-                
-                <div class="max-h-64 overflow-y-auto" id="locationList">
-                    <!-- Joylashuvlar ro'yxati -->
-                </div>
-            </div>
-        </div>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f5f6f7;
+        color: #27383f;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      /* Wrapper */
+      .wrapper_oa {
+        max-width: 1489px;
+        margin: 0 auto;
+        padding: 30px 16px;
+      }
+
+      /* Navigation */
+      .wrapper_oa nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        gap: 15px;
+        font-size: 14px;
+        width: 100%;
+      
+      }
+      
+
+      .bars {
+        display: none;
+        cursor: pointer;
+      }
+
+      .bars i {
+        font-size: 22px;
+        color: #27383f;
+      }
+
+      .hudud_ao {
+        color: #a7afbc;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        padding: 8px 12px;
+        border-radius: 8px;
+      }
+
+      .hudud_ao:hover {
+        color: #424f55;
+        background-color: #f0f2f5;
+      }
+
+      .hudud_ao svg {
+        margin-right: 8px;
+      }
+
+      .wrapper_oa nav ul {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        gap: 20px;
+      }
+
+      .wrapper_oa nav ul li a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #27383f;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-size: 14px;
+      }
+
+      .wrapper_oa nav ul li a:hover {
+        background-color: #f0f2f5;
+      }
+
+      .qoyish_ao {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        padding: 12px 20px;
+        gap: 8px;
+        border-radius: 50px;
+        color: #fff;
+        background-color: #27383f;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .qoyish_ao:hover {
+        background-color: #1a2529;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .gul_ao {
+        display: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      /* Main Content */
+      .intro_ao {
+        display: flex;
+        gap: 20px;
+      }
+
+      /* Sidebar */
+      .sidebar_ao {
+        width: 308px;
+        background-color: #fff;
+        padding: 16px;
+        border-radius: 24px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .profile_ao {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 12px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .profile_ao:hover {
+        background-color: #f8f9fa;
+      }
+
+      .avatar_ao {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 12px;
+        object-fit: cover;
+      }
+
+      .profile-info_ao {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .name_ao {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .phone_ao {
+        font-size: 13px;
+        color: #6c757d;
+      }
+
+      .profile_link_ao {
+        color: #18a0da;
+        text-decoration: none;
+        margin: 16px 0;
+        padding: 10px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        text-align: center;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .profile_link_ao:hover {
+        background-color: #e6f7ff;
+        color: #0d8bc7;
+      }
+
+      .menu_ao {
+        list-style: none;
+        margin: 16px 0;
+      }
+
+      .menu_ao hr {
+        border: none;
+        height: 1px;
+        background-color: #f0f2f5;
+        margin: 8px 0;
+      }
+
+      .menu_item_ao {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 8px;
+        background: #fafafa;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+
+      .menu_item_ao:hover {
+        background: #e8f0ff;
+        transform: translateX(5px);
+      }
+
+      .active_ao {
+        background: #e0ecff !important;
+        color: #0056d6;
+        font-weight: 500;
+      }
+
+      .menu_item_ao span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+      }
+
+      .svg_1 span {
+        background-color: #c1e6ff;
+      }
+
+      .active_ao span {
+        background-color: #29c840;
+      }
+
+      .svg_3 span {
+        background-color: #66b2e4;
+      }
+
+      .svg_4 span {
+        background-color: #18a0da;
+      }
+
+      .svg_5 span {
+        background-color: #27383f;
+      }
+
+      .svg_6 span {
+        background-color: #f5f6f7;
+      }
+
+      .logout_ao {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        gap: 12px;
+        padding: 12px;
+        background: #f1f1f1;
+        border-radius: 8px;
+        color: #333;
+        transition: all 0.3s ease;
+        margin-top: auto;
+        font-size: 14px;
+      }
+
+      .logout_ao:hover {
+        background: #e0e0e0;
+        color: #d32f2f;
+      }
+
+      /* Right Content */
+      .right_ao {
+        flex: 1;
+      }
+
+      .right_top_ao {
+        background-color: #fff;
+        padding: 24px;
+        margin-bottom: 24px;
+        border-radius: 24px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .right_top_ao h3 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .right_top_img_ao {
+        display: flex;
+        gap: 16px;
+      }
+
+      .right_top_img_ao img {
+        flex: 1;
+        border-radius: 12px;
+        height: 144px;
+        object-fit: cover;
+        transition: all 0.3s ease;
+      }
+
+      .right_top_img_ao img:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .right_center_ao {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+
+      .right_center_ao h3 {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .right_center_right_ao {
+        display: flex;
+        gap: 12px;
+      }
+
+      .right_center_right_ao a {
+        padding: 12px 16px;
+        border-radius: 16px;
+        background-color: #f0f2f5;
+        text-decoration: none;
+
+        transition: all 0.3s ease;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .right_center_right_ao a:hover {
+        background-color: #f0f2f5;
+      }
+
+      .faol_ao {
+        color: #fff;
+        background-color: #27383f !important;
+      }
+
+      .faol_ao:hover {
+        background-color: #1a2529 !important;
+      }
+
+      .right_bottom_ao {
+        text-align: center;
+        background-color: #fff;
+        padding: 40px 20px;
+        border-radius: 24px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .right_bottom_ao:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .right_div_ao {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background-color: #e3e3e3;
+        transition: all 0.3s ease;
+      }
+
+      .right_bottom_ao:hover .right_div_ao {
+        background-color: #d0d0d0;
+        transform: scale(1.05);
+      }
+
+      .right_bottom_ao p {
+        color: #6c757d;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+
+      .right_bottom_qoyish_ao {
+        color: #fff;
+        background-color: #27383f;
+        padding: 12px 24px;
+        border-radius: 16px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .right_bottom_qoyish_ao:hover {
+        background-color: #1a2529;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Mobile Overlay */
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+      }
+
+      /* Mobile Styles */
+      @media only screen and (max-width: 768px) {
+        .wrapper_oa {
+          padding: 16px;
+        }
+
+        .wrapper_oa nav {
+          margin-bottom: 20px;
+        }
+
+        .bars {
+          display: block;
+        }
+
+        .wrapper_oa nav ul,
+        .hudud_ao,
+        .qoyish_ao {
+          display: none;
+        }
+
+        .gul_ao {
+          display: block;
+        }
+
+        .intro_ao {
+          flex-direction: column;
+        }
+
+        .sidebar_ao {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 85%;
+          max-width: 320px;
+          z-index: 999;
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+          border-radius: 0;
+          padding-top: 60px;
+          overflow-y: auto;
+        }
+
+        .sidebar-open {
+          transform: translateX(0) !important;
+          display: flex !important;
+        }
+
+        .right_top_ao {
+          padding: 20px;
+        }
+
+        .right_top_ao h3 {
+          font-size: 20px;
+        }
+
+        .right_top_img_ao {
+          flex-direction: column;
+        }
+
+        .right_top_img_ao img {
+          height: 120px;
+        }
+
+        .right_center_ao {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+        }
+
+        .right_center_ao h3 {
+          font-size: 20px;
+        }
+
+        .right_center_right_ao {
+          width: 100%;
+          overflow-x: auto;
+          padding-bottom: 8px;
+        }
+
+        .right_center_right_ao a {
+          white-space: nowrap;
+          font-size: 13px;
+        }
+
+        .right_bottom_ao {
+          padding: 30px 20px;
+        }
+      }
+
+      @media only screen and (max-width: 480px) {
+        .wrapper_oa {
+          padding: 12px;
+        }
+
+        .right_top_ao,
+        .right_bottom_ao {
+          border-radius: 16px;
+        }
+
+        .right_top_img_ao img {
+          height: 100px;
+        }
+
+        .right_center_right_ao {
+          gap: 8px;
+        }
+
+        .right_center_right_ao a {
+          padding: 10px 14px;
+          font-size: 12px;
+        }
+      }
+      .logo {
+        width: 158px;
+        height: 43px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper_oa">
+      <nav>
+        <a class="bars" href="#">
+          <i class="fa-solid fa-bars"></i>
+        </a>
+        <a href="/">
+          <img class="logo"
+            src="{% static 'img/logo.png' %}"
+            alt="ishlamadi"
+            width="88"
+            height="28"
+          />
+        </a>
+        <a class="hudud_ao" href="#">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M19.768 2.693c.956-.344 1.88.58 1.536 1.535l-6.04 16.777c-.375 1.043-1.842 1.063-2.246.03l-2.829-7.228-7.228-2.828c-1.032-.404-1.012-1.871.03-2.247l16.777-6.04z"
+              fill="#a7afbc"
+            />
+          </svg>
+          Barcha hududlar
+        </a>
+        <ul>
+          <li><a href="#">Biz haqimizda</a></li>
+          <li><a href="#">Qo'llab-quvvatlash</a></li>
+          <li>
+            <a href="#">
+              <img
+                src="{% static 'img/uzb_flag.png' %}"
+                alt="uzb_flag"
+                width="24"
+                height="24"
+              />
+              UZ
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12.756 15.695a1.056 1.056 0 01-1.486 0L5.32 9.793a1.043 1.043 0 01-.243-1.145 1.043 1.043 0 01.575-.57 1.059 1.059 0 011.155.24l5.205 5.164 5.205-5.164a1.056 1.056 0 011.474.013 1.039 1.039 0 01.013 1.462l-5.949 5.902z"
+                  fill="#a7afbc"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 015-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
+                  fill="#a7afbc"
+                />
+              </svg>
+              Xabarlar
+            </a>
+          </li>
+          <li>
+            <!-- nav.html yoki asosiy sahifadagi navigatsiyada -->
+            {% if user.is_authenticated %}
+<li>
+  <a href="{% url 'sevimlilarim' %}">
+      <i class="fas fa-heart"></i>
+      Sevimlilar
+      <span class="bg-red-500 text-white rounded-full px-2 py-1 text-xs ml-2">
+          {{ request.user.sevimli_set.count }}
+      </span>
+  </a>
+</li>
+            {% else %}
+<li>
+  <a href="{% url 'kirish' %}">
+      <i class="fas fa-heart"></i>
+      Sevimlilar
+      <span class="bg-red-500 text-white rounded-full px-2 py-1 text-xs ml-2">
+          {{ request.user.sevimli_set.count }}
+      </span>
+  </a>
+</li>
+            {% endif %} 
+          </li>
+          <li>
+            {% if user.is_authenticated %}
+
+            <a href="{% url 'profil' %}">
+              <img
+                src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
+                alt="profil"
+                width="32"
+                height="32"
+              />
+              Mening profilim
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12.756 15.695a1.056 1.056 0 01-1.486 0L5.32 9.793a1.043 1.043 0 01-.243-1.145 1.043 1.043 0 01.575-.57 1.059 1.059 0 011.155.24l5.205 5.164 5.205-5.164a1.056 1.056 0 011.474.013 1.039 1.039 0 01.013 1.462l-5.949 5.902z"
+                  fill="#a7afbc"
+                />
+              </svg>
+            </a>
+            {% else %}
+            <a href="{% url 'signup' %}">Kirish</a>
+            {% endif %}
+          </li>
+        </ul>
+        {% if user.is_authenticated %}
+        <a class="qoyish_ao" href="{% url 'elon_qoshish' %}">
+          Qo'yish
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="24" height="24" rx="12" fill="#fff" />
+            <path
+              d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+              fill="#27383F"
+            />
+          </svg>
+        </a>
+          {% else %}
+          <a class="qoyish_ao" href="{% url 'signup' %}">
+            Qo'yish
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="24" height="24" rx="12" fill="#fff" />
+              <path
+                d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+                fill="#27383F"
+              />
+            </svg>
+          </a>
+        {% endif %}
+        <a class="gul_ao" href="#">
+          <img
+            src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
+            alt="profil"
+            width="40"
+            height="40"
+          />
+        </a>
+      </nav>
+
+      <!-- Mobile Overlay -->
+      <div class="overlay"></div>
     </div>
 
     <script>
-        const regions = [
-            "Andijon", "Buxoro", "Farg'ona", "Jizzax", "Xorazm", 
-            "Namangan", "Navoiy", "Qashqadaryo", "Qoraqalpog'iston", 
-            "Samarqand", "Sirdaryo", "Surxondaryo", "Toshkent"
-        ];
+      document.addEventListener("DOMContentLoaded", function () {
+        const sidebar = document.querySelector(".sidebar_ao");
+        const barsIcon = document.querySelector(".bars");
+        const overlay = document.querySelector(".overlay");
 
-        const locationSelector = document.getElementById('locationSelector');
-        const locationModal = document.getElementById('locationModal');
-        const closeModal = document.getElementById('closeModal');
-        const currentLocation = document.getElementById('currentLocation');
-        const locationSearch = document.getElementById('locationSearch');
-        const locationList = document.getElementById('locationList');
+        // Bars ikonkasini bosganda sidebar ochiladi
+        if (barsIcon) {
+          barsIcon.addEventListener("click", function (e) {
+            e.preventDefault();
+            sidebar.classList.add("sidebar-open");
+            overlay.style.display = "block";
+            document.body.style.overflow = "hidden";
+          });
+        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            getCurrentLocation();
-            populateLocationList(regions);
-            
-            locationSelector.addEventListener('click', openLocationModal);
-            closeModal.addEventListener('click', closeLocationModal);
-            locationSearch.addEventListener('input', filterLocations);
-            
-            window.addEventListener('click', function(event) {
-                if (event.target === locationModal) {
-                    closeLocationModal();
-                }
-            });
+        // Overlay bosganda sidebar yopiladi
+        if (overlay) {
+          overlay.addEventListener("click", function () {
+            sidebar.classList.remove("sidebar-open");
+            overlay.style.display = "none";
+            document.body.style.overflow = "";
+          });
+        }
+
+        // Ekran o'lchami o'zgarganda sidebar holatini boshqarish
+        window.addEventListener("resize", function () {
+          if (window.innerWidth > 768) {
+            sidebar.classList.remove("sidebar-open");
+            if (overlay) overlay.style.display = "none";
+            document.body.style.overflow = "";
+          }
         });
-
-        function getCurrentLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        console.log("Joylashuv aniqlandi");
-                    },
-                    function(error) {
-                        console.log("Joylashuvni aniqlab bo'lmadi");
-                    }
-                );
-            }
-        }
-
-        function openLocationModal() {
-            locationModal.classList.remove('hidden');
-            locationModal.classList.add('flex');
-        }
-
-        function closeLocationModal() {
-            locationModal.classList.add('hidden');
-            locationModal.classList.remove('flex');
-            locationSearch.value = '';
-            filterLocations();
-        }
-
-        function populateLocationList(items) {
-            locationList.innerHTML = '';
-            
-            items.forEach(item => {
-                const option = document.createElement('div');
-                option.className = 'p-3 hover:bg-blue-50 rounded-lg cursor-pointer';
-                option.textContent = item;
-                
-                option.addEventListener('click', function() {
-                    currentLocation.textContent = item;
-                    closeLocationModal();
-                });
-                
-                locationList.appendChild(option);
-            });
-        }
-
-        function filterLocations() {
-            const searchTerm = locationSearch.value.toLowerCase();
-            const options = locationList.querySelectorAll('div');
-            
-            options.forEach(option => {
-                const text = option.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    option.style.display = 'block';
-                } else {
-                    option.style.display = 'none';
-                }
-            });
-        }
+      });
     </script>
-</body>
+  </body>
 </html>

@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head><script src="https://static.readdy.ai/static/e.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yangi mahsulot qo'shish</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#8B5CF6',
+secondary: '#7C3AED'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<style>
+:where([class^="ri-"])::before {
+content: "\f3c2";
+}
+.theme-transition {
+transition: all 0.3s ease;
+}
+.light-mode {
+--bg-primary: #FFFFFF;
+--bg-secondary: #F9FAFB;
+--text-primary: #333333;
+--text-secondary: #6B7280;
+--border-color: #C4B5FD;
+--hover-color: #7C3AED;
+}
+.dark-mode {
+--bg-primary: #1A1A1A;
+--bg-secondary: #2D2D2D;
+--text-primary: #FFFFFF;
+--text-secondary: #D1D5DB;
+--border-color: #6D28D9;
+--hover-color: #A78BFA;
+}
+body {
+background-color: var(--bg-primary);
+color: var(--text-primary);
+}
+.custom-input {
+background-color: var(--bg-primary);
+border: 2px solid var(--border-color);
+color: var(--text-primary);
+transition: all 0.3s ease;
+}
+.custom-input:focus {
+outline: none;
+border-color: #FFD700;
+box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+}
+.custom-toggle {
+position: relative;
+display: inline-block;
+width: 48px;
+height: 24px;
+}
+.custom-toggle input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.toggle-slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+border-radius: 24px;
+}
+.toggle-slider:before {
+position: absolute;
+content: "";
+height: 18px;
+width: 18px;
+left: 3px;
+bottom: 3px;
+background-color: white;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+border-radius: 50%;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+input:checked + .toggle-slider {
+background-color: #8B5CF6;
+}
+input:checked + .toggle-slider:before {
+transform: translateX(24px);
+}
+.upload-zone {
+border: 2px dashed var(--border-color);
+background-color: var(--bg-secondary);
+transition: all 0.3s ease;
+}
+.upload-zone:hover {
+border-color: #FFD700;
+background-color: rgba(255, 215, 0, 0.05);
+}
+.image-preview {
+background-color: var(--bg-secondary);
+border: 1px solid var(--border-color);
+}
+.theme-toggle {
+position: fixed;
+top: 2rem;
+right: 2rem;
+z-index: 50;
+}
+</style>
+</head>
+<body class="light-mode theme-transition min-h-screen">
+<div class="theme-toggle">
+<button id="themeToggle" class="w-12 h-12 flex items-center justify-center rounded-full bg-primary text-white hover:bg-secondary transition-all duration-300">
+<i class="ri-sun-line ri-lg"></i>
+</button>
+</div>
+<div class="max-w-4xl mx-auto p-8">
+<div class="mb-8 flex justify-between ai">
+    <div>
+        <h1 class="text-4xl font-bold text-primary mb-2">Yangi mahsulot</h1>
+
+        <p class="text-lg" style="color: var(--text-secondary)">Yangi mahsulot ma'lumotlarini kiriting</p>
+    </div>
+    <a href="{% url 'dashboard' %}">
+    <button type="button" class="w-[150px] h-[50px]  rounded-button border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 font-medium whitespace-nowrap">
+        orqaga qaytish
+        </button>
+    </a>
+</div>
+
+<form class="space-y-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="space-y-6">
+<div>
+<label class="block text-sm font-semibold mb-3" style="color: var(--text-primary)">Mahsulot nomi *</label>
+<input type="text" placeholder="Mahsulot nomini kiriting" class="custom-input w-full px-4 py-3 rounded text-base">
+</div>
+<div>
+<label class="block text-sm font-semibold mb-3" style="color: var(--text-primary)">Kategoriya *</label>
+<div class="relative">
+<button type="button" id="categoryDropdown" class="custom-input w-full px-4 py-3 rounded text-base text-left flex items-center justify-between">
+<span id="categorySelected">Kategoriyani tanlang</span>
+<i class="ri-arrow-down-s-line ri-lg"></i>
+</button>
+<div id="categoryOptions" class="absolute top-full left-0 right-0 mt-1 rounded shadow-lg hidden z-10" style="background-color: var(--bg-primary); border: 2px solid var(--border-color);">
+<div class="py-2">
+<button type="button" class="w-full px-4 py-2 text-left hover:bg-primary hover:bg-opacity-10 transition-colors" onclick="selectCategory('Elektronika')">Elektronika</button>
+<button type="button" class="w-full px-4 py-2 text-left hover:bg-primary hover:bg-opacity-10 transition-colors" onclick="selectCategory('Kiyim')">Kiyim</button>
+<button type="button" class="w-full px-4 py-2 text-left hover:bg-primary hover:bg-opacity-10 transition-colors" onclick="selectCategory('Uy-ro\'zg\'or')">Uy-ro'zg'or</button>
+<button type="button" class="w-full px-4 py-2 text-left hover:bg-primary hover:bg-opacity-10 transition-colors" onclick="selectCategory('Sport')">Sport</button>
+<button type="button" class="w-full px-4 py-2 text-left hover:bg-primary hover:bg-opacity-10 transition-colors" onclick="selectCategory('Kitoblar')">Kitoblar</button>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4 text-primary">Narxlar</h3>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium mb-2" style="color: var(--text-primary)">Asosiy narx (so'm) *</label>
+<input type="number" placeholder="0" class="custom-input w-full px-4 py-3 rounded text-base">
+</div>
+<div>
+<label class="block text-sm font-medium mb-2" style="color: var(--text-primary)">Asl narxi</label>
+<input type="number" placeholder="0" class="custom-input w-full px-4 py-3 rounded text-base">
+</div>
+<div>
+<label class="block text-sm font-medium mb-2" style="color: var(--text-primary)">Nasiya narhi</label>
+<input type="number" placeholder="0" class="custom-input w-full px-4 py-3 rounded text-base">
+</div>
+<div>
+<label class="block text-sm font-medium mb-2" style="color: var(--text-primary)">Skidka narhi</label>
+<input type="number" placeholder="0" class="custom-input w-full px-4 py-3 rounded text-base">
+</div>
+<div class="col-span-2">
+<label class="block text-sm font-medium mb-2" style="color: var(--text-primary)">Boshqa usl narx (-5%)</label>
+<input type="number" placeholder="0" class="custom-input w-full px-4 py-3 rounded text-base">
+</div>
+</div>
+</div>
+<div>
+<label class="block text-sm font-semibold mb-3" style="color: var(--text-primary)">Tavsif</label>
+<textarea rows="4" placeholder="Mahsulot tavsifini kiriting" class="custom-input w-full px-4 py-3 rounded text-base resize-none"></textarea>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4 text-primary">Status</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-base font-medium" style="color: var(--text-primary)">Is active</span>
+<label class="custom-toggle">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-base font-medium" style="color: var(--text-primary)">Is sotilgan</span>
+<label class="custom-toggle">
+<input type="checkbox">
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-base font-medium" style="color: var(--text-primary)">Original</span>
+<label class="custom-toggle">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div>
+<h3 class="text-lg font-semibold mb-4 text-primary">Asosiy rasm</h3>
+<div class="upload-zone rounded-lg p-8 text-center cursor-pointer" onclick="document.getElementById('mainImage').click()">
+<div id="mainImagePreview" class="hidden">
+<img id="mainImageImg" class="w-full h-48 object-cover rounded-lg mb-4">
+<button type="button" onclick="removeMainImage()" class="text-red-500 hover:text-red-700 text-sm font-medium">
+<i class="ri-delete-bin-line mr-1"></i>O'chirish
+</button>
+</div>
+<div id="mainImagePlaceholder">
+<i class="ri-image-add-line ri-3x text-primary mb-4"></i>
+<p class="text-lg font-medium text-primary mb-2">Rasm yuklash</p>
+<p class="text-sm" style="color: var(--text-secondary)">JPG, PNG formatida, maksimal 5MB</p>
+</div>
+<input type="file" id="mainImage" accept="image/*" class="hidden" onchange="previewMainImage(this)">
+</div>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4 text-primary">Qo'shimcha rasmlar</h3>
+<div class="grid grid-cols-4 gap-3">
+<div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" onclick="document.getElementById('additionalImage1').click()">
+<div id="additionalPreview1" class="hidden w-full h-full">
+<img id="additionalImg1" class="w-full h-full object-cover rounded">
+</div>
+<div id="additionalPlaceholder1" class="flex flex-col items-center">
+<i class="ri-add-line ri-xl text-primary mb-1"></i>
+<span class="text-xs" style="color: var(--text-secondary)">Rasm</span>
+</div>
+<input type="file" id="additionalImage1" accept="image/*" class="hidden" onchange="previewAdditionalImage(this, 1)">
+</div>
+<div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" onclick="document.getElementById('additionalImage2').click()">
+<div id="additionalPreview2" class="hidden w-full h-full">
+<img id="additionalImg2" class="w-full h-full object-cover rounded">
+</div>
+<div id="additionalPlaceholder2" class="flex flex-col items-center">
+<i class="ri-add-line ri-xl text-primary mb-1"></i>
+<span class="text-xs" style="color: var(--text-secondary)">Rasm</span>
+</div>
+<input type="file" id="additionalImage2" accept="image/*" class="hidden" onchange="previewAdditionalImage(this, 2)">
+</div>
+<div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" onclick="document.getElementById('additionalImage3').click()">
+<div id="additionalPreview3" class="hidden w-full h-full">
+<img id="additionalImg3" class="w-full h-full object-cover rounded">
+</div>
+<div id="additionalPlaceholder3" class="flex flex-col items-center">
+<i class="ri-add-line ri-xl text-primary mb-1"></i>
+<span class="text-xs" style="color: var(--text-secondary)">Rasm</span>
+</div>
+<input type="file" id="additionalImage3" accept="image/*" class="hidden" onchange="previewAdditionalImage(this, 3)">
+</div>
+<div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" onclick="document.getElementById('additionalImage4').click()">
+<div id="additionalPreview4" class="hidden w-full h-full">
+<img id="additionalImg4" class="w-full h-full object-cover rounded">
+</div>
+<div id="additionalPlaceholder4" class="flex flex-col items-center">
+<i class="ri-add-line ri-xl text-primary mb-1"></i>
+<span class="text-xs" style="color: var(--text-secondary)">Rasm</span>
+</div>
+<input type="file" id="additionalImage4" accept="image/*" class="hidden" onchange="previewAdditionalImage(this, 4)">
+</div>
+<div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" onclick="document.getElementById('additionalImage5').click()">
+<div id="additionalPreview5" class="hidden w-full h-full">
+<img id="additionalImg5" class="w-full h-full object-cover rounded">
+</div>
+<div id="additionalPlaceholder5" class="flex flex-col items-center">
+<i class="ri-add-line ri-xl text-primary mb-1"></i>
+<span class="text-xs" style="color: var(--text-secondary)">Rasm</span>
+</div>
+<input type="file" id="additionalImage5" accept="image/*" class="hidden" onchange="previewAdditionalImage(this, 5)">
+</div>
+<div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" onclick="document.getElementById('additionalImage6').click()">
+<div id="additionalPreview6" class="hidden w-full h-full">
+<img id="additionalImg6" class="w-full h-full object-cover rounded">
+</div>
+<div id="additionalPlaceholder6" class="flex flex-col items-center">
+<i class="ri-add-line ri-xl text-primary mb-1"></i>
+<span class="text-xs" style="color: var(--text-secondary)">Rasm</span>
+</div>
+<input type="file" id="additionalImage6" accept="image/*" class="hidden" onchange="previewAdditionalImage(this, 6)">
+</div>
+<div class="upload-zone aspect-square rounded-lg p-4 text-center cursor-pointer flex flex-col items-center justify-center" onclick="document.getElementById('additionalImage7').click()">
+<div id="additionalPreview7" class="hidden w-full h-full">
+<img id="additionalImg7" class="w-full h-full object-cover rounded">
+</div>
+<div id="additionalPlaceholder7" class="flex flex-col items-center">
+<i class="ri-add-line ri-xl text-primary mb-1"></i>
+<span class="text-xs" style="color: var(--text-secondary)">Rasm</span>
+</div>
+<input type="file" id="additionalImage7" accept="image/*" class="hidden" onchange="previewAdditionalImage(this, 7)">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-between pt-8 border-t" style="border-color: var(--border-color);">
+<button type="button" class="px-8 py-3 rounded-button border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 font-medium whitespace-nowrap">
+Bekor qilish
+</button>
+<button type="submit" class="px-8 py-3 rounded-button bg-primary text-white hover:bg-secondary transition-all duration-300 font-medium whitespace-nowrap">
+Saqlash
+</button>
+</div>
+</form>
+</div>
+<script id="themeToggleScript">
+document.addEventListener('DOMContentLoaded', function() {
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+const themeIcon = themeToggle.querySelector('i');
+let isDarkMode = false;
+themeToggle.addEventListener('click', function() {
+isDarkMode = !isDarkMode;
+if (isDarkMode) {
+body.classList.remove('light-mode');
+body.classList.add('dark-mode');
+themeIcon.className = 'ri-moon-line ri-lg';
+} else {
+body.classList.remove('dark-mode');
+body.classList.add('light-mode');
+themeIcon.className = 'ri-sun-line ri-lg';
+}
+});
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+const toggles = document.querySelectorAll('.custom-toggle input[type="checkbox"]');
+toggles.forEach(toggle => {
+toggle.addEventListener('change', function() {
+const slider = this.nextElementSibling;
+if (this.checked) {
+slider.style.backgroundColor = '#8B5CF6';
+} else {
+slider.style.backgroundColor = '#ccc';
+}
+slider.style.transition = 'all 0.3s ease';
+});
+});
+});
+</script>
+<script id="dropdownScript">
+document.addEventListener('DOMContentLoaded', function() {
+const categoryDropdown = document.getElementById('categoryDropdown');
+const categoryOptions = document.getElementById('categoryOptions');
+categoryDropdown.addEventListener('click', function() {
+categoryOptions.classList.toggle('hidden');
+});
+document.addEventListener('click', function(event) {
+if (!categoryDropdown.contains(event.target) && !categoryOptions.contains(event.target)) {
+categoryOptions.classList.add('hidden');
+}
+});
+});
+function selectCategory(category) {
+document.getElementById('categorySelected').textContent = category;
+document.getElementById('categoryOptions').classList.add('hidden');
+}
+</script>
+<script id="imageUploadScript">
+function previewMainImage(input) {
+if (input.files && input.files[0]) {
+const reader = new FileReader();
+reader.onload = function(e) {
+document.getElementById('mainImageImg').src = e.target.result;
+document.getElementById('mainImagePreview').classList.remove('hidden');
+document.getElementById('mainImagePlaceholder').classList.add('hidden');
+};
+reader.readAsDataURL(input.files[0]);
+}
+}
+function removeMainImage() {
+document.getElementById('mainImage').value = '';
+document.getElementById('mainImagePreview').classList.add('hidden');
+document.getElementById('mainImagePlaceholder').classList.remove('hidden');
+}
+function previewAdditionalImage(input, index) {
+if (input.files && input.files[0]) {
+const reader = new FileReader();
+reader.onload = function(e) {
+document.getElementById('additionalImg' + index).src = e.target.result;
+document.getElementById('additionalPreview' + index).classList.remove('hidden');
+document.getElementById('additionalPlaceholder' + index).classList.add('hidden');
+};
+reader.readAsDataURL(input.files[0]);
+}
+}
+</script>
+</html>

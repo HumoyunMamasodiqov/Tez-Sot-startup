@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="uz">
+    {% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BirBir - O'rinboyev Abdurahim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f5f6f7;
+            color: #27383f;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Wrapper */
+        .wrapper_oa {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 30px 16px;
+
+        }
+
+        /* Navigation */
+        .wrapper_oa nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .bars {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bars i {
+            font-size: 22px;
+            color: #27383f;
+        }
+
+        .hudud_ao {
+            color: #a7afbc;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .hudud_ao:hover {
+            color: #424f55;
+            background-color: #f0f2f5;
+        }
+
+        .hudud_ao svg {
+            margin-right: 8px;
+        }
+
+        .wrapper_oa nav ul {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .wrapper_oa nav ul li a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #27383f;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .wrapper_oa nav ul li a:hover {
+            background-color: #f0f2f5;
+        }
+
+        .qoyish_ao {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 12px 20px;
+            gap: 8px;
+            border-radius: 50px;
+            color: #fff;
+            background-color: #27383f;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .qoyish_ao:hover {
+            background-color: #1a2529;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .gul_ao {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        /* Main Content */
+        .intro_ao {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar_ao {
+            width: 308px;
+            background-color: #fff;
+            padding: 16px;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile_ao {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .profile_ao:hover {
+            background-color: #f8f9fa;
+        }
+
+        .avatar_ao {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+        }
+
+        .profile-info_ao {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name_ao {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .phone_ao {
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        .profile_link_ao {
+            color: #18a0da;
+            text-decoration: none;
+            margin: 16px 0;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .profile_link_ao:hover {
+            background-color: #e6f7ff;
+            color: #0d8bc7;
+        }
+
+        .menu_ao {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .menu_ao hr {
+            border: none;
+            height: 1px;
+            background-color: #f0f2f5;
+            margin: 8px 0;
+        }
+
+        .menu_item_ao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #fafafa;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .menu_item_ao:hover {
+            background: #e8f0ff;
+            transform: translateX(5px);
+        }
+
+        .active_ao {
+            background: #e0ecff !important;
+            color: #0056d6;
+            font-weight: 500;
+        }
+
+        .menu_item_ao span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+
+        .svg_1 span {
+            background-color: #c1e6ff;
+        }
+
+        .active_ao span {
+            background-color: #29C840;
+        }
+
+        .svg_3 span {
+            background-color:#66B2E4 ;
+            color: rgb(243, 100, 100);
+        }
+
+        .svg_4 span {
+            background-color: #18A0DA;
+        }
+
+        .svg_5 span {
+            background-color: #27383F;
+        }
+
+        .svg_6 span {
+            background-color: #F5F6F7;
+        }
+
+        .logout_ao {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+            padding: 12px;
+            background: #f1f1f1;
+            border-radius: 8px;
+            color: #333;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        .logout_ao:hover {
+            background: #e0e0e0;
+            color: #d32f2f;
+        }
+
+        /* Right Content */
+        .right_ao {
+            flex: 1;
+        }
+
+        .right_top_ao {
+            background-color: #fff;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-radius: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .right_top_ao h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .right_top_img_ao {
+            display: flex;
+            gap: 16px;
+        }
+
+        .right_top_img_ao img {
+            flex: 1;
+            border-radius: 12px;
+            height: 144px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .right_top_img_ao img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .right_center_ao {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .right_center_ao h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .right_center_right_ao {
+            display: flex;
+            gap: 12px;
+            
+        }
+
+        .right_center_right_ao a {
+            padding: 12px 16px;
+            border-radius: 16px;
+            background-color: #f0f2f5;
+            text-decoration: none;
+    
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .right_center_right_ao a:hover {
+            background-color: #f0f2f5;
+        }
+
+        .faol_ao {
+            color: #fff;
+            background-color: #27383f !important;
+        }
+
+        .faol_ao:hover {
+            background-color: #1a2529 !important;
+        }
+
+        .right_bottom_ao {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px 20px;
+            border-radius: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .right_bottom_ao:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .right_div_ao {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background-color: #e3e3e3;
+            transition: all 0.3s ease;
+        }
+
+        .right_bottom_ao:hover .right_div_ao {
+            background-color: #d0d0d0;
+            transform: scale(1.05);
+        }
+
+        .right_bottom_ao p {
+            color: #6c757d;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .right_bottom_qoyish_ao {
+            color: #fff;
+            background-color: #27383f;
+            padding: 12px 24px;
+            border-radius: 16px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .right_bottom_qoyish_ao:hover {
+            background-color: #1a2529;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mobile Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        /* Mobile Styles */
+        @media only screen and (max-width: 768px) {
+            .wrapper_oa {
+                padding: 16px;
+            }
+
+            .wrapper_oa nav {
+                margin-bottom: 20px;
+            }
+
+            .bars {
+                display: block;
+            }
+
+            .wrapper_oa nav ul,
+            .hudud_ao,
+            .qoyish_ao {
+                display: none;
+            }
+
+            .gul_ao {
+                display: block;
+            }
+
+            .intro_ao {
+                flex-direction: column;
+            }
+
+            .sidebar_ao {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 85%;
+                max-width: 320px;
+                z-index: 999;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                border-radius: 0;
+                padding-top: 60px;
+                overflow-y: auto;
+            }
+
+            .sidebar-open {
+                transform: translateX(0) !important;
+                display: flex !important;
+            }
+
+            .right_top_ao {
+                padding: 20px;
+            }
+
+            .right_top_ao h3 {
+                font-size: 20px;
+            }
+
+            .right_top_img_ao {
+                flex-direction: column;
+            }
+
+            .right_top_img_ao img {
+                height: 120px;
+            }
+
+            .right_center_ao {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .right_center_ao h3 {
+                font-size: 20px;
+            }
+
+            .right_center_right_ao {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+
+            .right_center_right_ao a {
+                white-space: nowrap;
+                font-size: 13px;
+            }
+
+            .right_bottom_ao {
+                padding: 30px 20px;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .wrapper_oa {
+                padding: 12px;
+            }
+
+            .right_top_ao,
+            .right_bottom_ao {
+                border-radius: 16px;
+            }
+
+            .right_top_img_ao img {
+                height: 100px;
+            }
+
+            .right_center_right_ao {
+                gap: 8px;
+            }
+
+            .right_center_right_ao a {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+        }
+        .logo {
+            width: 158px;
+        height: 43px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper_oa">
+        <nav>
+            <a class="bars" href="#">
+              <i class="fa-solid fa-bars"></i>
+            </a>
+            <a href="/">
+              <img class="logo"
+                src="{% static 'img/logo.png' %}"
+                alt="ishlamadi"
+                width="88"
+                height="28"
+              />
+            </a>
+            <a class="hudud_ao" href="#">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M19.768 2.693c.956-.344 1.88.58 1.536 1.535l-6.04 16.777c-.375 1.043-1.842 1.063-2.246.03l-2.829-7.228-7.228-2.828c-1.032-.404-1.012-1.871.03-2.247l16.777-6.04z"
+                  fill="#a7afbc"
+                />
+              </svg>
+              Barcha hududlar
+            </a>
+            <ul>
+              <li><a href="#">Biz haqimizda</a></li>
+              <li><a href="#">Qo'llab-quvvatlash</a></li>
+              <li>
+                <a href="#">
+                  <img
+                    src="{% static 'img/uzb_flag.png' %}"
+                    alt="uzb_flag"
+                    width="24"
+                    height="24"
+                  />
+                  UZ
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12.756 15.695a1.056 1.056 0 01-1.486 0L5.32 9.793a1.043 1.043 0 01-.243-1.145 1.043 1.043 0 01.575-.57 1.059 1.059 0 011.155.24l5.205 5.164 5.205-5.164a1.056 1.056 0 011.474.013 1.039 1.039 0 01.013 1.462l-5.949 5.902z"
+                      fill="#a7afbc"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 015-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
+                      fill="#a7afbc"
+                    />
+                  </svg>
+                  Xabarlar
+                </a>
+              </li>
+              <li>
+                <!-- nav.html yoki asosiy sahifadagi navigatsiyada -->
+
+              </li>
+              <li>
+                <a href="{% url 'profil' %}">
+                  <img
+                    src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
+                    alt="profil"
+                    width="32"
+                    height="32"
+                  />
+                  Mening profilim
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12.756 15.695a1.056 1.056 0 01-1.486 0L5.32 9.793a1.043 1.043 0 01-.243-1.145 1.043 1.043 0 01.575-.57 1.059 1.059 0 011.155.24l5.205 5.164 5.205-5.164a1.056 1.056 0 011.474.013 1.039 1.039 0 01.013 1.462l-5.949 5.902z"
+                      fill="#a7afbc"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+           {% if user.is_authenticated %}
+        <a class="qoyish_ao" href="{% url 'elon_qoshish' %}">
+          Qo'yish
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="24" height="24" rx="12" fill="#fff" />
+            <path
+              d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+              fill="#27383F"
+            />
+          </svg>
+        </a>
+          {% else %}
+          <a class="qoyish_ao" href="{% url 'signup' %}">
+            Qo'yish
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="24" height="24" rx="12" fill="#fff" />
+              <path
+                d="M11.467 16.266a.533.533 0 001.066 0v-3.733h3.734a.533.533 0 100-1.067h-3.734V7.733a.533.533 0 00-1.066 0v3.733H7.733a.533.533 0 000 1.067h3.734v3.733z"
+                fill="#27383F"
+              />
+            </svg>
+          </a>
+        {% endif %}
+            <a class="gul_ao" href="#">
+              <img
+                src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png"
+                alt="profil"
+                width="40"
+                height="40"
+              />
+            </a>
+          </nav>
+
+        <!-- Mobile Overlay -->
+        <div class="overlay"></div>
+
+        <div class="intro_ao">
+            <!-- Sidebar -->
+            <aside class="sidebar_ao">
+                <div class="profile_ao">
+                    <img src="https://img.birbir.uz/i/400x400-fit/files/37/dd/17e07b5e87a15b53d3e3d9d75b83.png" alt="avatar" class="avatar_ao">
+                    <div class="profile-info_ao">
+                        <h3 class="name_ao">{{ user.first_name }} {{ user.last_name }}</h3>
+                        <p class="phone_ao">
+                            {% if user.profile.phone %}
+                                {{ user.profile.phone }}
+                            {% else %}
+                                Telefon raqam kiritilmagan
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <a href="#" class="profile_link_ao">Profilim qanday ko'rinadi</a>
+
+                <ul class="menu_ao">
+                    <li>
+                        <a class="menu_item_ao svg_1" href="#">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M4 4.495a3.333 3.333 0 116.667 0 3.333 3.333 0 01-6.667 0zm-.785 5.114c1.068-.652 2.522-1.114 4.118-1.114.298 0 .592.016.878.046a.667.667 0 01.48 1.038A3.979 3.979 0 008 11.828c0 .613.138 1.193.383 1.711a.667.667 0 01-.593.952l-.457.004c-1.486 0-2.89-.094-3.942-.372-.523-.139-1.016-.338-1.389-.638-.395-.317-.669-.76-.669-1.324 0-.524.239-1.015.563-1.426.33-.416.785-.8 1.319-1.126zm8.118 4.219a.667.667 0 01.589-.662l.08-.005a.666.666 0 01.077 1.329l-.079.005a.666.666 0 01-.667-.667zm.378-3.167a.334.334 0 01.622.167c0 .09-.032.17-.214.320l-.096.076-.074.055c-.049.036-.108.08-.162.124l-.092.077a1.134 1.134 0 00-.326.465.666.666 0 001.224.521l.064-.051.238-.18.072-.058.12-.105c.271-.25.58-.645.58-1.244a1.667 1.667 0 00-3.108-.838.667.667 0 101.152.671z"
+                                        fill="#bd007d" />
+                                </svg>
+                            </span>
+                            ID tasdiqlashdan o'ting
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu_item_ao active_ao" href="#">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12.782 1.847a.833.833 0 011.234.732v11.432a.833.833 0 01-1.234.732c-.758-.416-3.002-1.628-4.346-2.162-.833-.336-1.7-.582-2.584-.733l-.516 2.578a.668.668 0 01-1.308-.262l.496-2.476c-.18-.014-.36-.025-.54-.033-1.068-.05-1.968-.913-1.968-2.027V6.962c0-1.114.9-1.978 1.968-2.027.237-.011.47-.026.698-.045v6.072h.023a.666.666 0 011.155 0h.156V4.714c.828-.154 1.638-.39 2.42-.705 1.344-.534 3.588-1.747 4.346-2.162z"
+                                        fill="#fff" />
+                                </svg>
+                            </span>
+                            Mening e'lonlarim
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                       <!-- nav.html yoki asosiy sahifadagi navigatsiyada -->
+<li>
+    <a class="menu_item_ao svg_3" href="{% url 'sevimlilarim' %}">
+        <span>
+           <i class="fa-solid fa-heart"></i>
+        </span>
+        Sevimlilar
+    </a>
+</li>
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="menu_item_ao svg_4" href="#">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M17 3a5 5 0 015 5v8a5 5 0 01-5 5H3a1 1 0 01-1-1V8a5 5 0 015-5h10zm0 2H7a3 3 0 00-3 3v11h13a3 3 0 003-3V8a3 3 0 00-3-3zm-8 5a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm6 0a1 1 0 01.993.883L16 11v2a1 1 0 01-1.993.117L14 13v-2a1 1 0 011-1z"
+                                        fill="#fff" />
+                                </svg>
+                            </span>
+                            Chat BirBir
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="menu_item_ao svg_5" href="#">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M18.842 2A3.158 3.158 0 0122 5.158v13.684A3.158 3.158 0 0118.842 22h-3.158v-6.316a3.158 3.158 0 00-3.157-3.157h-1.053a3.158 3.158 0 00-3.158 3.157V22H5.158A3.158 3.158 0 012 18.842V5.158A3.158 3.158 0 015.158 2h13.684zm-6.315 12.632a1.052 1.052 0 011.045.93l.007.122V22h-3.158v-6.316a1.053 1.053 0 01.93-1.045l.123-.007h1.053zm6.315-10.526H5.158a1.053 1.053 0 00-1.045.93l-.007.122v1.053a2.105 2.105 0 004.147.516l.034-.164a1.053 1.053 0 01.945-.874l.137-.004a1.053 1.053 0 011.045.929l.007.123a1.579 1.579 0 003.15.152l.008-.152a1.053 1.053 0 01.93-1.045l.142-.007a1.053 1.053 0 011.035.76l.028.118a2.105 2.105 0 004.176-.195l.005-.157V5.158a1.053 1.053 0 00-.93-1.045l-.123-.007z"
+                                        fill="#fff" />
+                                </svg>
+                            </span>
+                            BirBir biznes uchun
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="menu_item_ao svg_6" href="#">
+                            <span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M18 2a2 2 0 012 2v11.586A2 2 0 0119.414 17L15 21.414a2 2 0 01-1.414.586H6a2 2 0 01-2-2V4a2 2 0 012-2h12zm0 2H6v16h6v-4.5a1.5 1.5 0 011.5-1.5H18V4zm-.414 12H14v3.586L17.586 16zM10 11a1 1 0 010 2H9a1 1 0 010-2h1zm5-4a1 1 0 110 2H9a1 1 0 010-2h6z"
+                                        fill="#a7afbc" />
+                                </svg>
+                            </span>
+                            Platforma qoidalari
+                        </a>
+                    </li>
+                    <hr>
+                </ul>
+
+                <a href="{% url 'chiqish' %}" class="logout_ao">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 3a1 1 0 01.117 1.993L12 5H7a1 1 0 00-.993.883L6 6v12a1 1 0 00.883.993L7 19h4.5a1 1 0 01.117 1.993L11.5 21H7a3 3 0 01-2.995-2.824L4 18V6a3 3 0 012.824-2.995L7 3h5zm5.707 5.464l2.828 2.829a1 1 0 010 1.414l-2.828 2.829a1 1 0 11-1.414-1.415L17.414 13H12a1 1 0 010-2h5.414l-1.121-1.121a1 1 0 011.414-1.415z"
+                            fill="#a7afbc" />
+                    </svg>
+                    Chiqish
+                </a>
+            </aside>
+
+            <!-- Right Content -->
+            <div class="right_ao">
+                <div class="right_top_ao">
+                    <h3>Siz uchun foydali</h3>
+                    <div class="right_top_img_ao">
+                        <img src="{% static 'img/qollanma.jpg' %}" alt="qo'llanma">
+                        <img src="{% static 'img/qollanma2.png' %}" alt="qo'llanma2">
+                    </div>
+                </div>
+                <div class="right_center_ao">
+                    <h3>Mening e'lonlarim</h3>
+                    <div class="right_center_right_ao">
+                        <a class="faol_ao" href="#">Faollar</a>
+                        <a href="#">Qoralamalar</a>
+                        <a href="{% url 'mening_elonlarim' %}">Harakat kutmoqda</a>
+                        <a href="#">Arxiv</a>
+                    </div>
+                </div>
+                <div class="right_bottom_ao">
+                    <div class="right_div_ao"></div>
+                    <p>Bu yerga sizning e'lonlaringiz <br> joylashadi</p>
+                   
+<a class="right_bottom_qoyish_ao" href="{% url 'elon_qoshish' %}">E'lon qo'yish</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar_ao');
+            const barsIcon = document.querySelector('.bars');
+            const overlay = document.querySelector('.overlay');
+            
+            // Bars ikonkasini bosganda sidebar ochiladi
+            if (barsIcon) {
+                barsIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sidebar.classList.add('sidebar-open');
+                    overlay.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            // Overlay bosganda sidebar yopiladi
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('sidebar-open');
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Ekran o'lchami o'zgarganda sidebar holatini boshqarish
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('sidebar-open');
+                    if (overlay) overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
