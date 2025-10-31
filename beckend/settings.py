@@ -9,7 +9,8 @@ SECRET_KEY = 'django-insecure-&*0@&h#k5ut#s(!r-2gbjs&&1y_)k%pch(6o(7%v*7qj*0m5@*
 # LOCALDA TEST UCHUN HAR DOIM TRUE
 DEBUG = True
 
-ALLOWED_HOSTS = []  # localda kerak emas, serverda domen yoziladi
+ALLOWED_HOSTS = ['tezsotuz.onrender.com', '127.0.0.1', 'localhost']
+  # localda kerak emas, serverda domen yoziladi
 
 # === Dasturlar ===
 INSTALLED_APPS = [
