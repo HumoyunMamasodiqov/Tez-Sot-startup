@@ -1,26 +1,16 @@
-from pathlib import Path
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv()  # .env faylni yuklash
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# === SECURITY ===
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
-
-# Local serverda DEBUG=True bo'ladi
-# Render serverda DEBUG=False bo'ladi
 DEBUG = os.environ.get('RENDER', None) is None
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'tezsotuz.onrender.com',
-    '.onrender.com'
-]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tezsotuz.onrender.com', '.onrender.com']
 
-# === APPS ===
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,7 +27,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
 ]
 
-# === MIDDLEWARE ===
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -52,7 +41,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'beckend.urls'
 
-# === TEMPLATES ===
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -70,7 +58,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'beckend.wsgi.application'
 
-# === DATABASE ===
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -78,7 +65,6 @@ DATABASES = {
     }
 }
 
-# === PASSWORDS ===
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -86,29 +72,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# === LANGUAGE & TIME ===
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_TZ = True
 
-# === STATIC FILES (WhiteNoise + Render) ===
+# Static files
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-else:
-    STATICFILES_DIRS = []
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# === MEDIA (Cloudinary) ===
+# Media files (Cloudinary)
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 
-CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
-
-# === OTHER ===
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
