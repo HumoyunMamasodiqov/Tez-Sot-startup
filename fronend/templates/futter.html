@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer</title>
+    <link rel="icon" type="image/png" href="{% static 'img/iconlogo.png' %}">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -109,6 +111,7 @@
             padding-top: 1.5rem;
             border-top: 1px solid #374151;
             color: #9ca3af;
+            
             font-size: 0.875rem;
         }
         
@@ -150,38 +153,36 @@
     </style>
 </head>
 <body>
-    <!-- Asosiy kontent (misol uchun) -->
-    <main>
-        <div style="padding: 2rem; text-align: center;">
-            <h1>Asosiy kontent</h1>
-            <p>Bu yerda saytning asosiy kontenti bo'ladi</p>
-        </div>
-    </main>
+
     
     <!-- Futer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-links">
-                    <h3>Tez havolalar</h3>
-                    <a href="{% url 'boglanish' %}">Qo'llab-quvvatlash</a>
-                    <a href="{% url 'boglanish' %}">Yordam markazi</a>
-                    <a href="{% url 'biz_haqimizda' %}">Biz haqimizda</a>
+    <footer style="background: #27383f; color: white; padding: 40px 0; margin-top: 60px;">
+        <div style="max-width: 1280px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+                <div>
+                    <h3 style="font-size: 20px; margin-bottom: 15px;"><img class="logo " src="{% static 'img/logo.png' %}" alt=""></h3>
+                    <p style="color: #ccc; line-height: 1.6;">O'zbekistondagi eng yirik e'lonlar platformasi. Biz sizga eng yaxshi mahsulotlarni topishda yordam beramiz.</p>
                 </div>
-                
-                <div class="footer-social">
-                    <h3>Ijtimoiy tarmoqlar</h3>
-                    <div class="social-icons">
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    </div>
+                <div>
+                    <h4 style="font-size: 16px; margin-bottom: 15px;">Tez havolalar</h4>
+                    <ul style="list-style: none; color: #ccc;">
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: #ccc; text-decoration: none;">Bosh sahifa</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: #ccc; text-decoration: none;">Kategoriyalar</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: #ccc; text-decoration: none;">Yordam</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: #ccc; text-decoration: none;">Biz haqimizda</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="font-size: 16px; margin-bottom: 15px;">Aloqa</h4>
+                    <ul style="list-style: none; color: #ccc;">
+                        <li style="margin-bottom: 8px;"><i class="fas fa-phone"></i> +998 33 026 00 38 </li>
+                        <li style="margin-bottom: 8px;"><i class="fas fa-envelope"></i> info@tezsot.uz</li>
+                        <li style="margin-bottom: 8px;"><i class="fas fa-map-marker-alt"></i> Toshkent shahri</li>
+                    </ul>
                 </div>
             </div>
-            
-            <div class="copyright">
-                <p>© 2025 BirBir. Barcha huquqlar himoyalangan.</p>
+            <div style="border-top: 1px solid #444; margin-top: 30px; padding-top: 20px; text-align: center; color: #ccc;">
+                <p>© 2025 Tez Sot. Barcha huquqlar himoyalangan.</p>
             </div>
         </div>
     </footer>
