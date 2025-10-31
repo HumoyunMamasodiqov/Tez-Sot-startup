@@ -6,8 +6,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mening e'lonlarim - Tez Sot</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <link rel="icon" type="image/png" href="{% static 'img/iconlogo.png' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                primary: {
+                  50: "#eff6ff",
+                  100: "#dbeafe",
+                  500: "#3b82f6",
+                  600: "#2563eb",
+                  700: "#1d4ed8",
+                },
+                secondary: {
+                  50: "#ecfdf5",
+                  100: "#d1fae5",
+                  500: "#10b981",
+                  600: "#059669",
+                },
+                gray: {
+                  50: "#f9fafb",
+                  100: "#f3f4f6",
+                  200: "#e5e7eb",
+                  300: "#d1d5db",
+                  400: "#9ca3af",
+                  500: "#6b7280",
+                  600: "#4b5563",
+                  700: "#374151",
+                  800: "#1f2937",
+                  900: "#111827",
+                },
+              },
+              fontFamily: {
+                pacifico: ["Pacifico", "cursive"],
+                inter: ["Inter", "system-ui", "sans-serif"],
+              },
+              boxShadow: {
+                soft: "0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)",
+                medium:
+                  "0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              },
+              animation: {
+                "fade-in": "fadeIn 0.5s ease-in-out",
+                "slide-up": "slideUp 0.3s ease-out",
+                "bounce-soft": "bounceSoft 2s infinite",
+              },
+              keyframes: {
+                fadeIn: {
+                  "0%": { opacity: "0" },
+                  "100%": { opacity: "1" },
+                },
+                slideUp: {
+                  "0%": { transform: "translateY(10px)", opacity: "0" },
+                  "100%": { transform: "translateY(0)", opacity: "1" },
+                },
+                bounceSoft: {
+                  "0%, 100%": { transform: "translateY(0)" },
+                  "50%": { transform: "translateY(-5px)" },
+                },
+              },
+            },
+          },
+        };
+      </script>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pacifico&display=swap"
+        rel="stylesheet"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      />
+      <style>
+        .gradient-bg {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+  
+        .card-hover {
+          transition: all 0.3s ease;
+        }
+  
+        .card-hover:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+  
+        .nav-link {
+          position: relative;
+        }
+  
+        .nav-link::after {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: #3b82f6;
+          transition: width 0.3s ease;
+        }
+  
+        .nav-link:hover::after,
+        .nav-link.active::after {
+          width: 100%;
+        }
+  
+        .category-card {
+          transition: all 0.3s ease;
+        }
+  
+        .category-card:hover {
+          transform: scale(1.05);
+        }
+  
+        .loading-dots {
+          display: inline-block;
+          position: relative;
+          width: 80px;
+          height: 80px;
+        }
+  
+        .loading-dots div {
+          position: absolute;
+          top: 33px;
+          width: 13px;
+          height: 13px;
+          border-radius: 50%;
+          background: #3b82f6;
+          animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+  
+        .loading-dots div:nth-child(1) {
+          left: 8px;
+          animation: loading-dots1 0.6s infinite;
+        }
+  
+        .loading-dots div:nth-child(2) {
+          left: 8px;
+          animation: loading-dots2 0.6s infinite;
+        }
+  
+        .loading-dots div:nth-child(3) {
+          left: 32px;
+          animation: loading-dots2 0.6s infinite;
+        }
+  
+        .loading-dots div:nth-child(4) {
+          left: 56px;
+          animation: loading-dots3 0.6s infinite;
+        }
+  
+        @keyframes loading-dots1 {
+          0% {
+            transform: scale(0);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+  
+        @keyframes loading-dots3 {
+          0% {
+            transform: scale(1);
+          }
+          100% {
+            transform: scale(0);
+          }
+        }
+  
+        @keyframes loading-dots2 {
+          0% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(24px, 0);
+          }
+        }
+      </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
@@ -1229,6 +1409,73 @@
             </div>
         </div>
     </div>
+    <div
+    class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 lg:hidden z-40 shadow-medium"
+  >
+    <div class="flex items-center justify-around py-3">
+      <a
+        href="/"
+        class="flex flex-col items-center py-1 px-3 text-primary-600"
+      >
+        <i class="ri-home-line text-xl mb-1"></i>
+        <span class="text-xs font-medium">Bosh</span>
+      </a>
+      {% if user.is_authenticated %}
+      <a
+        href="{% url 'sevimlilarim' %}"
+        class="flex relative flex-col items-center py-1 px-3 text-gray-600"
+      >
+        <i class="ri-heart-line text-xl mb-1"></i>
+        <span class="text-xs">Sevimli </span>
+        {% if request.user.sevimli_set.count > 0 %}
+        <span class="sevimli-soni absolute top-0 right-[5px] bg-primary-600 text-white w-5 h-5 rounded-full flex justify-center items-center">{{ request.user.sevimli_set.count }}</span>
+        {% endif %}
+      </a>
+      {% else %}
+      <a
+        href="{% url 'kirish' %}"
+        class="flex flex-col items-center py-1 px-3 text-gray-600"
+      >
+        <i class="ri-heart-line text-xl mb-1"></i>
+        <span class="text-xs">Sevimli</span>
+      </a>
+      {% endif %} {% if user.is_authenticated %}
+      <a
+        href="{% url 'mening_elonlarim' %}"
+        class="flex flex-col items-center py-1 px-3 text-gray-600"
+      >
+        <i class="ri-user-line text-xl mb-1"></i>
+        <span class="text-xs">Profil</span>
+      </a>
+      {% else %}
+      <a
+        href="{% url 'kirish' %}"
+        class="flex flex-col items-center py-1 px-3 text-gray-600"
+      >
+        <i class="ri-user-line text-xl mb-1"></i>
+        <span class="text-xs">Profil</span>
+      </a>
+      {% endif %} {% if user.is_authenticated %}
+      <a
+        href="{% url 'elon_qoshish' %}"
+        class="flex flex-col items-center py-1 px-3 text-gray-600"
+      >
+        <span class="text-xl flex justify-center items-center border border-gray-600 rounded-full w-8 h-8 p-3"
+          >+</span
+        >
+        <span class="text-xs">elon qoshish</span>
+      </a>
+      {% else %}
+      <a
+        href="{% url 'kirish' %}"
+        class="flex flex-col items-center py-1 px-3 text-gray-600"
+      >
+        <span class="text-xl border border-gray-600 rounded-full">+</span>
+        <span class="text-xs">elon qoshish</span>
+      </a>
+      {% endif %}
+    </div>
+  </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

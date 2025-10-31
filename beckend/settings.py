@@ -8,7 +8,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # === SECURITY ===
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
+# Local serverda DEBUG=True bo'ladi
+# Render serverda DEBUG=False bo'ladi
+DEBUG = os.environ.get('RENDER', None) is None
 
 ALLOWED_HOSTS = [
     'tezsotuz.onrender.com',
@@ -29,15 +32,12 @@ INSTALLED_APPS = [
     'fronend',
     'authentication',
 
-    # whitenoise static files
     'whitenoise.runserver_nostatic',
 ]
 
 # === MIDDLEWARE ===
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    # STATIC FILE SERVE
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -90,14 +90,18 @@ TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_TZ = True
 
-# === STATIC FILES (Render uchun to‘liq sozlangan) ===
+# === STATIC FILES ===
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Localda static papkani ishlatamiz
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+else:
+    STATICFILES_DIRS = []
 
 # Render static uchun majburiy
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# whitenoise gzip + brotli
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # === MEDIA ===
