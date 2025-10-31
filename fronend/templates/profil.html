@@ -1075,7 +1075,7 @@
                 <div class="elonlar_grid">
                     {% for mahsulot in mahsulotlar %}
                     <div class="elon_card">
-                        <img src="{{ mahsulot.asosiyimg.url }}" alt="{{ mahsulot.name }}" class="elon_img">
+                        <img src="{% static 'mahsulotimg/rasm1.png' %}" alt="{{ mahsulot.name }}" class="elon_img">
                         <div class="elon_content">
                             <div class="elon_narx">{{ mahsulot.narx_formatted }}</div>
                             <div class="elon_nomi">{{ mahsulot.name }}</div>
