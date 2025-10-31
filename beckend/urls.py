@@ -16,6 +16,5 @@ urlpatterns = [
     path('', include('fronend.urls')),  # asosiy app
     path('auth/', include('authentication.urls')),  # auth app
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
