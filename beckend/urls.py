@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.shortcuts import render
 import os
 
+
 # 404 sahifa
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
