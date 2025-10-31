@@ -5,17 +5,18 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# === Security ===
-SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-key")
+DEBUG = True
+# === SECURITY ===
+SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret")
 DEBUG = os.environ.get("RENDER") is None
+
 ALLOWED_HOSTS = [
+    ".onrender.com",
     "localhost",
-    "127.0.0.1",
-    ".onrender.com"
+    "127.0.0.1"
 ]
 
-# === Apps ===
+# === APPS ===
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
 ]
 
-# === Middleware ===
+# === MIDDLEWARE ===
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -48,27 +49,27 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'beckend.urls'
+ROOT_URLCONF = "beckend.urls"
 
-# === Templates ===
+# === TEMPLATES ===
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'beckend.wsgi.application'
+WSGI_APPLICATION = "beckend.wsgi.application"
 
-# === Database ===
+# === DATABASE ===
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -76,21 +77,21 @@ DATABASES = {
     }
 }
 
-# === Password ===
+# === PASSWORD VALIDATION ===
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# === Language & Time ===
+# === LANGUAGE & TIME ===
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Tashkent"
 USE_I18N = True
 USE_TZ = True
 
-# === Static ===
+# === STATIC ===
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -98,9 +99,10 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-# === Media (Cloudinary) ===
+# === MEDIA (CLOUDINARY) ===
 MEDIA_URL = "/media/"
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
 CLOUDINARY_STORAGE = {
@@ -110,6 +112,6 @@ CLOUDINARY_STORAGE = {
 }
 
 # === 404 ===
-SECURE_BROWSER_XSS_FILTER = True
+SECURE_BROWSER_XSS_FILTER = False
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
