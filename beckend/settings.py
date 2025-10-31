@@ -1,18 +1,23 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# === Asosiy xavfsizlik ===
-SECRET_KEY = 'django-insecure-&*0@&h#k5ut#s(!r-2gbjs&&1y_)k%pch(6o(7%v*7qj*0m5@*'
+# === SECURITY ===
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# LOCALDA TEST UCHUN HAR DOIM TRUE
-DEBUG = True
+ALLOWED_HOSTS = [
+    'tezsotuz.onrender.com',
+    '127.0.0.1',
+    'localhost',
+    '.onrender.com'
+]
 
-ALLOWED_HOSTS = ['tezsotuz.onrender.com', '127.0.0.1', 'localhost']
-  # localda kerak emas, serverda domen yoziladi
-
-# === Dasturlar ===
+# === APPS ===
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,11 +28,18 @@ INSTALLED_APPS = [
 
     'fronend',
     'authentication',
+
+    # whitenoise static files
+    'whitenoise.runserver_nostatic',
 ]
 
-# === Middleware ===
+# === MIDDLEWARE ===
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    # STATIC FILE SERVE
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -38,11 +50,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'beckend.urls'
 
-# === Templates ===
+# === TEMPLATES ===
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # templates papkangizni bu yerga yozamiz
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -57,7 +68,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'beckend.wsgi.application'
 
-# === Ma'lumotlar bazasi ===
+# === DATABASE ===
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -65,7 +76,7 @@ DATABASES = {
     }
 }
 
-# === Parol tekshiruvi ===
+# === PASSWORDS ===
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -73,25 +84,26 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# === Til va vaqt ===
+# === LANGUAGE & TIME ===
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_TZ = True
 
-# === STATIC SOZLAMALARI ===
+# === STATIC FILES (Render uchun to‘liq sozlangan) ===
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-# STATIC_ROOT localda kerak emas, serverda qo‘shiladi
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Render static uchun majburiy
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# whitenoise gzip + brotli
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # === MEDIA ===
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# === 404 sahifa uchun ===
+# === OTHER ===
 SECURE_BROWSER_XSS_FILTER = True
-
-# === Avtomatik ID ===
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
