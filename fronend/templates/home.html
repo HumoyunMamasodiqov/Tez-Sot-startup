@@ -370,8 +370,9 @@
             <a href="{% url 'mahsulot_detail' product.id %}" class="block h-full">
               <div class="product-image">
                 {% if product.asosiyimg %}
-                {% load static %}
-                <img src="{% static 'mahsulotimg/asosiy.png' %}" alt="{{ product.name }}" />                
+             
+                <img src="{% static 'mahsulot/' %}{{ mahsulot.asosiyimg.name | slice:'7:' }}" class="..." />
+             
                 {% else %}
                 <div
                   style="
