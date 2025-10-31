@@ -2,15 +2,18 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+# === Load .env ===
 load_dotenv()  # .env faylni yuklash
 
+# === Base dir ===
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# === Security ===
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.environ.get('RENDER', None) is None
-
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tezsotuz.onrender.com', '.onrender.com']
 
+# === Installed apps ===
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,11 +25,15 @@ INSTALLED_APPS = [
     'fronend',
     'authentication',
 
+    # Cloudinary
     'cloudinary',
     'cloudinary_storage',
+
+    # Whitenoise for static files
     'whitenoise.runserver_nostatic',
 ]
 
+# === Middleware ===
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -41,6 +48,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'beckend.urls'
 
+# === Templates ===
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -58,6 +66,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'beckend.wsgi.application'
 
+# === Database ===
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -65,6 +74,7 @@ DATABASES = {
     }
 }
 
+# === Password validation ===
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -72,21 +82,32 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# === Language & Time ===
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+# === Static files ===
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Collectstatic natijasi
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Media files (Cloudinary)
+# === Media files (Cloudinary) ===
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 
+# === Security & other settings ===
+SECURE_BROWSER_XSS_FILTER = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# === Optional: additional Cloudinary settings ===
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
