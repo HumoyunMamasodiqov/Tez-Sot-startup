@@ -14,9 +14,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.environ.get('RENDER', None) is None
 
 ALLOWED_HOSTS = [
-    'tezsotuz.onrender.com',
     '127.0.0.1',
     'localhost',
+    'tezsotuz.onrender.com',
     '.onrender.com'
 ]
 
@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'fronend',
     'authentication',
 
+    'cloudinary',
+    'cloudinary_storage',
     'whitenoise.runserver_nostatic',
 ]
 
@@ -90,24 +92,23 @@ TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_TZ = True
 
-# === STATIC FILES ===
+# === STATIC FILES (WhiteNoise + Render) ===
 STATIC_URL = '/static/'
 
-# Localda static papkani ishlatamiz
 if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 else:
     STATICFILES_DIRS = []
 
-# Render static uchun majburiy
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# === MEDIA ===
+# === MEDIA (Cloudinary) ===
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
 # === OTHER ===
-SECURE_BROWSER_XSS_FILTER = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
