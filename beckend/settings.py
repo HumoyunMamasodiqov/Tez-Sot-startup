@@ -1,16 +1,23 @@
 import os
 from pathlib import Path
 
+# BASE DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SECRET KEY
 SECRET_KEY = 'django-secret'
+
+# DEBUG
 DEBUG = False
 
+# ALLOWED HOSTS
 ALLOWED_HOSTS = ['*']
 
-# ✅ Asosiy loyiha URLs fayli
-ROOT_URLCONF = 'config.urls'   # <-- SHUNI O'ZGARTIRISH KERAK BO'LSA AYTMAN
+# ✅ ASOSIY URL FAYL — SENING PROJECT PAPKANG NOMI: beckend
+ROOT_URLCONF = 'beckend.urls'
+WSGI_APPLICATION = 'beckend.wsgi.application'
 
+# INSTALLED APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,6 +30,7 @@ INSTALLED_APPS = [
     'fronend',
 ]
 
+# MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -34,11 +42,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ✅ TEMPLATES — admin ishlashi uchun shart
+# ✅ TEMPLATES
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],   # Agar tashqi templates bo‘lsa
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,22 +59,22 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'   # <-- Shuni ham project nomiga qarab o‘zgartiramiz
-
+# LANGUAGE / TIMEZONE
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ✅ Static
+# ✅ STATIC FILES
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles'   # Render uchun shart
 
-# ✅ Media
+# ✅ MEDIA FILES
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# DEFAULT PRIMARY KEY
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
