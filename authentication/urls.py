@@ -9,6 +9,4 @@ urlpatterns = [
     path('chiqish/', views.chiqish_view, name='chiqish'),
     path('signup/', views.signup_view, name='signup'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

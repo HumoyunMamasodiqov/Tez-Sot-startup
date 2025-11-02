@@ -1,31 +1,13 @@
 import os
 from pathlib import Path
 
-# BASE DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECRET KEY
 SECRET_KEY = 'django-secret'
-
-# DEBUG
 DEBUG = False
 
-# ALLOWED HOSTS
 ALLOWED_HOSTS = ['*']
 
-# ✅ ASOSIY URL FAYL – SENING PROJECT PAPKANG: beckend
-ROOT_URLCONF = 'beckend.urls'
-WSGI_APPLICATION = 'beckend.wsgi.application'
-
-# ✅ DATABASE – SQLite (Renderda ham ishlaydi)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# INSTALLED APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,10 +20,9 @@ INSTALLED_APPS = [
     'fronend',
 ]
 
-# MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Static uchun Render’da shart
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -50,11 +31,22 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ✅ TEMPLATES
+ROOT_URLCONF = 'beckend.urls'
+WSGI_APPLICATION = 'beckend.wsgi.application'
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # tashqi templates bo‘lsa
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,22 +59,16 @@ TEMPLATES = [
     },
 ]
 
-# LANGUAGE / TIMEZONE
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ✅ STATIC FILES
+# ✅ STATIC
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'   # Render uchun shart
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ✅ MEDIA FILES
+# ✅ MEDIA (mahsulot rasmlari)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-# DEFAULT PRIMARY KEY
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
