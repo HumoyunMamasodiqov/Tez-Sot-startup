@@ -370,10 +370,8 @@
             <a href="{% url 'mahsulot_detail' product.id %}" class="block h-full">
               <div class="product-image">
                 {% if product.asosiyimg %}
-             
-                <img src="{% static 'mahsulot/' %}{{ mahsulot.asosiyimg.name | slice:'7:' }}" class="..." />
-             
-                {% else %}
+                <img src="{{ product.asosiyimg.url }}" class="..." alt="{{ product.name }}">
+            {% else %}
                 <div
                   style="
                     background: #f0f0f0;
@@ -387,7 +385,8 @@
                 >
                   <i class="fas fa-image text-2xl"></i>
                 </div>
-                {% endif %}
+            {% endif %}
+            
 
                 <!-- Sotilgan/Yangi belgilari -->
                 {% if product.sotilgan %}
