@@ -16,11 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'fronend',
     'authentication',
-
-    'cloudinary',
-    'cloudinary_storage',
+    'fronend',
 ]
 
 MIDDLEWARE = [
@@ -34,14 +31,38 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# ✅ TEMPLATES — muammo shu edi!
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],   # templates papkang bo‘lsa ishlaydi
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
+
+# ✅ Static files
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# ✅ CLOUDINARY — BU YER ENG MUHIM
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')   # Render uchun shart!
+
+# ✅ Media files
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
