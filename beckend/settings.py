@@ -13,9 +13,17 @@ DEBUG = False
 # ALLOWED HOSTS
 ALLOWED_HOSTS = ['*']
 
-# ✅ ASOSIY URL FAYL — SENING PROJECT PAPKANG NOMI: beckend
+# ✅ ASOSIY URL FAYL – SENING PROJECT PAPKANG: beckend
 ROOT_URLCONF = 'beckend.urls'
 WSGI_APPLICATION = 'beckend.wsgi.application'
+
+# ✅ DATABASE – SQLite (Renderda ham ishlaydi)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # INSTALLED APPS
 INSTALLED_APPS = [
@@ -33,7 +41,7 @@ INSTALLED_APPS = [
 # MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Static uchun Render’da shart
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -46,7 +54,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],   # Agar tashqi templates bo‘lsa
+        'DIRS': [BASE_DIR / 'templates'],  # tashqi templates bo‘lsa
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
