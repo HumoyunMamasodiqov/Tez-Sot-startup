@@ -806,7 +806,7 @@
                             <!-- Django template orqali rasmlarni yuklash -->
                             {% if mahsulot.asosiyimg %}
                             <div class="carousel-card">
-                                <img src="{% static 'mahsulotimg/myimage.png' %}" alt="{{ mahsulot.name }}">
+                                <img src="{{ mahsulot.asosiyimg.url }}" alt="{{ mahsulot.name }}">
                             </div>
                             {% endif %}
                             

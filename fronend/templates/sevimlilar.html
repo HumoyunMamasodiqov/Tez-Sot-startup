@@ -164,7 +164,7 @@ border-color: #fecaca !important;
         <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow" data-sevimli-id="{{ sevimli.id }}">
             <div class="relative">
                 {% if product.asosiyimg %}
-                <img src="{% static 'mahsulotimg/rasm1.png' %}" class="w-full h-48 object-cover object-top">
+                <img src="{{ mahsulot.asosiyimg.url }}" class="w-full h-48 object-cover object-top">
                 {% else %}
                 <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
                     <i class="ri-image-line text-gray-400 text-2xl"></i>
