@@ -900,7 +900,7 @@
                         <a href="{% url 'mahsulot_detail' similar.id %}" class="similar-card">
                             <div class="similar-image">
                                 {% if similar.asosiyimg %}
-                                <img src="{% static 'mahsulotimg/rasm1.png' %}" alt="{{ similar.name }}">
+                                <img src="{{ product.asosiyimg.url }}" alt="{{ similar.name }}">
                                 {% else %}
                                 <div class="no-image" style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; color: #999;">
                                     <i class="fas fa-image" style="font-size: 48px;"></i>
