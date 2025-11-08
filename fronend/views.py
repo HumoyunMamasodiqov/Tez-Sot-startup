@@ -1,23 +1,24 @@
-# frontend/views.py
+# fronend/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 from django.utils import timezone
 from django.core.paginator import Paginator
-from .models import Mahsulot, Sevimli
+from django.db.models import Q
+from .models import Mahsulot, Sevimli, Category
 import re
 
 
 def test_404(request):
-    """404 sahifasini ko‘rsatish"""
+    """404 sahifasini ko'rsatish"""
     return HttpResponseNotFound(render(request, '404.html'))
 
 
 def home_view(request):
-    """Bosh sahifa - oxirgi 8 ta mahsulot"""
+    """Bosh sahifa - barcha aktiv mahsulotlar"""
     try:
-        mahsulotlar = Mahsulot.objects.filter(aktiv=True).order_by('-id')[:8]
+        mahsulotlar = Mahsulot.objects.filter(aktiv=True, sotilgan=False).order_by('-id')[:12]
         return render(request, 'home.html', {'mahsulotlar': mahsulotlar})
     except Exception as e:
         print(f"DEBUG: Xatolik - {e}")
@@ -27,7 +28,7 @@ def home_view(request):
 def index(request):
     """Barcha mahsulotlar sahifasi"""
     try:
-        mahsulotlar = Mahsulot.objects.filter(aktiv=True).order_by('-id')
+        mahsulotlar = Mahsulot.objects.filter(aktiv=True, sotilgan=False).order_by('-id')
         paginator = Paginator(mahsulotlar, 12)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -35,6 +36,99 @@ def index(request):
     except Exception as e:
         print(f"DEBUG: Xatolik - {e}")
         return render(request, 'index.html', {'mahsulotlar': []})
+
+
+def barcha_mahsulotlar(request):
+    """Barcha mahsulotlar sahifasi - qidiruv va filtrlash bilan"""
+    mahsulotlar = Mahsulot.objects.filter(aktiv=True, sotilgan=False)
+    
+    # Qidiruv parametrlari
+    q = request.GET.get('q')
+    category = request.GET.get('category')
+    viloyat = request.GET.get('viloyat')
+    sort = request.GET.get('sort', 'newest')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    
+    # Filtrlash
+    if q:
+        mahsulotlar = mahsulotlar.filter(
+            Q(name__icontains=q) | 
+            Q(tavsif__icontains=q) |
+            Q(category__icontains=q) |
+            Q(mahsulotturi__icontains=q)
+        )
+    
+    if category:
+        mahsulotlar = mahsulotlar.filter(category=category)
+    
+    if viloyat:
+        mahsulotlar = mahsulotlar.filter(viloyat=viloyat)
+    
+    if min_price:
+        try:
+            mahsulotlar = mahsulotlar.filter(narx__gte=min_price)
+        except:
+            pass
+    
+    if max_price:
+        try:
+            mahsulotlar = mahsulotlar.filter(narx__lte=max_price)
+        except:
+            pass
+    
+    # Saralash
+    if sort == 'newest':
+        mahsulotlar = mahsulotlar.order_by('-sana')
+    elif sort == 'oldest':
+        mahsulotlar = mahsulotlar.order_by('sana')
+    elif sort == 'price_low':
+        mahsulotlar = mahsulotlar.order_by('narx')
+    elif sort == 'price_high':
+        mahsulotlar = mahsulotlar.order_by('-narx')
+    
+    # Kategoriyalar ro'yxati
+    categories = Mahsulot.objects.filter(aktiv=True).values_list('category', flat=True).distinct()
+    viloyatlar = Mahsulot.VILOYAT_CHOICES
+    
+    context = {
+        'mahsulotlar': mahsulotlar,
+        'categories': [{'id': cat, 'name': cat} for cat in categories],
+        'viloyatlar': viloyatlar,
+    }
+    
+    return render(request, 'barcha_mahsulotlar.html', context)
+
+
+def api_search(request):
+    """Real-time qidiruv API"""
+    query = request.GET.get('q', '').strip()
+    
+    if len(query) < 2:
+        return JsonResponse([], safe=False)
+    
+    # Mahsulotlarni qidirish
+    mahsulotlar = Mahsulot.objects.filter(
+        Q(name__icontains=query) | 
+        Q(tavsif__icontains=query) |
+        Q(category__icontains=query) |
+        Q(mahsulotturi__icontains=query),
+        aktiv=True,
+        sotilgan=False
+    )[:10]  # Faqat 10 ta natija
+    
+    results = []
+    for product in mahsulotlar:
+        results.append({
+            'id': product.id,
+            'name': product.name,
+            'price': product.narx_formatted(),
+            'category': product.get_category_display(),
+            'image': product.asosiyimg.url if product.asosiyimg else None,
+            'url': f"/mahsulot/{product.id}/"
+        })
+    
+    return JsonResponse(results, safe=False)
 
 
 def qosjso_view(request):
@@ -55,7 +149,7 @@ def boglanish_view(request):
 
 @login_required
 def elon_qoshish_view(request):
-    """Yangi e‘lon qo‘shish"""
+    """Yangi e'lon qo'shish"""
     if request.method == 'POST':
         try:
             category = request.POST.get('category')
@@ -66,7 +160,7 @@ def elon_qoshish_view(request):
             asosiyimg = request.FILES.get('asosiyimg')
 
             if not all([category, mahsulotturi, name, viloyat, narx_input, asosiyimg]):
-                messages.error(request, "Iltimos, barcha majburiy maydonlarni to‘ldiring.")
+                messages.error(request, "Iltimos, barcha majburiy maydonlarni to'ldiring.")
                 return render(request, 'elon_qoshish.html')
 
             cleaned_narx = ''.join(c for c in narx_input if c.isdigit() or c in '.,') or '0'
@@ -96,7 +190,7 @@ def elon_qoshish_view(request):
                 aktiv=True
             )
 
-            messages.success(request, f'"{name}" mahsuloti muvaffaqiyatli qo‘shildi!')
+            messages.success(request, f'"{name}" mahsuloti muvaffaqiyatli qo\'shildi!')
             return redirect('mahsulot_detail', mahsulot_id=mahsulot.id)
 
         except Exception as e:
@@ -107,7 +201,7 @@ def elon_qoshish_view(request):
 
 @login_required
 def mening_elonlarim_view(request):
-    """Foydalanuvchining o‘z e‘lonlari"""
+    """Foydalanuvchining o'z e'lonlari"""
     try:
         status = request.GET.get('status')
         mahsulotlar = Mahsulot.objects.filter(user=request.user).order_by('-id')
@@ -132,7 +226,7 @@ def sotilgan_qilish_view(request, mahsulot_id):
     mahsulot = get_object_or_404(Mahsulot, id=mahsulot_id, user=request.user)
     mahsulot.sotilgan = True
     mahsulot.save(update_fields=['sotilgan'])
-    messages.success(request, f'"{mahsulot.name}" sotilganlar ro‘yxatiga o‘tkazildi!')
+    messages.success(request, f'"{mahsulot.name}" sotilganlar ro\'yxatiga o\'tkazildi!')
     return redirect('mening_elonlarim')
 
 
@@ -141,19 +235,19 @@ def elon_ochirish_view(request, mahsulot_id):
     mahsulot = get_object_or_404(Mahsulot, id=mahsulot_id, user=request.user)
     nom = mahsulot.name
     mahsulot.delete()
-    messages.success(request, f'"{nom}" e‘loni o‘chirildi!')
+    messages.success(request, f'"{nom}" e\'loni o\'chirildi!')
     return redirect('mening_elonlarim')
 
 
 @login_required
 def sevimliga_qoshish_view(request, mahsulot_id):
-    """Mahsulotni sevimlilarga qo‘shish"""
+    """Mahsulotni sevimlilarga qo'shish"""
     try:
         mahsulot = get_object_or_404(Mahsulot, id=mahsulot_id)
         sevimli, created = Sevimli.objects.get_or_create(user=request.user, mahsulot=mahsulot)
 
         if created:
-            messages.success(request, f'"{mahsulot.name}" sevimlilarga qo‘shildi ❤️')
+            messages.success(request, f'"{mahsulot.name}" sevimlilarga qo\'shildi ❤️')
         else:
             messages.info(request, f'"{mahsulot.name}" allaqachon sevimlilarda bor.')
 
@@ -190,7 +284,7 @@ def sevimlidan_ochirish_view(request, sevimli_id):
 
 
 def mahsulot_detail_view(request, mahsulot_id):
-    """Mahsulot tafsilotlari (login bo‘lmaganlar ham kiradi)"""
+    """Mahsulot tafsilotlari (login bo'lmaganlar ham kiradi)"""
     try:
         mahsulot = get_object_or_404(Mahsulot, id=mahsulot_id)
 
@@ -209,9 +303,9 @@ def mahsulot_detail_view(request, mahsulot_id):
         })
 
     except Mahsulot.DoesNotExist:
-        messages.error(request, "Mahsulot topilmadi yoki o‘chirilgan.")
+        messages.error(request, "Mahsulot topilmadi yoki o'chirilgan.")
         return redirect('index')
     except Exception as e:
         print(f"DEBUG: Xatolik - {e}")
-        messages.error(request, "Noma’lum xatolik yuz berdi.")
+        messages.error(request, "Noma'lum xatolik yuz berdi.")
         return redirect('index')

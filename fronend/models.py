@@ -153,3 +153,17 @@ class Sevimli(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.mahsulot.name}"
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Kategoriya nomi")
+    description = models.TextField(blank=True, verbose_name="Tavsif")
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name = "Kategoriya"
+        verbose_name_plural = "Kategoriyalar"
+        ordering = ['name']
+    
+    def __str__(self):
+        return self.name

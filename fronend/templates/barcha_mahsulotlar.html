@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="uz">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barcha mahsulotlar - Tez Sot</title>
+    <link rel="icon" type="image/png" href="{% static 'img/iconlogo.png' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+      :root {
+        --primary-color: #4a6cf7;
+        --secondary-color: #6b7280;
+        --accent-color: #f59e0b;
+        --text-dark: #1f2937;
+        --text-light: #6b7280;
+        --bg-light: #f9fafb;
+        --border-radius: 12px;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
+
+      .wrapper {
+        max-width: 1400px;
+        padding: 2rem 1rem;
+      }
+
+      .page-title {
+        text-align: left;
+        margin-bottom: 2.5rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        position: relative;
+      }
+
+      .continer {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1500px;
+      }
+
+      .page-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: var(--accent-color);
+        border-radius: 2px;
+      }
+
+      /* Qidiruv bo'limi */
+      .search-section {
+        margin-bottom: 2.5rem;
+      }
+
+      .search-input-container {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 1rem 3rem 1rem 1.5rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        transition: var(--transition);
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-light);
+        font-size: 1.2rem;
+      }
+
+      .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        max-height: 400px;
+        overflow-y: auto;
+        z-index: 1000;
+        margin-top: 0.5rem;
+        display: none;
+        border: 1px solid #e5e7eb;
+      }
+
+      .search-results.active {
+        display: block;
+      }
+
+      .search-result-item {
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .search-result-item:hover {
+        background: #f9fafb;
+      }
+
+      .search-result-item:last-child {
+        border-bottom: none;
+      }
+
+      .search-result-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .search-result-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .search-result-content {
+        flex: 1;
+      }
+
+      .search-result-name {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: var(--text-dark);
+      }
+
+      .search-result-price {
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .search-result-category {
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      .no-results {
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-light);
+      }
+
+      .loading-spinner {
+        display: none;
+        text-align: center;
+        padding: 1rem;
+        color: var(--primary-color);
+      }
+
+      .loading-spinner.active {
+        display: block;
+      }
+
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .product-card {
+        cursor: pointer;
+        background: white;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      .product-image {
+        width: 100%;
+        height: 180px;
+        overflow: hidden;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .product-card:hover .product-image img {
+        transform: scale(1.05);
+      }
+
+      .product-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--accent-color);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 15px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        z-index: 2;
+      }
+
+      .product-content {
+        padding: 1rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+      }
+
+      .product-name {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+        color: var(--text-dark);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .product-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 0.8rem;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .product-location,
+      .product-date {
+        display: flex;
+        align-items: center;
+        font-size: 0.75rem;
+        color: var(--text-light);
+      }
+
+      .product-location svg,
+      .product-date svg {
+        margin-right: 4px;
+        width: 14px;
+        height: 14px;
+      }
+
+      .product-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+        gap: 0.5rem;
+      }
+
+      .btn {
+        padding: 0.5rem 0.8rem;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: var(--primary-color);
+        color: white;
+        flex: 1;
+      }
+
+      .btn-primary:hover {
+        background: #3a56d4;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        flex: 1;
+      }
+
+      .btn-secondary:hover {
+        background: #f0f4ff;
+      }
+
+      .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--text-light);
+        font-size: 1.2rem;
+      }
+
+      @media (max-width: 480px) {
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+        
+        .product-image {
+          height: 140px;
+        }
+
+        .page-title {
+          font-size: 1.8rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .product-content {
+          padding: 0.7rem;
+        }
+
+        .product-price {
+          font-size: 1.1rem;
+        }
+
+        .product-name {
+          font-size: 0.85rem;
+        }
+
+        .btn {
+          padding: 0.4rem 0.6rem;
+          font-size: 0.75rem;
+        }
+        
+        .product-details {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+        }
+
+        .search-input {
+          padding: 0.8rem 2.5rem 0.8rem 1rem;
+          font-size: 1rem;
+        }
+
+        .search-icon {
+          right: 0.8rem;
+          font-size: 1rem;
+        }
+
+        .search-result-item {
+          padding: 0.8rem;
+          gap: 0.8rem;
+        }
+
+        .search-result-image {
+          width: 50px;
+          height: 50px;
+        }
+
+        .search-result-name {
+          font-size: 0.9rem;
+        }
+
+        .search-result-price {
+          font-size: 1rem;
+        }
+      }
+
+      @media (min-width: 481px) and (max-width: 639px) {
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
+        }
+
+        .product-image {
+          height: 160px;
+        }
+
+        .product-content {
+          padding: 0.8rem;
+        }
+
+        .product-price {
+          font-size: 1.2rem;
+        }
+
+        .product-name {
+          font-size: 0.9rem;
+        }
+
+        .btn {
+          padding: 0.5rem 0.7rem;
+          font-size: 0.75rem;
+        }
+      }
+
+      @media (min-width: 640px) and (max-width: 767px) {
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+
+        .product-image {
+          height: 180px;
+        }
+      }
+
+      @media (min-width: 768px) and (max-width: 1023px) {
+        .products-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+
+        .product-image {
+          height: 200px;
+        }
+
+        .product-content {
+          padding: 1.25rem;
+        }
+
+        .product-price {
+          font-size: 1.4rem;
+        }
+
+        .product-name {
+          font-size: 1.05rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (min-width: 1024px) and (max-width: 1279px) {
+        .products-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+
+        .product-image {
+          height: 200px;
+        }
+      }
+
+      @media (min-width: 1280px) {
+        .products-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 24px;
+        }
+
+        .product-image {
+          height: 220px;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    {% include 'nav.html' %}
+
+    <div class="wrapper continer">
+      <h1 class="page-title">Barcha e'lonlar</h1>
+     
+      <!-- Soddalashtirilgan qidiruv bo'limi -->
+    
+      
+      <!-- Mahsulotlar -->
+      <div class="products-grid" id="productsContainer">
+        {% if mahsulotlar %}
+          {% for product in mahsulotlar %}
+          <div class="product-card">
+            <a href="{% url 'mahsulot_detail' product.id %}" class="block h-full">
+              <div class="product-image">
+                {% if product.asosiyimg %}
+                <img src="{{ product.asosiyimg.url }}" alt="{{ product.name }}">
+                {% else %}
+                <div style="background: #f0f0f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #999;">
+                  <i class="fas fa-image text-2xl"></i>
+                </div>
+                {% endif %}
+
+                <!-- Sotilgan/Yangi belgilari -->
+                {% if product.sotilgan %}
+                <span class="product-badge" style="background: #ef4444">🔴 Sotilgan</span>
+                {% else %}
+                <span class="product-badge" style="background: #10b981">🟢 Yangi</span>
+                {% endif %}
+              </div>
+
+              <div class="product-content">
+                <div class="product-price">
+                  {{ product.narx_formatted }}
+                </div>
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.5rem;">
+                  {{ product.mahsulotturi }}
+                </p>
+
+                <div class="product-details">
+                  <div class="product-location">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    {{ product.get_viloyat_display }}
+                  </div>
+                  <div class="product-date">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    {{ product.sana|date:"d.m.Y" }}
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <div class="product-actions">
+              <a href="{% url 'mahsulot_detail' product.id %}" class="btn btn-primary">
+                <i class="fas fa-info-circle mr-1"></i>
+                Batafsil
+              </a>
+                
+              {% if user.is_authenticated %}
+              <form method="POST" action="{% url 'sevimliga_qoshish' product.id %}" class="flex-1">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary w-full flex items-center justify-center gap-1">
+                  <i class="fas fa-heart"></i>
+                  Saqlash
+                </button>
+              </form>
+              {% else %}
+              <a href="{% url 'kirish' %}" class="btn btn-secondary flex items-center justify-center gap-1 flex-1">
+                <i class="fas fa-heart"></i>
+                Saqlash
+              </a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+        <div class="empty-state">
+          <i class="fas fa-box-open text-5xl mb-4 text-gray-400"></i>
+          <p class="text-xl mb-4">Hozircha mahsulotlar mavjud emas 😔</p>
+          <p style="margin-top: 10px; font-size: 1rem">
+            <a href="{% url 'elon_qoshish' %}" style="color: var(--primary-color); text-decoration: underline">
+              Birinchi mahsulotni qo'shish
+            </a>
+          </p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <script>
+      // Real-time qidiruv funksiyalari
+      let searchTimeout;
+      let currentSearchQuery = '';
+      
+      document.getElementById('realTimeSearch').addEventListener('input', function(e) {
+        const query = e.target.value.trim();
+        currentSearchQuery = query;
+        const resultsContainer = document.getElementById('resultsContainer');
+        const searchResults = document.getElementById('searchResults');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        
+        // Oldingi timeoutni tozalash
+        clearTimeout(searchTimeout);
+        
+        // Agar so'rov bo'sh bo'lsa, natijalarni yashirish
+        if (query.length === 0) {
+          searchResults.classList.remove('active');
+          // Agar qidiruv bo'sh bo'lsa, barcha mahsulotlarni ko'rsatish
+          showAllProducts();
+          return;
+        }
+        
+        // Loading ko'rsatish
+        loadingSpinner.classList.add('active');
+        searchResults.classList.add('active');
+        
+        // Yangi timeout o'rnatish
+        searchTimeout = setTimeout(() => {
+          performSearch(query);
+        }, 300);
+      });
+      
+      // Enter tugmasini bosganda to'liq qidiruv
+      document.getElementById('realTimeSearch').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          performFullSearch(currentSearchQuery);
+        }
+      });
+      
+      // Tashqi elementlarni bosganda qidiruv natijalarini yashirish
+      document.addEventListener('click', function(e) {
+        const searchResults = document.getElementById('searchResults');
+        const searchInput = document.getElementById('realTimeSearch');
+        
+        if (!searchResults.contains(e.target) && e.target !== searchInput) {
+          searchResults.classList.remove('active');
+        }
+      });
+      
+      // Real-time qidiruvni amalga oshirish
+      function performSearch(query) {
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const resultsContainer = document.getElementById('resultsContainer');
+        
+        // AJAX so'rov
+        fetch(`/api/search/?q=${encodeURIComponent(query)}`)
+          .then(response => response.json())
+          .then(data => {
+            loadingSpinner.classList.remove('active');
+            displaySearchResults(data);
+          })
+          .catch(error => {
+            console.error('Qidiruv xatosi:', error);
+            loadingSpinner.classList.remove('active');
+            resultsContainer.innerHTML = `
+              <div class="no-results">
+                <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                <p>Qidiruvda xatolik yuz berdi</p>
+              </div>
+            `;
+          });
+      }
+      
+      // To'liq qidiruvni amalga oshirish
+      function performFullSearch(query) {
+        // Qidiruv natijalarini yashirish
+        document.getElementById('searchResults').classList.remove('active');
+        
+        // AJAX so'rov - barcha mahsulotlarni filtrlash
+        fetch(`/api/full-search/?q=${encodeURIComponent(query)}`)
+          .then(response => response.json())
+          .then(data => {
+            displayFilteredProducts(data);
+          })
+          .catch(error => {
+            console.error('To\'liq qidiruv xatosi:', error);
+            // Agar xatolik bo'lsa, oddiy sahifa yuklash
+            window.location.href = `{% url 'barcha_mahsulotlar' %}?q=${encodeURIComponent(query)}`;
+          });
+      }
+      
+      // Qidiruv natijalarini ko'rsatish
+      function displaySearchResults(results) {
+        const resultsContainer = document.getElementById('resultsContainer');
+        
+        if (results.length === 0) {
+          resultsContainer.innerHTML = `
+            <div class="no-results">
+              <i class="fas fa-search text-2xl mb-2"></i>
+              <p>Hech narsa topilmadi</p>
+              <p class="text-sm mt-2">Boshqa so'zlar bilan qayta urinib ko'ring</p>
+            </div>
+          `;
+          return;
+        }
+        
+        let html = '';
+        results.forEach(product => {
+          html += `
+            <div class="search-result-item" onclick="window.location.href='${product.url}'">
+              <div class="search-result-image">
+                ${product.image ? 
+                  `<img src="${product.image}" alt="${product.name}">` : 
+                  `<div style="background:#f0f0f0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#999;">
+                    <i class="fas fa-image"></i>
+                  </div>`
+                }
+              </div>
+              <div class="search-result-content">
+                <div class="search-result-name">${product.name}</div>
+                <div class="search-result-price">${product.price}</div>
+                <div class="search-result-category">${product.category}</div>
+              </div>
+            </div>
+          `;
+        });
+        
+        resultsContainer.innerHTML = html;
+      }
+      
+      // Filtrlangan mahsulotlarni ko'rsatish
+      function displayFilteredProducts(products) {
+        const productsContainer = document.getElementById('productsContainer');
+        
+        if (products.length === 0) {
+          productsContainer.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-search text-5xl mb-4 text-gray-400"></i>
+              <p class="text-xl mb-4">Qidiruv bo'yicha hech narsa topilmadi</p>
+              <p class="text-sm">Boshqa so'zlar bilan qayta urinib ko'ring</p>
+            </div>
+          `;
+          return;
+        }
+        
+        let html = '';
+        products.forEach(product => {
+          html += `
+            <div class="product-card">
+              <a href="${product.url}" class="block h-full">
+                <div class="product-image">
+                  ${product.image ? 
+                    `<img src="${product.image}" alt="${product.name}">` : 
+                    `<div style="background: #f0f0f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #999;">
+                      <i class="fas fa-image text-2xl"></i>
+                    </div>`
+                  }
+                  <span class="product-badge" style="background: ${product.sold ? '#ef4444' : '#10b981'}">
+                    ${product.sold ? '🔴 Sotilgan' : '🟢 Yangi'}
+                  </span>
+                </div>
+
+                <div class="product-content">
+                  <div class="product-price">${product.price}</div>
+                  <h3 class="product-name">${product.name}</h3>
+                  <p style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.5rem;">
+                    ${product.category}
+                  </p>
+
+                  <div class="product-details">
+                    <div class="product-location">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      ${product.location}
+                    </div>
+                    <div class="product-date">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      ${product.date}
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <div class="product-actions">
+                <a href="${product.url}" class="btn btn-primary">
+                  <i class="fas fa-info-circle mr-1"></i>
+                  Batafsil
+                </a>
+                <a href="#" class="btn btn-secondary flex items-center justify-center gap-1 flex-1">
+                  <i class="fas fa-heart"></i>
+                  Saqlash
+                </a>
+              </div>
+            </div>
+          `;
+        });
+        
+        productsContainer.innerHTML = html;
+      }
+      
+      // Barcha mahsulotlarni ko'rsatish
+      function showAllProducts() {
+        // Bu funksiya sahifa yuklangan mahsulotlarni qayta ko'rsatadi
+        // Amalda bu Django template orqali yuklangan ma'lumotlarni qayta ko'rsatish kerak
+        // Bu yerda siz AJAX orqali barcha mahsulotlarni yuklashingiz mumkin
+        // Yoki sahifani qayta yuklashingiz mumkin
+        window.location.href = "{% url 'barcha_mahsulotlar' %}";
+      }
+    </script>
+  </body>
+</html>

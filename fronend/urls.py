@@ -1,12 +1,13 @@
+# fronend/urls.py
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 
-
 urlpatterns = [
     path('', views.home_view, name='home'),
-    path('', views.index, name='mahsulotlar'),
+    path('mahsulotlar/', views.index, name='mahsulotlar'),
+    path('barcha-mahsulotlar/', views.barcha_mahsulotlar, name='barcha_mahsulotlar'),
     path('qosjso/', views.qosjso_view, name='qosjso'),
     path('test404/', views.test_404, name='test_404'),
     path('profil/', views.profil_view, name='profil'),
@@ -20,5 +21,8 @@ urlpatterns = [
     path('sevimliga-qoshish/<int:mahsulot_id>/', views.sevimliga_qoshish_view, name='sevimliga_qoshish'),
     path('sevimlilarim/', views.sevimlilarim_view, name='sevimlilarim'),
     path('sevimlidan-ochirish/<int:sevimli_id>/', views.sevimlidan_ochirish_view, name='sevimlidan_ochirish'),
+    path('api/search/', views.api_search, name='api_search'),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

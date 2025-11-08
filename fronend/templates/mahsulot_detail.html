@@ -501,7 +501,7 @@
             color: #991b1b;
         }
 
-        /* O'xshash mahsulotlar styles */
+        /* O'xshash mahsulotlar styles - IMPROVED */
         .similar-products {
             margin-top: 40px;
             padding: 20px 0;
@@ -535,6 +535,9 @@
             cursor: pointer;
             text-decoration: none;
             color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .similar-card:hover {
@@ -544,9 +547,13 @@
 
         .similar-image {
             width: 100%;
-            height: 160px;
-            overflow: hidden;
             position: relative;
+            overflow: hidden;
+        }
+
+        /* Mobile uchun 165px balandlik */
+        .similar-image {
+            height: 165px;
         }
 
         .similar-image img {
@@ -581,6 +588,9 @@
 
         .similar-content {
             padding: 12px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .similar-price {
@@ -599,6 +609,7 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            flex-grow: 1;
         }
 
         .similar-category {
@@ -654,7 +665,12 @@
             }
 
             .similar-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, minmax(150px, 2fr));
+            }
+            
+            /* Desktop uchun rasm balandligi */
+            .similar-image {
+                height: 180px;
             }
         }
 
@@ -689,6 +705,11 @@
 
             .similar-grid {
                 grid-template-columns: repeat(3, 1fr);
+            }
+            
+            /* Katta ekranlar uchun rasm balandligi */
+            .similar-image {
+                height: 200px;
             }
         }
 
@@ -747,6 +768,11 @@
             .similar-header h2 {
                 font-size: 20px;
             }
+            
+            /* Mobile uchun 165px balandlikni ta'minlash */
+            .similar-image {
+                height: 165px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -779,8 +805,9 @@
                 grid-template-columns: 1fr;
             }
 
+            /* Kichik ekranlarda ham 165px balandlik */
             .similar-image {
-                height: 140px;
+                height: 165px;
             }
         }
     </style>
@@ -900,7 +927,7 @@
                         <a href="{% url 'mahsulot_detail' similar.id %}" class="similar-card">
                             <div class="similar-image">
                                 {% if similar.asosiyimg %}
-                                <img src="{{ product.asosiyimg.url }}" alt="{{ similar.name }}">
+                                <img src="{{ similar.asosiyimg.url }}" alt="{{ similar.name }}">
                                 {% else %}
                                 <div class="no-image" style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; color: #999;">
                                     <i class="fas fa-image" style="font-size: 48px;"></i>
