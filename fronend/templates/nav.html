@@ -316,14 +316,18 @@
       .mobile-search-container {
         position: relative;
         width: 100%;
-        margin-bottom: 1rem;
+      
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
       .mobile-search-input {
         width: 100%;
        margin-top: 13px;
-       padding-top: 5px;
-       padding-bottom: 5px;
+      padding-left: 46px;
+      padding-right: 10px;
+      padding-top: 17px;
+      padding-bottom: 15px;
 
         border: 2px solid #e5e7eb;
         border-radius: 12px;
@@ -342,7 +346,8 @@
       .mobile-search-icon {
         position: absolute;
         right: 1rem;
-        top: 50%;
+     top: 44px;
+     left: 33px;
         transform: translateY(-50%);
         color: #6b7280;
         transition: color 0.3s ease;
@@ -391,6 +396,7 @@
         border: 2px solid #e5e7eb;
         border-radius: 10px;
         font-size: 1rem;
+        
         background: #f9fafb;
         transition: all 0.3s ease;
       }
@@ -824,10 +830,10 @@
   </head>
   <body class="bg-gray-50 font-inter min-h-screen">
     <!-- Desktop Header -->
-    <header class="bg-white shadow-soft sticky top-0 z-50 border-b border-gray-100">
+    <header class="bg-white shadow-soft sticky top-[30px] z-50 border-b border-gray-100">
       <div class="max-w-7xl mx-auto mt-[10px]">
         <!-- Top Navigation -->
-        <div class="flex items-center justify-between h-16">
+        <div class="flex items-center  justify-between h-16">
           <!-- Logo -->
           <a href="/">
             <div class="flex-shrink-0 flex items-center space-x-3">
@@ -842,32 +848,7 @@
           </a>
 
           <!-- Mobile qidiruv (faqat kichik ekranlarda) -->
-          <div class="">
-            <div class="mobile-search-container">
-              <input 
-                type="text" 
-                id="mobileSearch" 
-                class="mobile-search-input" 
-                placeholder="Mahsulot nomi, kategoriya yoki tavsif bo'yicha qidiring..."
-                autocomplete="off"
-              >
-              <div class="mobile-search-icon">
-                <i class="fas fa-search"></i>
-              </div>
-              
-              <div class="search-results" id="mobileSearchResults">
-                <div class="loading-spinner" id="mobileLoadingSpinner">
-                  <div class="loading-dots">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                  </div>
-                  <span>Qidirilmoqda...</span>
-                </div>
-                <div id="mobileResultsContainer"></div>
-              </div>
-            </div>
-          </div>
+       
 
           <!-- Desktop Navigation -->
           <nav class="hidden lg:flex space-x-8 items-center">
@@ -877,11 +858,7 @@
               >Bosh sahifa</a
             >
 
-            <a
-              href="{% url 'boglanish' %}"
-              class="nav-link text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
-              >Yordam</a
-            >
+           
             <a
               href="{% url 'biz_haqimizda' %}"
               class="nav-link text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
@@ -915,12 +892,7 @@
             </div>
 
             <!-- Filtrlash tugmalari -->
-            <div class="hidden xl:flex items-center space-x-4">
-              <button class="filter-toggle-btn flex items-center space-x-2 px-3 py-2 bg-primary-50 text-primary-600 rounded-lg hover:bg-primary-100 transition-colors duration-200">
-                <i class="fas fa-filter text-sm"></i>
-                <span class="text-sm font-medium">Filtrlash</span>
-              </button>
-            </div>
+           
           </nav>
 
           <!-- Right Side Icons -->
@@ -987,7 +959,7 @@
           type="text" 
           id="mobileSearchFull" 
           class="mobile-search-input-full" 
-          placeholder="Mahsulot nomi, kategoriya yoki tavsif bo'yicha qidiring..."
+          placeholder="Mahsulotlar va turkumlar izlash"
           autocomplete="off"
           autofocus
           aria-label="Qidiruv so'rovi"
@@ -995,110 +967,6 @@
         <button class="voice-search-btn" id="voiceSearchBtn" aria-label="Ovozli qidiruv" title="Ovozli qidiruv">
           <i class="fas fa-microphone text-sm"></i>
         </button>
-      </div>
-      <h1>Navsiya Etilgan Mahsulotlar</h1>
-      <div class="products-grid">
-        {% if mahsulotlar %}
-          {% for product in mahsulotlar %}
-          <div class="product-card">
-            <a href="{% url 'mahsulot_detail' product.id %}" class="block h-full">
-              <div class="product-image">
-                {% if product.asosiyimg %}
-                <img src="{{ product.asosiyimg.url }}" class="..." alt="{{ product.name }}">
-            {% else %}
-                <div
-                  style="
-                    background: #f0f0f0;
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: #999;
-                  "
-                >
-                  <i class="fas fa-image text-2xl"></i>
-                </div>
-            {% endif %}
-            
-
-                <!-- Sotilgan/Yangi belgilari -->
-                {% if product.sotilgan %}
-                <span class="product-badge" style="background: #ef4444">🔴 Sotilgan</span>
-                {% else %}
-                <span class="product-badge" style="background: #10b981">🟢 Yangi</span>
-                {% endif %}
-              </div>
-
-              <div class="product-content">
-                <div class="product-price">
-                  {% if product.narx_formatted %}
-                    {{ product.narx_formatted }}
-                  {% else %}
-                    {{ product.narx }} so'm
-                  {% endif %}
-                </div>
-                <h3 class="product-name">{{ product.name }}</h3>
-                <p style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.5rem;">
-                  {{ product.mahsulotturi }}
-                </p>
-
-                <div class="product-details">
-                  <div class="product-location">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {% if product.get_viloyat_display %}
-                      {{ product.get_viloyat_display }}
-                    {% else %}
-                      {{ product.viloyat }}
-                    {% endif %}
-                  </div>
-                  <div class="product-date">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    {{ product.sana|date:"d.m.Y" }}
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            <div class="product-actions">
-              <a href="{% url 'mahsulot_detail' product.id %}" class="btn btn-primary">
-                <i class="fas fa-info-circle mr-1"></i>
-                Batafsil
-              </a>
-                
-              {% if user.is_authenticated %}
-              <form method="POST" action="{% url 'sevimliga_qoshish' product.id %}" class="flex-1">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-secondary w-full flex items-center justify-center gap-1">
-                  <i class="fas fa-heart"></i>
-                  Saqlash
-                </button>
-              </form>
-              {% else %}
-              <a href="{% url 'kirish' %}" class="btn btn-secondary flex items-center justify-center gap-1 flex-1">
-                <i class="fas fa-heart"></i>
-                Saqlash
-              </a>
-              {% endif %}
-            </div>
-          </div>
-          {% endfor %}
-        {% else %}
-        <div class="empty-state">
-          <i class="fas fa-box-open text-5xl mb-4 text-gray-400"></i>
-          <p class="text-xl mb-4">Hozircha mahsulotlar mavjud emas 😔</p>
-          <p style="margin-top: 10px; font-size: 1rem">
-            <a href="{% url 'elon_qoshish' %}" style="color: var(--primary-color); text-decoration: underline">
-              Birinchi mahsulotni qo'shish
-            </a>
-          </p>
-        </div>
-        {% endif %}
       </div>
       <div class="search-results active h-full overflow-y-auto">
         <div class="loading-spinner" id="mobileSearchFullLoading">
@@ -1230,16 +1098,34 @@
       </div>
     </div>
 
-    <!-- Tez Filtrlash -->
-    <div class="max-w-7xl mx-auto px-4 py-6">
-      <div class="quick-filters">
-        
-        {% for category in categories %}
-        <div class="quick-filter" data-category="{{ category.id }}">{{ category.name }}</div>
-        {% endfor %}
+   
+      <div class=" fixed top-[78px] w-full left-0 w-full z-50 mb-[20px]" >
+        <div class="mobile-search-container">
+          <input 
+            type="text" 
+            id="mobileSearch" 
+            class="mobile-search-input w-full" 
+            placeholder="Mahsulotlar va turkumlar izlash"
+            autocomplete="off"
+          >
+          <div class="mobile-search-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          
+          <div class="search-results" id="mobileSearchResults">
+            <div class="loading-spinner" id="mobileLoadingSpinner">
+              <div class="loading-dots">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <span>Qidirilmoqda...</span>
+            </div>
+            <div id="mobileResultsContainer"></div>
+          </div>
+        </div>
       </div>
-    </div>
-
+   
     <!-- Mobile Menu Overlay -->
     <div class="fixed inset-0 z-50 hidden" id="mobile-menu">
       <div
@@ -1316,13 +1202,7 @@
             </a>
             {% endif %}
             
-            <a
-              href="{% url 'boglanish' %}"
-              class="flex items-center space-x-4 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors duration-200"
-            >
-              <i class="ri-question-line text-lg"></i>
-              <span>Yordam</span>
-            </a>
+       
 
             <!-- Mobile filtrlash -->
             <button
@@ -1358,7 +1238,26 @@
           <i class="ri-search-line text-xl mb-1"></i>
           <span class="text-xs">Qidirish</span>
         </button>
-        
+        {% if user.is_authenticated %}
+        <a
+        href="{% url 'elon_qoshish' %}"
+        class="flex relative flex-col items-center py-1 px-3 text-gray-600"
+      >
+        <i class="fa fa-plus text-xl mb-1"></i>
+        <span class="text-xs">Qo'shish</span>
+        {% if request.user.sevimli_set.count > 0 %}
+      
+        {% endif %}
+      </a>
+        {% else %}
+        <a
+          href="{% url 'kirish' %}"
+          class="flex flex-col items-center py-1 px-3 text-gray-600"
+        >
+          <i class="fa fa-plus text-xl mb-1"></i>
+          <span class="text-xs">Qo'shish</span>
+        </a>
+        {% endif %}
         {% if user.is_authenticated %}
         <a
           href="{% url 'sevimlilarim' %}"
@@ -1381,7 +1280,7 @@
           <span class="text-xs">Sevimli</span>
         </a>
         {% endif %} 
-        
+      
         {% if user.is_authenticated %}
         <a
           href="{% url 'mening_elonlarim' %}"

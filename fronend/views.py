@@ -309,3 +309,8 @@ def mahsulot_detail_view(request, mahsulot_id):
         print(f"DEBUG: Xatolik - {e}")
         messages.error(request, "Noma'lum xatolik yuz berdi.")
         return redirect('index')
+
+
+
+def newnav(request):
+    return render(request, 'newnav.html')

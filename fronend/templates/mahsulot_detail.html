@@ -27,8 +27,10 @@
             width: 100%;
             max-width: 1280px;
             margin-left: auto;
+
             margin-right: auto;
             padding: 15px 24px 0;
+            
         }
 
         .yolaklar_db {
@@ -721,6 +723,7 @@
 
         @media (max-width: 767px) {
             .container_db {
+                margin-top: 55px;
                 padding: 15px 15px 0;
             }
             
@@ -775,45 +778,12 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .carousel-card {
-                height: 250px;
-            }
-            
-            .left_db h1 {
-                font-size: 24px;
-            }
-            
-            .brn_wraps_db button {
-                padding: 14px 16px;
-                font-size: 14px;
-            }
-            
-            .contact_item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            
-            .contact_icon {
-                width: 35px;
-                height: 35px;
-                font-size: 16px;
-            }
-
-            .similar-grid {
-                grid-template-columns: 1fr;
-            }
-
-            /* Kichik ekranlarda ham 165px balandlik */
-            .similar-image {
-                height: 165px;
-            }
-        }
+    
     </style>
 </head>
 
 <body>
+    {% include 'newnav.html' %}
     {% include 'nav.html' %}
 
     <div class="container_db">
@@ -1094,7 +1064,7 @@
                             <span>E'lonlaringizni birinchi o'ringa chiqaring</span>
                             <h6>Premium reklama xizmati</h6>
                         </div>
-                        <img src="{% static 'images/premium-badge.png' %}" alt="Premium">
+                        <img src="{% static 'img/iconlogo.png' %}" alt="Premium">
                     </div>
                     <button>Premium sotib olish</button>
                 </div>

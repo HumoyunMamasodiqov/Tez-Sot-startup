@@ -18,137 +18,42 @@
             font-family: 'Poppins', sans-serif;
         }
         
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        main {
-            flex: 1;
-        }
-        
-        footer {
-            background-color: #111827;
+          /* Footer qismi */
+          footer {
+            background-color: #333;
             color: white;
-            padding: 2.5rem 0;
-            margin-top: auto;
-        }
-        
-        .container {
-            max-width: 1140px;
-            margin: 0 auto;
-            padding: 0 1rem;
+            padding: 50px 0 20px;
         }
         
         .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
         }
         
-        .footer-links, .footer-social {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #4A6CF7;
         }
         
-        .footer-links {
-            flex: 1;
-            min-width: 250px;
+        .footer-column ul {
+            list-style: none;
         }
         
-        .footer-social {
-            flex: 1;
-            min-width: 250px;
+        .footer-column ul li {
+            margin-bottom: 10px;
         }
         
-        .footer-links h3, .footer-social h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: #fbbf24;
-        }
-        
-        .footer-links a {
-            color: #d1d5db;
+        .footer-column ul li a {
+            color: #ddd;
             text-decoration: none;
             transition: color 0.3s;
-            display: inline-block;
-            padding: 0.25rem 0;
         }
         
-        .footer-links a:hover {
-            color: #fbbf24;
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #374151;
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .social-icons a:hover {
-            background-color: #fbbf24;
-            transform: translateY(-3px);
-        }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #374151;
-            color: #9ca3af;
-            
-            font-size: 0.875rem;
-        }
-        
-        /* Responsive dizayn */
-        @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .social-icons {
-                justify-content: center;
-            }
-        }
-        
-        @media (min-width: 1200px) {
-            .container {
-                max-width: 1140px;
-            }
-        }
-        
-        @media (min-width: 992px) {
-            .container {
-                max-width: 960px;
-            }
-        }
-        
-        @media (min-width: 768px) {
-            .container {
-                max-width: 720px;
-            }
-        }
-        
-        @media (min-width: 576px) {
-            .container {
-                max-width: 540px;
-            }
+        .footer-column ul li a:hover {
+            color: #3159fa;
         }
     </style>
 </head>
@@ -156,33 +61,55 @@
 
     
     <!-- Futer -->
-    <footer style="background: #27383f; color: white; padding: 40px 0; margin-top: 60px;">
-        <div style="max-width: 1280px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
-                <div>
-                    <h3 style="font-size: 20px; margin-bottom: 15px;"><img class="logo w-[150px] h-[50px] " src="{% static 'img/logo.png' %}" alt=""></h3>
-                    <p style="color: #ccc; line-height: 1.6;">O'zbekistondagi eng yirik e'lonlar platformasi. Biz sizga eng yaxshi mahsulotlarni topishda yordam beramiz.</p>
-                </div>
-                <div>
-                    <h4 style="font-size: 16px; margin-bottom: 15px;">Tez havolalar</h4>
-                    <ul style="list-style: none; color: #ccc;">
-                        <li style="margin-bottom: 8px;"><a href="#" style="color: #ccc; text-decoration: none;">Bosh sahifa</a></li>
-                        <li style="margin-bottom: 8px;"><a href="#" style="color: #ccc; text-decoration: none;">Kategoriyalar</a></li>
-                        <li style="margin-bottom: 8px;"><a href="#" style="color: #ccc; text-decoration: none;">Yordam</a></li>
-                        <li style="margin-bottom: 8px;"><a href="#" style="color: #ccc; text-decoration: none;">Biz haqimizda</a></li>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Kompaniya haqida</h3>
+                    <ul>
+                        <li><a href="{% url 'biz_haqimizda' %}">Biz haqimizda</a></li>
+                        <li><a href="#">Hamkorlar</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 style="font-size: 16px; margin-bottom: 15px;">Aloqa</h4>
-                    <ul style="list-style: none; color: #ccc;">
-                        <li style="margin-bottom: 8px;"><i class="fas fa-phone"></i> +998 33 026 00 38 </li>
-                        <li style="margin-bottom: 8px;"><i class="fas fa-envelope"></i> info@tezsot.uz</li>
-                        <li style="margin-bottom: 8px;"><i class="fas fa-map-marker-alt"></i> Toshkent shahri</li>
+                
+                <!-- <div class="footer-column">
+                    <h3>Mijozlar uchun</h3>
+                    <ul>
+                        <li><a href="#">Yetkazib berish</a></li>
+                        <li><a href="#">Kafolat</a></li>
+                        <li><a href="#">To'lov usullari</a></li>
+                        <li><a href="#">Aksiyalar</a></li>
                     </ul>
+                </div>
+                 -->
+                <div class="footer-column">
+                    <h3>Yordam</h3>
+                    <ul>
+                        <li><a href="{% url 'boglanish' %}">Yordam markazi</a></li>
+                        <li><a href="@tezsot_support_bot">Qo'llab-quvvatlash</a></li>
+                        
+            
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Aloqa</h3>
+                    <ul>
+                        <li>Manzil: Andijon Viloyati, Izboskan tumani</li>
+                        <li>Telefon: +998 33 026 00 38</li>
+                        <li>Email: humoyun731uzb@gmail.com</li>
+                    </ul>
+                    <div class="social-icons">
+                        <a href="#">FB</a>
+                        <a href="#">IG</a>
+                        <a href="#">TG</a>
+                  
+                    </div>
                 </div>
             </div>
-            <div style="border-top: 1px solid #444; margin-top: 30px; padding-top: 20px; text-align: center; color: #ccc;">
-                <p>© 2025 Tez Sot. Barcha huquqlar himoyalangan.</p>
+            
+            <div class="copyright m-auto">
+                &copy; 2025 Tez Sot . Barcha huquqlar himoyalangan.
             </div>
         </div>
     </footer>

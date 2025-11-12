@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Komponenti</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: sans-serif;
+    }
+    
+    .nw-nav {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        background-color: #4A6CF7;
+        height: 37px;
+        width: 100%;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    .nw-div-1 {
+        display: flex;
+        align-items: center;
+        width: 157px;
+        height: 22px;
+        background-color: #fff;
+        color: #000;
+        border-radius: 20px;
+    }
+    
+    .nw-div-1 p {
+        font-size: 12px;
+        font-weight: 600;
+        margin-right: 4px;
+    }
+    
+    .nw-img-1 {
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        margin-left: 2px;
+        margin-right: 5px;
+    }
+    
+    .nw-div-1 sup {
+        color: red;
+    }
+    
+    .nw-img-2 {
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        margin-left: 20px;
+        margin-right: 4px;
+    }
+    
+    .nw-a-1 {
+        margin-right: 30px;
+        margin-left: 5px;
+        border-bottom: 1px solid #fff;
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    .nw-a-2 {
+        margin-left: 7px;
+        margin-right: 40px;
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    .nw-a-3 {
+        margin-left: 7px;
+        margin-right: 35px;
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    .nw-div-2 {
+        padding-left: 4px;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        border: 2px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .nw-wrapper-1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    
+    .nw-a-4 {
+        margin-left: 10px;
+        margin-right: 240px;
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    .nw-div-3 {
+        position: relative;
+        left: 12px;
+        width: 52px;
+        height: 39px;
+        background-color: #4A6CF7;
+        border-radius: 10px;
+        padding-left: 15px;
+        padding-top: 8px;
+        margin-left: 20px;
+    }
+    
+    .nw-input-1 {
+        position: relative;
+        left: 20px;
+        padding-left: 30px;
+        width: 493px;
+        height: 40px;
+        border: 1px solid #4A6CF7;
+        border-radius: 10px;
+    }
+    
+    .nw-div-4 {
+        position: relative;
+        left: -15px;
+        padding-top: 2px;
+        padding-left: 3px;
+        border-radius: 50%;
+        width: 27px;
+        height: 27px;
+        background-color: #4A6CF7;
+        color: #fff;
+    }
+    
+    .nw-div-5 {
+        position: relative;
+        left: -492px;
+    }
+    
+    .nw-div-6 {
+        width: 47px;
+        height: 33px;
+        background-color: #4A6CF7;
+        border-radius: 10px;
+        padding-left: 13px;
+        padding-top: 5px;
+        color: #fff;
+    }
+    
+    .nw-div-7 {
+        color: #274151;
+        text-align: center;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+    
+    .nw-div-8 {
+        color: #274151;
+        text-align: center;
+        margin-right: 30px;
+    }
+    
+    .nw-div-9 {
+        width: 71px;
+        height: 37px;
+        border: 1px solid #4A6CF7;
+        border-radius: 10px;
+        padding-left: 13px;
+        padding-top: 5px;
+     
+    }
+    
+    .nw-div-2 h1 {
+        font-size: 10px;
+        font-weight: bold;
+    }
+    
+    /* Demo uchun qo'shimcha stillar */
+    .demo-content {
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .demo-content h2 {
+        margin-bottom: 20px;
+        color: #203e2e;
+    }
+    
+    .demo-content p {
+        margin-bottom: 15px;
+        line-height: 1.6;
+    }
+   
+    .nw-nav {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+
+    background-color: #4A6CF7;
+    z-index: 9999;
+    }
+    @media only screen and (max-width: 768px) {
+      .nw-a-3 {
+        display: none;
+      }
+      .nw-a-4,.nw-div-2 {
+        display: none;
+      }
+     .fa-telegram {
+        display: none;
+     }   
+     .yoq {
+        display: none;
+     }
+     .nw-a-1 {
+        font-size: 10px;
+     
+     }
+     .nw-a-2 {
+        font-size: 10px;
+        
+     }
+     .nw-a-4 {
+        font-size: 10px;
+     }
+     .nw-nav {
+        display: flex;
+        justify-content: space-between  ;
+        padding: 10px;
+        align-items: center;
+        
+     }
+    }
+</style>
+<body>
+    <div class="werapper">
+
+        <nav class="nw-nav">
+           
+            <div>
+                <i class="fa-solid fa-location-dot"></i>
+                <a class="nw-a-1" href="#">O'zbekiston</a>
+                <i class="fa-solid fa-phone"></i>
+                <a class="nw-a-2" href="#">+998 (33) 026 00 38</a>
+            </div>
+            <div class="yoq">
+    
+                <i class="fa-brands fa-telegram"></i>
+            </div>
+            <a class="nw-a-3" href="#">Texnik yordam markazi</a>
+            <div class="nw-div-2"><h1>i</h1></div>
+            <a class="nw-a-4" href="#">Yo'riqnoma</a>
+           <div class="flex justify-center itmems-center">
+    
+               <img class="nw-img-2" src="https://flagcdn.com/w40/uz.png" alt="O'zbekiston bayrog'i">
+               <p>O'z</p>
+           </div>
+        </nav>
+    </div>
+    
+   
+</body>
+</html>

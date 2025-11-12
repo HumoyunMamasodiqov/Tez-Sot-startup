@@ -48,6 +48,7 @@
         font-weight: 700;
         color: var(--primary-color);
         position: relative;
+        margin-top: 22px;
       }
 .continer {
   margin-left: auto;
@@ -236,6 +237,7 @@
         .page-title {
           font-size: 1.8rem;
           margin-bottom: 1.5rem;
+          margin-top: 22px;
         }
 
         .product-content {
@@ -355,12 +357,32 @@
           height: 220px;
         }
       }
+      .call {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 9999;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+      @media (max-width: 640px) {
+        .call {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body class="bg-gray-50">
+    {% include 'newnav.html' %}
     {% include 'nav.html' %}
 
     <div class="wrapper continer">
+      <a
+              href="{% url 'boglanish' %}"
+              class="nav-link text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              ><img class="call" src="{% static 'img/call.png' %}" alt=""></a
+            >
       <h1 class="page-title">Barcha e'lonlar</h1>
      
       <div class="products-grid">
