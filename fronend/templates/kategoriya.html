@@ -99,7 +99,9 @@
             .feature-item p {
                 font-size: 12px;
             }
-
+            .text {
+                font-size: 1px;
+            }
         }
         .mebel {
             background-image: url({% static 'img/mebel.png' %});
@@ -123,17 +125,18 @@
 
             background-image: url({% static 'img/onabola.png' %});
         }
+
             </style>
 
 </head>
 <body>
 
     <div class="features">
-
         <div class="feature-item">
-            <div class="icon"></div>
-            <p>Chet eldan tovarlar</p>
+            <div class="icon elek"></div>
+            <p>Elektronika</p>
         </div>
+       
 
         <div class="feature-item">
             <div class="icon elek"></div>
@@ -148,10 +151,14 @@
             <p>Mebellar</p>
         </div>
         <div class="feature-item">
-            <div class="icon car"></div>
-            <p>Auto elonlar</p>
+            <div class="icon mebel"></div>
+            <p>Mebellar</p>
+        </div>  
+        <div class="feature-item">
+            <div class="icon"></div>
+            <p class="text">Chet  tovarlar</p>
         </div>
-
+       
         <div class="feature-item">
             <div class="icon uy"></div>
             <p>Uy joy elonlari</p>
@@ -165,6 +172,10 @@
         <div class="feature-item">
             <div class="icon jihoz"></div>
             <p>Uy jihozlari</p>
+        </div>
+        <div class="feature-item">
+            <div class="icon car"></div>
+            <p>Auto elonlar</p>
         </div>
 
     </div>
