@@ -376,6 +376,8 @@
   <body class="bg-gray-50">
     {% include 'newnav.html' %}
     {% include 'nav.html' %}
+    {% include 'baner.html' %}
+    {% include 'kategoriya.html' %}
 
     <div class="wrapper continer">
       <a
@@ -388,7 +390,7 @@
       <div class="products-grid">
         {% if mahsulotlar %}
           {% for product in mahsulotlar %}
-          <div class="product-card">
+          <div class="product-card ">
             <a href="{% url 'mahsulot_detail' product.id %}" class="block h-full">
               <div class="product-image">
                 {% if product.asosiyimg %}

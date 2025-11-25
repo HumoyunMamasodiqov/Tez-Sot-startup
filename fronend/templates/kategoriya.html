@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="uz">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahsulotlar katalogi</title>
+
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: sans-serif;
+            background: #fff;
+            padding: 20px 0;
+        }
+
+        /* ==== DESKTOP (NO SCROLL) ==== */
+        .features {
+            max-width: 1150px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 0 15px;
+            overflow: hidden; /* 👈 scroll yo'q */
+            flex-wrap: wrap; /* 👈 joy yetmasa pastga tushadi */
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            width: 230px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 10px 15px 10px 65px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            cursor: pointer;
+            transition: transform .2s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Icon */
+        .icon {
+            width: 50px;
+            height: 50px;
+            background: url("{% static 'img/media.png' %}") center/90% no-repeat;
+            border-radius: 10px;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* ==== MOBILE (UZUM 5 GRID) ==== */
+        @media (max-width: 600px) {
+
+            .features {
+                display: grid;
+                justify-content: start;
+                margin-top: 0;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 18px;
+                max-width: 420px;
+                margin: 0 auto;
+            }
+
+            .feature-item {
+                width: auto;
+                height: auto;
+                padding: 0;
+                flex-direction: column;
+                align-items: center;
+                gap: 7px;
+                text-align: center;
+                background: transparent;
+                box-shadow: none;
+            }
+
+            .feature-item .icon {
+                position: static;
+                transform: none;
+                width: 60px;
+                height: 60px;
+                border-radius: 20px;
+            }
+
+            .feature-item p {
+                font-size: 12px;
+            }
+
+        }
+        .mebel {
+            background-image: url({% static 'img/mebel.png' %});
+        }
+        .kitob {
+            background-image: url({% static 'img/kitoblar.png' %});
+        }
+        .elek {
+            background-image: url({% static 'img/elektronika.png' %});
+        }
+        .car {
+            background-image: url({% static 'img/car.png' %});
+        }
+        .uy {
+            background-image: url({% static 'img/uy.png' %});
+        }
+        .jihoz {
+            background-image: url({% static 'img/uyjihoz.png' %});
+        }
+        .bola {
+
+            background-image: url({% static 'img/onabola.png' %});
+        }
+            </style>
+
+</head>
+<body>
+
+    <div class="features">
+
+        <div class="feature-item">
+            <div class="icon"></div>
+            <p>Chet eldan tovarlar</p>
+        </div>
+
+        <div class="feature-item">
+            <div class="icon elek"></div>
+            <p>Elektronika</p>
+        </div>
+        <div class="feature-item">
+            <div class="icon kitob"></div>
+            <p>Kitoblar</p>
+        </div>
+        <div class="feature-item">
+            <div class="icon mebel"></div>
+            <p>Mebellar</p>
+        </div>
+        <div class="feature-item">
+            <div class="icon car"></div>
+            <p>Auto elonlar</p>
+        </div>
+
+        <div class="feature-item">
+            <div class="icon uy"></div>
+            <p>Uy joy elonlari</p>
+        </div>
+
+        <div class="feature-item">
+            <div class="icon bola"></div>
+            <p>Onalar va bolalar uchun</p>
+        </div>
+
+        <div class="feature-item">
+            <div class="icon jihoz"></div>
+            <p>Uy jihozlari</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

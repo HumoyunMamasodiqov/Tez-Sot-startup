@@ -4,6 +4,28 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 import re
 
+class Banner(models.Model):
+    DEVICE_CHOICES = [
+        ('desktop', 'Desktop/Notebook'),
+        ('mobile', 'Mobile/Tablet'),
+    ]
+    
+    title = models.CharField(max_length=200, verbose_name="Banner nomi")
+    image = models.ImageField(upload_to='banners/', verbose_name="Banner rasmi")
+    device_type = models.CharField(max_length=10, choices=DEVICE_CHOICES, verbose_name="Qurilma turi")
+    is_active = models.BooleanField(default=True, verbose_name="Faol")
+    link = models.URLField(blank=True, null=True, verbose_name="Havola (ixtiyoriy)")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan sana")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Yangilangan sana")
+    
+    class Meta:
+        verbose_name = "Banner"
+        verbose_name_plural = "Bannerlar"
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.title} ({self.get_device_type_display()})"
+
 class Mahsulot(models.Model):
     CATEGORY_CHOICES = [
         ('elektronika', 'Elektronika'),

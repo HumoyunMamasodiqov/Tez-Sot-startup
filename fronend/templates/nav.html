@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TezSot - Online Market</title>
+    <title>TezSot - O'zbekistonning Eng Yirik Online Marketi</title>
     <link rel="icon" type="image/png" href="{% static 'img/iconlogo.png' %}">
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -53,6 +53,10 @@
                 500: "#10b981",
                 600: "#059669",
               },
+              accent: {
+                500: "#f59e0b",
+                600: "#d97706",
+              },
               gray: {
                 50: "#f9fafb",
                 100: "#f3f4f6",
@@ -74,12 +78,15 @@
               soft: "0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)",
               medium: "0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
               large: "0 10px 40px -10px rgba(0, 0, 0, 0.15)",
+              xl: "0 20px 50px -12px rgba(0, 0, 0, 0.25)",
             },
             animation: {
               "fade-in": "fadeIn 0.5s ease-in-out",
               "slide-up": "slideUp 0.3s ease-out",
               "bounce-soft": "bounceSoft 2s infinite",
               "slide-down": "slideDown 0.3s ease-out",
+              "pulse-soft": "pulseSoft 2s infinite",
+              "slide-in-right": "slideInRight 0.3s ease-out",
             },
             keyframes: {
               fadeIn: {
@@ -98,6 +105,14 @@
                 "0%, 100%": { transform: "translateY(0)" },
                 "50%": { transform: "translateY(-5px)" },
               },
+              pulseSoft: {
+                "0%, 100%": { opacity: "1" },
+                "50%": { opacity: "0.8" },
+              },
+              slideInRight: {
+                "0%": { transform: "translateX(20px)", opacity: "0" },
+                "100%": { transform: "translateX(0)", opacity: "1" },
+              },
             },
           },
         },
@@ -114,8 +129,17 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
     />
     <style>
+      /* Asosiy stillar */
       .gradient-bg {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      
+      .gradient-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      }
+      
+      .gradient-accent {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
       }
 
       .card-hover {
@@ -147,23 +171,98 @@
         width: 100%;
       }
 
-      .category-card {
-        transition: all 0.3s ease;
+      /* Header va navigatsiya stillari */
+      .header-container {
+        background: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid #f1f5f9;
+        padding: ;
       }
 
-      .category-card:hover {
+      .logo-container {
+        transition: transform 0.3s ease;
+      }
+
+      .logo-container:hover {
         transform: scale(1.05);
       }
 
-      /* Qidiruv uchun yangi stylelar */
-      .search-input-container {
+      .nav-item {
         position: relative;
-        width: 350px;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .nav-item:hover {
+        background-color: #f8fafc;
+        color: #3b82f6;
+      }
+
+      .nav-item.active {
+        color: #3b82f6;
+        background-color: #eff6ff;
+      }
+
+      .action-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .action-button.primary {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+
+      .action-button.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+      }
+
+      .action-button.accent {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      }
+
+      .action-button.accent:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+      }
+
+      .action-button.secondary {
+        background: #f8fafc;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+      }
+
+      .action-button.secondary:hover {
+        background: #f1f5f9;
+        border-color: #d1d5db;
+      }
+
+      /* Qidiruv tizimi stillari */
+      .search-container {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
       }
 
       .search-input {
         width: 100%;
-        padding: 0.75rem 3rem 0.75rem 1rem;
+        padding: 0.875rem 3.5rem 0.875rem 1.25rem;
         border: 2px solid #e5e7eb;
         border-radius: 12px;
         font-size: 0.95rem;
@@ -185,6 +284,7 @@
         transform: translateY(-50%);
         color: #6b7280;
         transition: color 0.3s ease;
+        cursor: pointer;
       }
 
       .search-input:focus + .search-icon {
@@ -213,6 +313,8 @@
       }
 
       .search-result-item {
+        width: 98%;
+        height: auto;
         padding: 1rem;
         border-bottom: 1px solid #f3f4f6;
         cursor: pointer;
@@ -286,253 +388,181 @@
         margin-top: 0.25rem;
       }
 
-      .no-results {
-        padding: 2rem 1.5rem;
-        text-align: center;
+      /* Mobile navigatsiya */
+      .mobile-nav-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+        z-index: 999;
+        padding: 0.5rem 0;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+        border-radius: 10px;
+        transition: all 0.2s ease;
         color: #6b7280;
+        position: relative;
       }
 
-      .no-results i {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        color: #d1d5db;
+      .mobile-nav-item.active {
+        color: #3b82f6;
       }
 
+      .mobile-nav-item:hover {
+        background: #f8fafc;
+      }
+
+      .mobile-nav-icon {
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .mobile-nav-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .mobile-nav-badge {
+        position: absolute;
+        top: 0;
+        right: 0.25rem;
+        background: #ef4444;
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 600;
+      }
+
+      /* Mobile menyu */
+      .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .mobile-menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .mobile-menu-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 85%;
+        max-width: 320px;
+        height: 100%;
+        background: white;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1002;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+      }
+
+      .mobile-menu-panel.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .mobile-menu-logo {
+        height: 32px;
+      }
+
+      .mobile-menu-close {
+        padding: 0.5rem;
+        border-radius: 8px;
+        color: #6b7280;
+        transition: all 0.2s ease;
+      }
+
+      .mobile-menu-close:hover {
+        background: #f3f4f6;
+        color: #374151;
+      }
+
+      .mobile-menu-content {
+        padding: 1.25rem;
+      }
+
+      .mobile-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1rem;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        color: #374151;
+        margin-bottom: 0.5rem;
+      }
+
+      .mobile-menu-item:hover,
+      .mobile-menu-item.active {
+        background: #eff6ff;
+        color: #3b82f6;
+      }
+
+      .mobile-menu-icon {
+        font-size: 1.25rem;
+        width: 24px;
+        text-align: center;
+      }
+
+      .mobile-menu-label {
+        font-weight: 500;
+      }
+
+      .mobile-menu-badge {
+        margin-left: auto;
+        background: #3b82f6;
+        color: white;
+        border-radius: 12px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      /* Yuklash animatsiyasi */
       .loading-spinner {
         display: none;
-        text-align: center;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
         padding: 1.5rem;
         color: #3b82f6;
       }
 
       .loading-spinner.active {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
       }
 
-      /* Mobile qidiruv */
-      .mobile-search-container {
-        position: relative;
-        width: 100%;
-      
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-      .mobile-search-input {
-        width: 100%;
-       margin-top: 13px;
-      padding-left: 46px;
-      padding-right: 10px;
-      padding-top: 17px;
-      padding-bottom: 15px;
-
-        border: 2px solid #e5e7eb;
-        border-radius: 12px;
-        font-size: 1rem;
-        background: white;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      }
-
-      .mobile-search-input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      }
-
-      .mobile-search-icon {
-        position: absolute;
-        right: 1rem;
-     top: 44px;
-     left: 33px;
-        transform: translateY(-50%);
-        color: #6b7280;
-        transition: color 0.3s ease;
-      }
-
-      .mobile-search-input:focus + .mobile-search-icon {
-        color: #3b82f6;
-      }
-
-      /* Mobile qidiruv modali */
-      .mobile-search-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: white;
-        z-index: 1000;
-        transform: translateY(100%);
-        transition: transform 0.3s ease;
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .mobile-search-modal.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .mobile-search-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem;
-        border-bottom: 1px solid #e5e7eb;
-        background: white;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
-
-      .mobile-search-input-full {
-        flex: 1;
-        padding: 0.75rem 1rem;
-        border: 2px solid #e5e7eb;
-        border-radius: 10px;
-        font-size: 1rem;
-        
-        background: #f9fafb;
-        transition: all 0.3s ease;
-      }
-
-      .mobile-search-input-full:focus {
-        outline: none;
-        border-color: #3b82f6;
-        background: white;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      }
-
-      /* Filtrlash bo'limi */
-      .filters-container {
-        background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        margin-bottom: 2rem;
-      }
-
-      .filter-group {
-        margin-bottom: 1.5rem;
-      }
-
-      .filter-label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 0.75rem;
-        color: #374151;
-        font-size: 0.95rem;
-      }
-
-      .filter-select {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border: 2px solid #e5e7eb;
-        border-radius: 8px;
-        background: white;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-      }
-
-      .filter-select:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      }
-
-      .price-inputs {
-        display: flex;
-        gap: 1rem;
-      }
-
-      .price-input {
-        flex: 1;
-        padding: 0.75rem 1rem;
-        border: 2px solid #e5e7eb;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-      }
-
-      .price-input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      }
-
-      .filter-buttons {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-
-      .filter-btn {
-        flex: 1;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-      }
-
-      .filter-btn.apply {
-        background: #3b82f6;
-        color: white;
-      }
-
-      .filter-btn.apply:hover {
-        background: #2563eb;
-        transform: translateY(-2px);
-      }
-
-      .filter-btn.reset {
-        background: #f3f4f6;
-        color: #374151;
-      }
-
-      .filter-btn.reset:hover {
-        background: #e5e7eb;
-      }
-
-      /* Kategoriya tez filtrlari */
-      .quick-filters {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-bottom: 2rem;
-      }
-
-      .quick-filter {
-        padding: 0.5rem 1rem;
-        background: white;
-        border: 2px solid #e5e7eb;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #374151;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .quick-filter:hover {
-        border-color: #3b82f6;
-        color: #3b82f6;
-        transform: translateY(-2px);
-      }
-
-      .quick-filter.active {
-        background: #3b82f6;
-        border-color: #3b82f6;
-        color: white;
-      }
-
-      /* Yuklash animatsiyasi */
       .loading-dots {
         display: inline-flex;
         gap: 4px;
@@ -557,391 +587,323 @@
         }
       }
 
-      /* Yangi qo'shimchalar - Qidiruv takliflari */
-      .search-suggestions {
-        padding: 1rem;
-        border-bottom: 1px solid #f3f4f6;
-      }
-
-      .suggestion-title {
-        font-size: 0.85rem;
-        color: #6b7280;
-        margin-bottom: 0.75rem;
-        font-weight: 500;
-      }
-
-      .suggestion-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .suggestion-tag {
-        padding: 0.4rem 0.75rem;
-        background: #f3f4f6;
-        border-radius: 16px;
-        font-size: 0.8rem;
-        color: #374151;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-
-      .suggestion-tag:hover {
-        background: #e5e7eb;
-        transform: translateY(-1px);
-      }
-
-      .recent-searches {
-        padding: 1rem;
-      }
-
-      .recent-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.75rem 0;
-        border-bottom: 1px solid #f9fafb;
-        cursor: pointer;
-      }
-
-      .recent-item:last-child {
-        border-bottom: none;
-      }
-
-      .recent-text {
-        flex: 1;
-        color: #374151;
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-      }
-
-      .recent-remove {
-        color: #9ca3af;
-        cursor: pointer;
-        padding: 0.25rem;
-        border-radius: 4px;
-        transition: all 0.2s ease;
-      }
-
-      .recent-remove:hover {
-        color: #ef4444;
-        background: #fef2f2;
-      }
-
-      /* Tavsiya etiladigan mahsulotlar */
-      .recommended-section {
-        padding: 1rem;
-        border-bottom: 1px solid #f3f4f6;
-      }
-
-      .recommended-title {
-        font-size: 0.85rem;
-        color: #6b7280;
-        margin-bottom: 0.75rem;
-        font-weight: 500;
-      }
-
-      .recommended-products {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .recommended-product {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem;
-        background: #f8fafc;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-
-      .recommended-product:hover {
-        background: #f1f5f9;
-        transform: translateX(3px);
-      }
-
-      .recommended-product-image {
-        width: 40px;
-        height: 40px;
-        border-radius: 6px;
+      /* Hero section */
+      .hero-section {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        position: relative;
         overflow: hidden;
-        background: #e5e7eb;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
       }
 
-      .recommended-product-image img {
+      .hero-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      /* Category cards */
+      .category-card {
+        transition: all 0.3s ease;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .category-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .category-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        padding: 1.5rem;
+        color: white;
+      }
+
+      /* Product cards */
+      .product-card {
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+        position: relative;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-image {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .product-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.5s ease;
       }
 
-      .recommended-product-info {
-        flex: 1;
-        min-width: 0;
+      .product-card:hover .product-image img {
+        transform: scale(1.05);
       }
 
-      .recommended-product-name {
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: #1f2937;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .recommended-product-price {
-        font-size: 0.8rem;
-        color: #3b82f6;
+      .product-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: #ef4444;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
         font-weight: 600;
-        margin-top: 0.25rem;
       }
 
-      /* Voice search */
-      .voice-search-btn {
-        padding: 0.5rem;
+      .product-favorite {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
-        background: #f3f4f6;
-        color: #6b7280;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-
-      .voice-search-btn:hover {
-        background: #e5e7eb;
-        color: #3b82f6;
-      }
-
-      .voice-search-btn.listening {
-        background: #fee2e2;
-        color: #ef4444;
-        animation: pulse 1.5s infinite;
-      }
-
-      @keyframes pulse {
-        0% {
-          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
-        }
-        70% {
-          box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
-        }
-        100% {
-          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-        }
-      }
-
-      /* Search error states */
-      .search-error {
-        padding: 2rem 1.5rem;
-        text-align: center;
-        color: #6b7280;
-      }
-
-      .search-error i {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        color: #ef4444;
-      }
-
-      .retry-btn {
-        margin-top: 1rem;
-        padding: 0.5rem 1rem;
-        background: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-weight: 500;
         cursor: pointer;
         transition: all 0.2s ease;
       }
 
-      .retry-btn:hover {
-        background: #2563eb;
+      .product-favorite:hover {
+        background: white;
+        transform: scale(1.1);
       }
 
-      /* Media queries */
+      .product-favorite.active {
+        background: #ef4444;
+        color: white;
+      }
+
+      /* Stats section */
+      .stats-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .stats-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+      }
+
+      /* Footer */
+      .footer {
+        background: #1f2937;
+        color: white;
+      }
+
+      .footer-links a {
+        transition: color 0.2s ease;
+      }
+
+      .footer-links a:hover {
+        color: #3b82f6;
+      }
+
+      /* Responsive dizayn */
       @media (max-width: 1024px) {
-        .search-input-container {
-          width: 300px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .search-input-container {
-          width: 250px;
+        .desktop-nav {
+          display: none;
         }
         
-        .search-input {
-          font-size: 0.9rem;
-      
+        .mobile-nav-container {
+          display: flex;
         }
-      .user {
-        display: none;
       }
-      .mobile-search-container {
-        display: block;
 
-      }
+      @media (min-width: 1025px) {
+        .mobile-nav-container {
+          display: none;
+        }
+        
+        .mobile-menu-btn {
+          display: none;
+        }
       }
 
       @media (max-width: 640px) {
-        .search-input-container {
+        .logo-a {
+          display: none;
+        }
+        .action-button {
+          display: none;
+        }
+        .search-container {
+          max-width: 100%;
+        }
+        
+        .action-button span {
           display: none;
         }
         
-        .mobile-search-container {
-          display: block;
+        .action-button {
+          padding: 0.75rem;
         }
-
-        .filters-container {
-          margin: 1rem;
-          padding: 1rem;
+        
+        .hero-title {
+          font-size: 2rem;
         }
-
-        .price-inputs {
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-      }
-
-      @media (min-width: 641px) {
-        .mobile-search-container {
+        .ba {
           display: none;
         }
       }
 
-      /* Print styles */
+      /* Print stillari */
       @media print {
-        .no-print { display: none !important; }
-        .search-input-container { display: none !important; }
-        .mobile-search-container { display: none !important; }
+        .no-print {
+          display: none !important;
+        }
+      }
+      .mobile-nav-container  {
+        display: flex;
+        justify-content: space-between;
       }
     </style>
   </head>
-  <body class="bg-gray-50 font-inter min-h-screen">
+  <body class="">
     <!-- Desktop Header -->
-    <header class="bg-white shadow-soft sticky top-[30px] z-50 border-b border-gray-100">
-      <div class="max-w-7xl mx-auto mt-[10px]">
-        <!-- Top Navigation -->
-        <div class="flex items-center  justify-between h-16">
+    <header class="header-container no-print">
+      <div class="max-w-[1440px] mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
           <!-- Logo -->
-          <a href="/">
-            <div class="flex-shrink-0 flex items-center space-x-3">
-              <h1 class="text-2xl font-pacifico text-primary-600">
-                <img
-                  class="logo w-[150px] h-[40px]"
-                  src="{% static 'img/logo.png' %}"
-                  alt="Tez Sot"
-                />
-              </h1>
+          <a href="/" class="logo-container">
+            <div class="flex items-center space-x-3">
+              <img
+                class="h-8 logo-a"
+                src="{% static 'img/logo.png' %}"
+                alt="TezSot - O'zbekistonning eng yirik online marketi"
+              />
             </div>
           </a>
 
-          <!-- Mobile qidiruv (faqat kichik ekranlarda) -->
-       
-
           <!-- Desktop Navigation -->
-          <nav class="hidden lg:flex space-x-8 items-center">
+          <nav class="desktop-nav flex items-center space-x-6">
             <a
               href="/"
-              class="nav-link text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200 active"
-              >Bosh sahifa</a
+              class="nav-item {% if request.path == '/' %}active{% endif %}"
             >
-
-           
+              Bosh sahifa
+            </a>
+            <a
+              href="{% url 'barcha_mahsulotlar' %}"
+              class="nav-item {% if 'barcha-mahsulotlar' in request.path %}active{% endif %}"
+            >
+              Barcha mahsulotlar
+            </a>
             <a
               href="{% url 'biz_haqimizda' %}"
-              class="nav-link text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
-              >Biz haqimizda</a
+              class="nav-item {% if 'biz-haqimizda' in request.path %}active{% endif %}"
             >
+              Biz haqimizda
+            </a>
             
-            <!-- Desktop qidiruv bo'limi -->
-            <div class="search-input-container">
-              <input 
-                type="text" 
-                id="desktopSearch" 
-                class="search-input" 
-                placeholder="Mahsulot qidirish..."
-                autocomplete="off"
-              >
-              <div class="search-icon">
-                <i class="fas fa-search text-sm"></i>
-              </div>
-              
-              <div class="search-results" id="desktopSearchResults">
-                <div class="loading-spinner" id="desktopLoadingSpinner">
-                  <div class="loading-dots">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                  </div>
-                  <span>Qidirilmoqda...</span>
-                </div>
-                <div id="desktopResultsContainer"></div>
-              </div>
-            </div>
-
-            <!-- Filtrlash tugmalari -->
-           
           </nav>
 
-          <!-- Right Side Icons -->
+          <!-- Qidiruv bo'limi -->
+          <div class="search-container">
+            <input 
+              type="text" 
+              id="desktopSearch" 
+              class="search-input" 
+              placeholder="Mahsulot, kategoriya yoki brend qidirish..."
+              autocomplete="off"
+              aria-label="Mahsulot qidirish"
+            >
+            <div class="search-icon" id="desktopSearchIcon">
+              <i class="fas fa-search"></i>
+            </div>
+            
+            <div class="search-results" id="desktopSearchResults">
+              <div class="loading-spinner" id="desktopLoadingSpinner">
+                <div class="loading-dots">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <span>Qidirilmoqda...</span>
+              </div>
+              <div id="desktopResultsContainer"></div>
+            </div>
+          </div>
+
+          <!-- Foydalanuvchi amallari -->
           <div class="flex items-center space-x-3">
             {% if user.is_authenticated %}
-            <a class="user" href="{% url 'mening_elonlarim' %}">
-              <button
-                class=" p-3 flex justify-center items-center text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-200"
-              >
-                <i class="ri-user-line text-xl"></i>
-                <h1 class="ml-2 hidden sm:block">Profil</h1>
-              </button>
-            </a>
+              <div class="relative group">
+                <button class="action-button secondary">
+                  <i class="ri-user-line"></i>
+                  <span>Profil</span>
+                </button>
+                <div class="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-large border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+                  <a href="{% url 'mening_elonlarim' %}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 rounded-t-lg">
+                    Mening e'lonlarim
+                  </a>
+                  <a href="{% url 'sevimlilarim' %}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">
+                    Sevimlilar
+                    {% if request.user.sevimli_set.count > 0 %}
+                      <span class="ml-2 bg-primary-500 text-white text-xs px-2 py-1 rounded-full">
+                        {{ request.user.sevimli_set.count }}
+                      </span>
+                    {% endif %}
+                  </a>
+                  <div class="border-t border-gray-100">
+                    <a href="{% url 'chiqish' %}" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 rounded-b-lg">
+                      Chiqish
+                    </a>
+                  </div>
+                </div>
+              </div>
             {% else %}
-            <a class="user" href="{% url 'kirish' %}">
-              <button
-                class="p-3 flex justify-center items-center text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-200"
-              >
-                <i class="ri-user-line text-xl"></i>
-                <h1 class="ml-2 hidden sm:block">Profil</h1>
-              </button>
-            </a>
-            {% endif %} 
-            
-            {% if user.is_authenticated %}
-            <a href="{% url 'elon_qoshish' %}">
-              <button
-                class="p-3 flex justify-center items-center text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-200"
-              >
-                <i class="ri-add-line text-xl"></i>
-                <h1 class="ml-2 hidden sm:block">Qo'shish</h1>
-              </button>
-            </a>
-            {% else %}
-            <a href="{% url 'kirish' %}">
-              <button
-                class="p-3 flex justify-center items-center text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-200"
-              >
-                <i class="ri-add-line text-xl"></i>
-                <h1 class="ml-2 hidden sm:block">Qo'shish</h1>
-              </button>
-            </a>
+              <a href="{% url 'kirish' %}">
+                <button class="action-button secondary">
+                  <i class="ri-user-line"></i>
+                  <span>Kirish</span>
+                </button>
+              </a>
             {% endif %}
             
-            <!-- Mobile Menu Button -->
-            <button
-              class="lg:hidden p-3 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-200"
-              id="mobile-menu-btn"
-            >
+            <a href="{% url 'elon_qoshish' %}">
+              <button class="action-button primary">
+                <i class="ri-add-line"></i>
+                <span>E'lon qo'shish</span>
+              </button>
+            </a>
+
+            <!-- Mobile menyu tugmasi -->
+            <button class="ba mobile-menu-btn p-2 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors duration-200">
               <i class="ri-menu-line text-xl"></i>
             </button>
           </div>
@@ -949,934 +911,348 @@
       </div>
     </header>
 
-    <!-- Mobile Search Modal -->
-    <div class="mobile-search-modal" id="mobileSearchModal">
-      <div class="mobile-search-header">
-        <button class="p-2 text-gray-600" id="mobileSearchBack" aria-label="Orqaga">
-          <i class="ri-arrow-left-line text-xl"></i>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-container no-print flex justify-between items-center bg-white shadow-md fixed bottom-0 w-full z-50">
+      <div class="flex items-center justify-between w-full px-4 py-2">
+    
+        <!-- Bosh -->
+        <a href="/" class="mobile-nav-item flex flex-col items-center justify-center {% if request.path == '/' %}text-blue-500{% else %}text-gray-600{% endif %}">
+          <i class="ri-home-line mobile-nav-icon text-2xl"></i>
+          <span class="mobile-nav-label text-xs mt-1">Bosh</span>
+        </a>
+    
+        <!-- Qidirish -->
+        <button id="mobileSearchBtn" class="mobile-nav-item flex flex-col items-center justify-center text-gray-600">
+          <i class="ri-search-line mobile-nav-icon text-2xl"></i>
+          <span class="mobile-nav-label text-xs mt-1">Qidirish</span>
         </button>
-        <input 
-          type="text" 
-          id="mobileSearchFull" 
-          class="mobile-search-input-full" 
-          placeholder="Mahsulotlar va turkumlar izlash"
-          autocomplete="off"
-          autofocus
-          aria-label="Qidiruv so'rovi"
-        >
-        <button class="voice-search-btn" id="voiceSearchBtn" aria-label="Ovozli qidiruv" title="Ovozli qidiruv">
-          <i class="fas fa-microphone text-sm"></i>
-        </button>
-      </div>
-      <div class="search-results active h-full overflow-y-auto">
-        <div class="loading-spinner" id="mobileSearchFullLoading">
-          <div class="loading-dots">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <span>Qidirilmoqda...</span>
-        </div>
-        
-        <!-- Xatolik holati -->
-        <div class="search-error hidden" id="mobileSearchError">
-          <i class="fas fa-wifi text-red-500 text-lg mb-2"></i>
-          <p class="font-medium text-gray-600">Internet aloqasi yo'q</p>
-          <p class="text-sm text-gray-500 mt-1">Iltimos, internet aloqasini tekshiring</p>
-          <button class="retry-btn" id="mobileRetryBtn">
-            Qayta urinish
+    
+        <!-- Qo‘shish -->
+        {% if user.is_authenticated %}
+          <a href="{% url 'elon_qoshish' %}" class="mobile-nav-item flex flex-col items-center justify-center text-gray-600">
+            <i class="ri-add-circle-line mobile-nav-icon text-2xl"></i>
+            <span class="mobile-nav-label text-xs mt-1">Qo'shish</span>
+          </a>
+        {% else %}
+          <a href="{% url 'kirish' %}" class="mobile-nav-item flex flex-col items-center justify-center text-gray-600">
+            <i class="ri-add-circle-line mobile-nav-icon text-2xl"></i>
+            <span class="mobile-nav-label text-xs mt-1">Qo'shish</span>
+          </a>
+        {% endif %}
+    
+        <!-- Sevimli -->
+        {% if user.is_authenticated %}
+          <a href="{% url 'sevimlilarim' %}" class="mobile-nav-item relative flex flex-col items-center justify-center {% if 'sevimlilar' in request.path %}text-blue-500{% else %}text-gray-600{% endif %}">
+            <i class="ri-heart-line mobile-nav-icon text-2xl"></i>
+            <span class="mobile-nav-label text-xs mt-1">Sevimli</span>
+            {% if request.user.sevimli_set.count > 0 %}
+              <span class="mobile-nav-badge absolute top-0 right-0 bg-red-500 text-white text-[10px] rounded-full px-1">{{ request.user.sevimli_set.count }}</span>
+            {% endif %}
+          </a>
+        {% else %}
+          <a href="{% url 'kirish' %}" class="mobile-nav-item flex flex-col items-center justify-center text-gray-600">
+            <i class="ri-heart-line mobile-nav-icon text-2xl"></i>
+            <span class="mobile-nav-label text-xs mt-1">Sevimli</span>
+          </a>
+        {% endif %}
+    
+        <!-- Menyu / Profil -->
+          <button class="mobile-nav-item flex flex-col items-center justify-center text-gray-600 mobile-menu-btn">
+            <i class="ri-menu-line mobile-nav-icon text-2xl"></i>
+            <span class="mobile-nav-label text-xs mt-1">Menyu</span>
           </button>
-        </div>
-        
-        <div id="mobileSearchFullResults">
-          <!-- Oxirgi qidiruvlar -->
-          <div class="recent-searches" id="recentSearchesSection">
-            <div class="suggestion-title">Oxirgi qidiruvlar</div>
-            <!-- JavaScript orqali to'ldiriladi -->
-          </div>
-          
-          <!-- Ko'p qidirilganlar -->
-          <div class="search-suggestions">
-            <div class="suggestion-title">Ko'p qidirilganlar</div>
-            <div class="suggestion-tags">
-              <div class="suggestion-tag" data-search="iPhone">iPhone</div>
-              <div class="suggestion-tag" data-search="MacBook">MacBook</div>
-              <div class="suggestion-tag" data-search="Samsung">Samsung</div>
-              <div class="suggestion-tag" data-search="Uy">Uy</div>
-              <div class="suggestion-tag" data-search="Ish">Ish</div>
-              <div class="suggestion-tag" data-search="Avtomobil">Avtomobil</div>
-              <div class="suggestion-tag" data-search="Kiyim">Kiyim</div>
-              <div class="suggestion-tag" data-search="Telefon">Telefon</div>
-            </div>
-          </div>
-          
-          <!-- Tavsiya etiladigan mahsulotlar -->
-          <div class="recommended-section">
-            <div class="recommended-title">Tavsiya etiladigan mahsulotlar</div>
-            <div class="recommended-products">
-              <div class="recommended-product" data-product="1">
-                <div class="recommended-product-image">
-                  <i class="fas fa-mobile-alt text-gray-400"></i>
-                </div>
-                <div class="recommended-product-info">
-                  <div class="recommended-product-name">iPhone 14 Pro Max 256GB</div>
-                  <div class="recommended-product-price">12 000 000 so'm</div>
-                </div>
-              </div>
-              <div class="recommended-product" data-product="2">
-                <div class="recommended-product-image">
-                  <i class="fas fa-laptop text-gray-400"></i>
-                </div>
-                <div class="recommended-product-info">
-                  <div class="recommended-product-name">MacBook Air M2 2023</div>
-                  <div class="recommended-product-price">15 000 000 so'm</div>
-                </div>
-              </div>
-              <div class="recommended-product" data-product="3">
-                <div class="recommended-product-image">
-                  <i class="fas fa-car text-gray-400"></i>
-                </div>
-                <div class="recommended-product-info">
-                  <div class="recommended-product-name">Chevrolet Malibu 2020</div>
-                  <div class="recommended-product-price">25 000 $</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+       
+    
       </div>
     </div>
-
-    <!-- Filtrlash Paneli -->
-    <div class="filters-container hidden" id="filtersPanel">
-      <h3 class="text-lg font-bold mb-4 text-gray-800">Filtrlash</h3>
-      
-      <div class="filter-group">
-        <label class="filter-label">Kategoriya</label>
-        <select class="filter-select" id="categoryFilter">
-          <option value="">Barcha kategoriyalar</option>
-          {% for category in categories %}
-          <option value="{{ category.id }}">{{ category.name }}</option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <div class="filter-group">
-        <label class="filter-label">Narx oralig'i</label>
-        <div class="price-inputs">
-          <input type="number" class="price-input" id="minPrice" placeholder="Min narx">
-          <input type="number" class="price-input" id="maxPrice" placeholder="Max narx">
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <label class="filter-label">Holati</label>
-        <select class="filter-select" id="conditionFilter">
-          <option value="">Barchasi</option>
-          <option value="new">Yangi</option>
-          <option value="used">Ishlatilgan</option>
-        </select>
-      </div>
-
-      <div class="filter-group">
-        <label class="filter-label">Joylashuv</label>
-        <select class="filter-select" id="locationFilter">
-          <option value="">Barcha joylar</option>
-          {% for region in regions %}
-          <option value="{{ region.id }}">{{ region.name }}</option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <div class="filter-buttons">
-        <button class="filter-btn reset" id="resetFilters">
-          Tozalash
-        </button>
-        <button class="filter-btn apply" id="applyFilters">
-          Qo'llash
-        </button>
-      </div>
-    </div>
-
-   
-      <!-- <div class=" fixed top-[78px] w-full left-0 w-full z-50 mb-[20px]" >
-        <div class="mobile-search-container">
-          <input 
-            type="text" 
-            id="mobileSearch" 
-            class="mobile-search-input w-full" 
-            placeholder="Mahsulotlar va turkumlar izlash"
-            autocomplete="off"
-          >
-          <div class="mobile-search-icon">
-            <i class="fas fa-search"></i>
-          </div>
-          
-          <div class="search-results" id="mobileSearchResults">
-            <div class="loading-spinner" id="mobileLoadingSpinner">
-              <div class="loading-dots">
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <span>Qidirilmoqda...</span>
-            </div>
-            <div id="mobileResultsContainer"></div>
-          </div>
-        </div>
-      </div> -->
-   
+    
     <!-- Mobile Menu Overlay -->
-    <div class="fixed inset-0 z-50 hidden" id="mobile-menu">
-      <div
-        class="fixed inset-0 bg-black bg-opacity-50"
-        id="mobile-menu-backdrop"
-      ></div>
-      <div
-        class="fixed top-0 left-0 w-80 h-full bg-white shadow-xl transform -translate-x-full transition-transform duration-300"
-        id="mobile-menu-panel"
-      >
-        <div
-          class="flex items-center justify-between p-6 border-b border-gray-200"
-        >
+    <div class="mobile-menu-overlay no-print" id="mobileMenuOverlay">
+      <div class="mobile-menu-panel" id="mobileMenuPanel">
+        <div class="mobile-menu-header">
           <div class="flex items-center space-x-3">
-            <h2 class="text-lg font-semibold text-gray-900">
-              <img src="{% static 'img/logo.png' %}" alt="Tez Sot" />
-            </h2>
+            <img
+              src="{% static 'img/logo.png' %}"
+              alt="TezSot"
+              class="mobile-menu-logo"
+            />
+            
           </div>
-          <button
-            class="p-2 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors duration-200"
-            id="mobile-menu-close"
-          >
+          <button class="mobile-menu-close" id="mobileMenuClose">
             <i class="ri-close-line text-xl"></i>
           </button>
         </div>
-
-        <div class="p-6">
-          <!-- Mobile Navigation -->
-          <nav class="space-y-2">
-            <a
-              href="/"
-              class="flex items-center space-x-4 px-4 py-3 bg-primary-50 text-primary-600 rounded-xl font-medium transition-colors duration-200"
-            >
-              <i class="ri-home-line text-lg"></i>
-              <span>Bosh sahifa</span>
+        
+        <div class="mobile-menu-content">
+          {% if user.is_authenticated %}
+            <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg mb-4">
+              <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center">
+                <i class="ri-user-line"></i>
+              </div>
+              <div>
+                <div class="font-medium text-gray-900">{{ user.username }}</div>
+                <div class="text-sm text-gray-500">{{ user.email }}</div>
+              </div>
+            </div>
+          {% endif %}
+          
+          <a href="/" class="mobile-menu-item {% if request.path == '/' %}active{% endif %}">
+            <i class="ri-home-line mobile-menu-icon"></i>
+            <span class="mobile-menu-label">Bosh sahifa</span>
+          </a>
+          
+          <a href="{% url 'barcha_mahsulotlar' %}" class="mobile-menu-item {% if 'barcha-mahsulotlar' in request.path %}active{% endif %}">
+            <i class="ri-store-line mobile-menu-icon"></i>
+            <span class="mobile-menu-label">Barcha mahsulotlar</span>
+          </a>
+          
+          {% if user.is_authenticated %}
+            <a href="{% url 'mening_elonlarim' %}" class="mobile-menu-item {% if 'mening-elonlarim' in request.path %}active{% endif %}">
+              <i class="ri-list-check mobile-menu-icon"></i>
+              <span class="mobile-menu-label">Mening e'lonlarim</span>
             </a>
             
-            {% if user.is_authenticated %}
-            <a
-              href="{% url 'sevimlilarim' %}"
-              class="flex items-center space-x-4 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors duration-200"
-            >
-              <i class="ri-heart-line text-lg"></i>
-              <span>Sevimlilar</span>
-              <span class="bg-primary-100 text-primary-600 px-2 py-1 rounded-full text-xs font-medium">
-                {{ request.user.sevimli_set.count }}
-              </span>
+            <a href="{% url 'sevimlilarim' %}" class="mobile-menu-item {% if 'sevimlilar' in request.path %}active{% endif %}">
+              <i class="ri-heart-line mobile-menu-icon"></i>
+              <span class="mobile-menu-label">Sevimlilar</span>
+              {% if request.user.sevimli_set.count > 0 %}
+                <span class="mobile-menu-badge">{{ request.user.sevimli_set.count }}</span>
+              {% endif %}
             </a>
-            {% else %}
-            <a
-              href="{% url 'kirish' %}"
-              class="flex items-center space-x-4 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors duration-200"
-            >
-              <i class="ri-heart-line text-lg"></i>
-              <span>Sevimlilar</span>
-            </a>
-            {% endif %}
-
-            {% if user.is_authenticated %}
-            <a
-              href="{% url 'mening_elonlarim' %}"
-              class="flex items-center space-x-4 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors duration-200"
-            >
-              <i class="ri-user-line text-lg"></i>
-              <span>Profil</span>
-            </a>
-            {% else %}
-            <a
-              href="{% url 'kirish' %}"
-              class="flex items-center space-x-4 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors duration-200"
-            >
-              <i class="ri-user-line text-lg"></i>
-              <span>Profil</span>
-            </a>
-            {% endif %}
+          {% endif %}
+          
+          <a href="{% url 'biz_haqimizda' %}" class="mobile-menu-item {% if 'biz-haqimizda' in request.path %}active{% endif %}">
+            <i class="ri-information-line mobile-menu-icon"></i>
+            <span class="mobile-menu-label">Biz haqimizda</span>
+          </a>
+          
+          
+          
+          {% if user.is_authenticated %}
+            <div class="border-t border-gray-200 mt-4 pt-4">
             
-       
-
-            <!-- Mobile filtrlash -->
-            <button
-              class="flex items-center space-x-4 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors duration-200 w-full text-left"
-              id="mobile-filter-btn"
-            >
-              <i class="ri-filter-line text-lg"></i>
-              <span>Filtrlash</span>
-            </button>
-          </nav>
+              
+              <a href="{% url 'chiqish' %}" class="mobile-menu-item text-red-600">
+                <i class="ri-logout-box-r-line mobile-menu-icon"></i>
+                <span class="mobile-menu-label">Chiqish</span>
+              </a>
+            </div>
+          {% else %}
+            <div class="border-t border-gray-200 mt-4 pt-4">
+              <a href="{% url 'kirish' %}" class="mobile-menu-item">
+                <i class="ri-login-box-line mobile-menu-icon"></i>
+                <span class="mobile-menu-label">Kirish</span>
+              </a>
+              
+             
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
 
-    <!-- Mobile Bottom Navigation -->
-    <div
-      class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 lg:hidden z-40 shadow-medium"
-    >
-      <div class="flex items-center justify-around py-3">
-        <a
-          href="/"
-          class="flex flex-col items-center py-1 px-3 text-primary-600"
-        >
-          <i class="ri-home-line text-xl mb-1"></i>
-          <span class="text-xs font-medium">Bosh</span>
-        </a>
-        
-        <!-- Mobile qidiruv tugmasi -->
-        <button
-          class="flex flex-col items-center py-1 px-3 text-gray-600"
-          id="mobile-search-btn"
-        >
-          <i class="ri-search-line text-xl mb-1"></i>
-          <span class="text-xs">Qidirish</span>
-        </button>
-        {% if user.is_authenticated %}
-        <a
-        href="{% url 'elon_qoshish' %}"
-        class="flex relative flex-col items-center py-1 px-3 text-gray-600"
-      >
-        <i class="fa fa-plus text-xl mb-1"></i>
-        <span class="text-xs">Qo'shish</span>
-        {% if request.user.sevimli_set.count > 0 %}
-      
-        {% endif %}
-      </a>
-        {% else %}
-        <a
-          href="{% url 'kirish' %}"
-          class="flex flex-col items-center py-1 px-3 text-gray-600"
-        >
-          <i class="fa fa-plus text-xl mb-1"></i>
-          <span class="text-xs">Qo'shish</span>
-        </a>
-        {% endif %}
-        {% if user.is_authenticated %}
-        <a
-          href="{% url 'sevimlilarim' %}"
-          class="flex relative flex-col items-center py-1 px-3 text-gray-600"
-        >
-          <i class="ri-heart-line text-xl mb-1"></i>
-          <span class="text-xs">Sevimli</span>
-          {% if request.user.sevimli_set.count > 0 %}
-          <span class="absolute top-0 right-[5px] bg-primary-600 text-white w-5 h-5 rounded-full flex justify-center items-center text-xs">
-            {{ request.user.sevimli_set.count }}
-          </span>
-          {% endif %}
-        </a>
-        {% else %}
-        <a
-          href="{% url 'kirish' %}"
-          class="flex flex-col items-center py-1 px-3 text-gray-600"
-        >
-          <i class="ri-heart-line text-xl mb-1"></i>
-          <span class="text-xs">Sevimli</span>
-        </a>
-        {% endif %} 
-      
-        {% if user.is_authenticated %}
-        <a
-          href="{% url 'mening_elonlarim' %}"
-          class="flex flex-col items-center py-1 px-3 text-gray-600"
-        >
-          <i class="ri-user-line text-xl mb-1"></i>
-          <span class="text-xs">Profil</span>
-        </a>
-        {% else %}
-        <a
-          href="{% url 'kirish' %}"
-          class="flex flex-col items-center py-1 px-3 text-gray-600"
-        >
-          <i class="ri-user-line text-xl mb-1"></i>
-          <span class="text-xs">Profil</span>
-        </a>
-        {% endif %} 
-      </div>
-    </div>
+    <!-- Asosiy kontent -->
+ 
+   
 
     <script>
-      // LocalStorage'dan oxirgi qidiruvlarni olish
-      function getRecentSearches() {
-          const recent = localStorage.getItem('recentSearches');
-          return recent ? JSON.parse(recent) : [];
-      }
-
-      // LocalStorage'ga oxirgi qidiruvlarni saqlash
-      function saveToRecentSearches(query) {
-          if (!query.trim()) return;
+      document.addEventListener("DOMContentLoaded", function () {
+        // Mobile menyu boshqaruvi
+        const mobileMenuBtn = document.querySelectorAll('.mobile-menu-btn');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        
+        function openMobileMenu() {
+          mobileMenuOverlay.classList.add('active');
+          mobileMenuPanel.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileMenu() {
+          mobileMenuOverlay.classList.remove('active');
+          mobileMenuPanel.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+        
+        mobileMenuBtn.forEach(btn => {
+          btn.addEventListener('click', openMobileMenu);
+        });
+        
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+        
+        // Qidiruv tizimi
+        const desktopSearch = document.getElementById('desktopSearch');
+        const desktopSearchResults = document.getElementById('desktopSearchResults');
+        const desktopResultsContainer = document.getElementById('desktopResultsContainer');
+        const desktopLoadingSpinner = document.getElementById('desktopLoadingSpinner');
+        
+        let searchTimeout;
+        
+        // Qidiruv funksiyasi
+        function performSearch(query, resultsContainer, loadingSpinner, searchResults) {
+          clearTimeout(searchTimeout);
           
-          let recent = getRecentSearches();
-          
-          // Agar so'rov allaqachon mavjud bo'lsa, uni olib tashlang
-          recent = recent.filter(item => item !== query);
-          
-          // Yangi so'rovni boshiga qo'shing
-          recent.unshift(query);
-          
-          // Faqat oxirgi 5 ta qidiruvni saqlang
-          if (recent.length > 5) {
-              recent = recent.slice(0, 5);
+          if (query.length === 0) {
+            searchResults.classList.remove('active');
+            return;
           }
           
-          localStorage.setItem('recentSearches', JSON.stringify(recent));
-      }
-
-      // Eng ko'p qidirilgan so'zlar (backenddan olinadi)
-      const popularSearches = [
-          "iPhone",
-          "MacBook",
-          "Samsung",
-          "Uy",
-          "Ish",
-          "Avtomobil",
-          "Kiyim",
-          "Telefon"
-      ];
-
-      // Oxirgi qidiruvlarni ko'rsatish
-      function showRecentSearches() {
-          const recentSearches = getRecentSearches();
-          const recentSearchesSection = document.getElementById('recentSearchesSection');
-          
-          if (recentSearches.length > 0) {
-              let html = `
-                  <div class="suggestion-title">Oxirgi qidiruvlar</div>
-                  ${recentSearches.map(search => `
-                      <div class="recent-item" data-search="${search}">
-                          <div class="recent-text">
-                              <i class="fas fa-history text-gray-400 mr-2"></i>
-                              ${search}
-                          </div>
-                          <div class="recent-remove" data-remove="${search}">
-                              <i class="fas fa-times"></i>
-                          </div>
-                      </div>
-                  `).join('')}
-              `;
-              recentSearchesSection.innerHTML = html;
-              
-              // Oxirgi qidiruvlarni bosish hodisasi
-              recentSearchesSection.querySelectorAll('.recent-item').forEach(element => {
-                  element.addEventListener('click', function() {
-                      const searchText = this.dataset.search;
-                      mobileSearchFull.value = searchText;
-                      mobileSearchFull.dispatchEvent(new Event('input'));
-                  });
-              });
-              
-              // Oxirgi qidiruvlarni o'chirish hodisasi
-              recentSearchesSection.querySelectorAll('.recent-remove').forEach(element => {
-                  element.addEventListener('click', function(e) {
-                      e.stopPropagation();
-                      const searchToRemove = this.dataset.remove;
-                      removeFromRecentSearches(searchToRemove);
-                      showRecentSearches();
-                  });
-              });
-          } else {
-              recentSearchesSection.style.display = 'none';
+          if (query.length < 2) {
+            resultsContainer.innerHTML = `
+              <div class="p-4 text-center text-gray-500">
+                Iltimos, kamida 2 ta belgi kiriting
+              </div>
+            `;
+            searchResults.classList.add('active');
+            return;
           }
-      }
-
-      // Oxirgi qidiruvlardan o'chirish
-      function removeFromRecentSearches(query) {
-          let recent = getRecentSearches();
-          recent = recent.filter(item => item !== query);
-          localStorage.setItem('recentSearches', JSON.stringify(recent));
-      }
-
-      // Qidiruv natijalari oynasini ko'rsatish
-      function showSearchSuggestions(resultsContainer, isMobile = false) {
-          const recentSearches = getRecentSearches();
+          
+          loadingSpinner.classList.add('active');
+          searchResults.classList.add('active');
+          
+          // Oldingi natijalarni tozalash
+          resultsContainer.innerHTML = '';
+          
+          searchTimeout = setTimeout(() => {
+            // Haqiqiy API chaqiruvi
+            fetch(`/api/search/?q=${encodeURIComponent(query)}`)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(data => {
+                loadingSpinner.classList.remove('active');
+                displaySearchResults(data, resultsContainer);
+              })
+              .catch(error => {
+                console.error('Qidiruv xatosi:', error);
+                loadingSpinner.classList.remove('active');
+                resultsContainer.innerHTML = `
+                  <div class="p-4 text-center text-red-500">
+                    Qidiruvda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.
+                  </div>
+                `;
+              });
+          }, 500);
+        }
+        
+        // Qidiruv natijalarini ko'rsatish
+        function displaySearchResults(results, resultsContainer) {
+          if (results.length === 0) {
+            resultsContainer.innerHTML = `
+              <div class="p-4 text-center text-gray-500">
+                <i class="fas fa-search text-gray-300 text-2xl mb-2 block"></i>
+                Hech narsa topilmadi
+              </div>
+            `;
+            return;
+          }
           
           let html = '';
-          
-          // Agar oxirgi qidiruvlar mavjud bo'lsa
-          if (recentSearches.length > 0) {
-              html += `
-                  <div class="recent-searches">
-                      <div class="suggestion-title">Oxirgi qidiruvlar</div>
-                      ${recentSearches.map(search => `
-                          <div class="recent-item" data-search="${search}">
-                              <div class="recent-text">
-                                  <i class="fas fa-history text-gray-400 mr-2"></i>
-                                  ${search}
-                              </div>
-                              <div class="recent-remove" data-remove="${search}">
-                                  <i class="fas fa-times"></i>
-                              </div>
-                          </div>
-                      `).join('')}
+          results.forEach(product => {
+            html += `
+              <div class="search-result-item" onclick="window.location.href='${product.url}'">
+                <div class="search-result-image">
+                  ${product.image ? 
+                    `<img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'">` : 
+                    `<div class="w-full h-full bg-gray-100 flex items-center justify-center rounded-lg">
+                      <i class="fas fa-image text-gray-400 text-lg"></i>
+                    </div>`
+                  }
+                </div>
+                <div class="search-result-content">
+                  <div class="search-result-name">${product.name}</div>
+                  <div class="search-result-price">${product.price}</div>
+                  <div class="flex items-center gap-2 mt-1">
+                    <span class="search-result-category">${product.category}</span>
+                    <span class="search-result-location">
+                      <i class="fas fa-map-marker-alt text-xs mr-1"></i>
+                      ${product.location}
+                    </span>
                   </div>
-              `;
-          }
-          
-          // Taklif qilingan qidiruvlar
-          html += `
-              <div class="search-suggestions">
-                  <div class="suggestion-title">Ko'p qidirilganlar</div>
-                  <div class="suggestion-tags">
-                      ${popularSearches.map(tag => `
-                          <div class="suggestion-tag" data-search="${tag}">${tag}</div>
-                      `).join('')}
-                  </div>
+                </div>
               </div>
-          `;
+            `;
+          });
           
           resultsContainer.innerHTML = html;
-          
-          // Taklif qilingan qidiruvlarni bosish hodisasi
-          resultsContainer.querySelectorAll('.suggestion-tag, .recent-text').forEach(element => {
-              element.addEventListener('click', function() {
-                  const searchText = this.closest('[data-search]').dataset.search;
-                  if (isMobile) {
-                      mobileSearchFull.value = searchText;
-                      mobileSearchFull.dispatchEvent(new Event('input'));
-                  } else {
-                      desktopSearch.value = searchText;
-                      desktopSearch.dispatchEvent(new Event('input'));
-                  }
-              });
-          });
-          
-          // Oxirgi qidiruvlarni o'chirish hodisasi
-          resultsContainer.querySelectorAll('.recent-remove').forEach(element => {
-              element.addEventListener('click', function(e) {
-                  e.stopPropagation();
-                  const searchToRemove = this.dataset.remove;
-                  removeFromRecentSearches(searchToRemove);
-                  showSearchSuggestions(resultsContainer, isMobile);
-              });
-          });
-      }
-
-      // Qidiruv input'iga fokus bo'lganda takliflarni ko'rsatish
-      function setupSearchInputEvents(searchInput, resultsContainer, loadingSpinner, searchResults, isMobile = false) {
-          // Fokus bo'lganda
-          searchInput.addEventListener('focus', function() {
-              if (this.value.trim() === '') {
-                  showSearchSuggestions(resultsContainer, isMobile);
-                  searchResults.classList.add('active');
-              }
-          });
-          
-          // Input o'zgarganida
-          searchInput.addEventListener('input', function(e) {
-              const query = e.target.value.trim();
-              
-              if (query === '') {
-                  showSearchSuggestions(resultsContainer, isMobile);
-                  searchResults.classList.add('active');
-                  return;
-              }
-              
-              performSearch(query, resultsContainer, loadingSpinner, searchResults);
-          });
-      }
-
-      // Ovozli qidiruv funksiyasi
-      function setupVoiceSearch() {
-          const voiceSearchBtn = document.getElementById('voiceSearchBtn');
-          const mobileSearchFull = document.getElementById('mobileSearchFull');
-          
-          if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-              voiceSearchBtn.style.display = 'none';
-              return;
+        }
+        
+        // Desktop qidiruv hodisalari
+        desktopSearch.addEventListener('input', function(e) {
+          const query = e.target.value.trim();
+          performSearch(query, desktopResultsContainer, desktopLoadingSpinner, desktopSearchResults);
+        });
+        
+        desktopSearch.addEventListener('focus', function() {
+          if (this.value.trim() !== '') {
+            desktopSearchResults.classList.add('active');
           }
-          
-          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-          const recognition = new SpeechRecognition();
-          
-          recognition.continuous = false;
-          recognition.interimResults = false;
-          recognition.lang = 'uz-UZ';
-          
-          voiceSearchBtn.addEventListener('click', function() {
-              if (voiceSearchBtn.classList.contains('listening')) {
-                  recognition.stop();
-                  voiceSearchBtn.classList.remove('listening');
-              } else {
-                  recognition.start();
-                  voiceSearchBtn.classList.add('listening');
-                  mobileSearchFull.placeholder = "Gapiring...";
-              }
-          });
-          
-          recognition.onresult = function(event) {
-              const transcript = event.results[0][0].transcript;
-              mobileSearchFull.value = transcript;
-              mobileSearchFull.dispatchEvent(new Event('input'));
-              voiceSearchBtn.classList.remove('listening');
-              mobileSearchFull.placeholder = "Mahsulot nomi, kategoriya yoki tavsif bo'yicha qidiring...";
-          };
-          
-          recognition.onerror = function(event) {
-              console.error('Speech recognition error', event.error);
-              voiceSearchBtn.classList.remove('listening');
-              mobileSearchFull.placeholder = "Mahsulot nomi, kategoriya yoki tavsif bo'yicha qidiring...";
-          };
-          
-          recognition.onend = function() {
-              voiceSearchBtn.classList.remove('listening');
-              mobileSearchFull.placeholder = "Mahsulot nomi, kategoriya yoki tavsif bo'yicha qidiring...";
-          };
-      }
-
-      document.addEventListener("DOMContentLoaded", function () {
-          // Mobile menu funksiyalari
-          const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-          const mobileMenu = document.getElementById("mobile-menu");
-          const mobileMenuPanel = document.getElementById("mobile-menu-panel");
-          const mobileMenuClose = document.getElementById("mobile-menu-close");
-          const mobileMenuBackdrop = document.getElementById("mobile-menu-backdrop");
-
-          function openMobileMenu() {
-            mobileMenu.classList.remove("hidden");
-            setTimeout(() => {
-              mobileMenuPanel.classList.remove("-translate-x-full");
-            }, 10);
-            document.body.style.overflow = "hidden";
-          }
-
-          function closeMobileMenu() {
-            mobileMenuPanel.classList.add("-translate-x-full");
-            setTimeout(() => {
-              mobileMenu.classList.add("hidden");
-            }, 300);
-            document.body.style.overflow = "";
-          }
-
-          mobileMenuBtn.addEventListener("click", openMobileMenu);
-          mobileMenuClose.addEventListener("click", closeMobileMenu);
-          mobileMenuBackdrop.addEventListener("click", closeMobileMenu);
-
-          // Qidiruv funksiyalari
-          let searchTimeout;
-          
-          // Desktop qidiruv elementlari
-          const desktopSearch = document.getElementById('desktopSearch');
-          const desktopSearchResults = document.getElementById('desktopSearchResults');
-          const desktopResultsContainer = document.getElementById('desktopResultsContainer');
-          const desktopLoadingSpinner = document.getElementById('desktopLoadingSpinner');
-          
-          // Mobile qidiruv elementlari
-          const mobileSearch = document.getElementById('mobileSearch');
-          const mobileSearchResults = document.getElementById('mobileSearchResults');
-          const mobileResultsContainer = document.getElementById('mobileResultsContainer');
-          const mobileLoadingSpinner = document.getElementById('mobileLoadingSpinner');
-          
-          // Mobile to'liq qidiruv elementlari
-          const mobileSearchModal = document.getElementById('mobileSearchModal');
-          const mobileSearchFull = document.getElementById('mobileSearchFull');
-          const mobileSearchFullResults = document.getElementById('mobileSearchFullResults');
-          const mobileSearchFullLoading = document.getElementById('mobileSearchFullLoading');
-          const mobileSearchBack = document.getElementById('mobileSearchBack');
-          const mobileSearchBtn = document.getElementById('mobile-search-btn');
-          const mobileSearchError = document.getElementById('mobileSearchError');
-          const mobileRetryBtn = document.getElementById('mobileRetryBtn');
-
-          // Filtrlash elementlari
-          const filtersPanel = document.getElementById('filtersPanel');
-          const filterToggleBtn = document.querySelector('.filter-toggle-btn');
-          const mobileFilterBtn = document.getElementById('mobile-filter-btn');
-          const applyFiltersBtn = document.getElementById('applyFilters');
-          const resetFiltersBtn = document.getElementById('resetFilters');
-          const quickFilters = document.querySelectorAll('.quick-filter');
-
-          // Tavsiya etiladigan mahsulotlar
-          const recommendedProducts = document.querySelectorAll('.recommended-product');
-          recommendedProducts.forEach(product => {
-              product.addEventListener('click', function() {
-                  const productId = this.dataset.product;
-                  // Mahsulot sahifasiga o'tish
-                  window.location.href = `/mahsulot/${productId}/`;
-              });
-          });
-
-          // Mobile qidiruv modalini ochish
-          function openMobileSearch() {
-            mobileSearchModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            mobileSearchFull.focus();
-            
-            // Oxirgi qidiruvlarni ko'rsatish
-            showRecentSearches();
-          }
-
-          // Mobile qidiruv modalini yopish
-          function closeMobileSearch() {
-            mobileSearchModal.classList.remove('active');
-            document.body.style.overflow = '';
-          }
-
-          mobileSearchBtn.addEventListener('click', openMobileSearch);
-          mobileSearchBack.addEventListener('click', closeMobileSearch);
-
-          // Filtrlash panelini boshqarish
-          function toggleFilters() {
-            filtersPanel.classList.toggle('hidden');
-            if (!filtersPanel.classList.contains('hidden')) {
-              filtersPanel.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Enter bosilganda to'liq qidiruv sahifasiga o'tish
+        desktopSearch.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            const query = this.value.trim();
+            if (query) {
+              window.location.href = `/barcha-mahsulotlar/?q=${encodeURIComponent(query)}`;
             }
           }
-
-          if (filterToggleBtn) {
-            filterToggleBtn.addEventListener('click', toggleFilters);
+        });
+        
+        // Tashqi bosilganda qidiruv natijalarini yashirish
+        document.addEventListener('click', function(e) {
+          if (!desktopSearch.contains(e.target) && !desktopSearchResults.contains(e.target)) {
+            desktopSearchResults.classList.remove('active');
           }
-
-          if (mobileFilterBtn) {
-            mobileFilterBtn.addEventListener('click', function() {
-              closeMobileMenu();
-              setTimeout(toggleFilters, 300);
-            });
-          }
-
-          // Tez filtrlash
-          quickFilters.forEach(filter => {
-            filter.addEventListener('click', function() {
-              quickFilters.forEach(f => f.classList.remove('active'));
-              this.classList.add('active');
-              
-              const category = this.dataset.category;
-              // Kategoriya bo'yicha filtrlash
-              if (category) {
-                document.getElementById('categoryFilter').value = category;
-                applyFilters();
-              } else {
-                document.getElementById('categoryFilter').value = '';
-                applyFilters();
-              }
-            });
+        });
+        
+        // Mobile qidiruv tugmasi
+        const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+        mobileSearchBtn.addEventListener('click', function() {
+          desktopSearch.focus();
+        });
+        
+        // Profil menyusi
+        const profileButton = document.querySelector('.group');
+        if (profileButton) {
+          profileButton.addEventListener('mouseenter', function() {
+            this.querySelector('button').classList.add('bg-gray-50');
           });
-
-          // Filtrlarni qo'llash
-          function applyFilters() {
-            const category = document.getElementById('categoryFilter').value;
-            const minPrice = document.getElementById('minPrice').value;
-            const maxPrice = document.getElementById('maxPrice').value;
-            const condition = document.getElementById('conditionFilter').value;
-            const location = document.getElementById('locationFilter').value;
-            
-            // Filtrlarni URL parametrlari sifatida yuborish
-            const params = new URLSearchParams();
-            
-            if (category) params.append('category', category);
-            if (minPrice) params.append('min_price', minPrice);
-            if (maxPrice) params.append('max_price', maxPrice);
-            if (condition) params.append('condition', condition);
-            if (location) params.append('location', location);
-            
-            // Sahifani yangilash yoki natijalarni AJAX orqali yuklash
-            window.location.href = `/barcha-mahsulotlar/?${params.toString()}`;
-          }
-
-          applyFiltersBtn.addEventListener('click', applyFilters);
-
-          // Filtrlarni tozalash
-          resetFiltersBtn.addEventListener('click', function() {
-            document.getElementById('categoryFilter').value = '';
-            document.getElementById('minPrice').value = '';
-            document.getElementById('maxPrice').value = '';
-            document.getElementById('conditionFilter').value = '';
-            document.getElementById('locationFilter').value = '';
-            
-            // Tozalashdan so'ng sahifani yangilash
-            window.location.href = '/barcha-mahsulotlar/';
-          });
-
-          // Qidiruv funksiyalarini sozlash
-          setupSearchInputEvents(
-              desktopSearch, 
-              desktopResultsContainer, 
-              desktopLoadingSpinner, 
-              desktopSearchResults, 
-              false
-          );
           
-          setupSearchInputEvents(
-              mobileSearch, 
-              mobileResultsContainer, 
-              mobileLoadingSpinner, 
-              mobileSearchResults, 
-              false
-          );
-          
-          setupSearchInputEvents(
-              mobileSearchFull, 
-              mobileSearchFullResults, 
-              mobileSearchFullLoading, 
-              mobileSearchFull.parentElement, 
-              true
-          );
-
-          // Ovozli qidiruvni sozlash
-          setupVoiceSearch();
-
-          // Qayta urinish tugmasi
-          mobileRetryBtn.addEventListener('click', function() {
-              const query = mobileSearchFull.value.trim();
-              if (query) {
-                  mobileSearchError.classList.add('hidden');
-                  mobileSearchFullLoading.classList.add('active');
-                  performSearch(query, mobileSearchFullResults, mobileSearchFullLoading, mobileSearchFull.parentElement);
-              }
+          profileButton.addEventListener('mouseleave', function() {
+            this.querySelector('button').classList.remove('bg-gray-50');
           });
-
-          // Umumiy qidiruv funksiyasi
-          function performSearch(query, resultsContainer, loadingSpinner, searchResults) {
-            clearTimeout(searchTimeout);
-            
-            if (query.length === 0) {
-              showSearchSuggestions(resultsContainer);
-              searchResults.classList.add('active');
-              return;
-            }
-            
-            if (query.length < 2) {
-              resultsContainer.innerHTML = `
-                <div class="no-results">
-                  <i class="fas fa-info-circle text-lg mb-2"></i>
-                  <p>Iltimos, kamida 2 ta belgi kiriting</p>
-                </div>
-              `;
-              searchResults.classList.add('active');
-              return;
-            }
-            
-            loadingSpinner.classList.add('active');
-            searchResults.classList.add('active');
-            mobileSearchError.classList.add('hidden');
-            
-            // Oldingi natijalarni tozalash
-            resultsContainer.innerHTML = '';
-            
-            searchTimeout = setTimeout(() => {
-              // Haqiqiy API chaqiruvi
-              fetch(`/api/search/?q=${encodeURIComponent(query)}`)
-                .then(response => {
-                  if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                  }
-                  return response.json();
-                })
-                .then(data => {
-                  loadingSpinner.classList.remove('active');
-                  displaySearchResults(data, resultsContainer);
-                  
-                  // Qidiruvni saqlash
-                  saveToRecentSearches(query);
-                })
-                .catch(error => {
-                  console.error('Qidiruv xatosi:', error);
-                  loadingSpinner.classList.remove('active');
-                  mobileSearchError.classList.remove('hidden');
-                });
-            }, 300);
-          }
-
-          // Qidiruv natijalarini ko'rsatish
-          function displaySearchResults(results, resultsContainer) {
-            if (results.length === 0) {
-              resultsContainer.innerHTML = `
-                <div class="no-results">
-                  <i class="fas fa-search text-gray-300 text-2xl mb-3"></i>
-                  <p class="font-medium text-gray-600">Hech narsa topilmadi</p>
-                  <p class="text-sm text-gray-500 mt-1">Boshqa so'zlar bilan qayta urinib ko'ring</p>
-                </div>
-              `;
-              return;
-            }
-            
-            let html = '';
-            results.forEach(product => {
-              html += `
-                <div class="search-result-item" onclick="window.location.href='${product.url}'">
-                  <div class="search-result-image">
-                    ${product.image ? 
-                      `<img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'">` : 
-                      `<div class="w-full h-full bg-gray-100 flex items-center justify-center rounded-lg">
-                        <i class="fas fa-image text-gray-400 text-lg"></i>
-                      </div>`
-                    }
-                  </div>
-                  <div class="search-result-content">
-                    <div class="search-result-name">${product.name}</div>
-                    <div class="search-result-price">${product.price}</div>
-                    <div class="flex items-center gap-2 mt-1">
-                      <span class="search-result-category">${product.category}</span>
-                      <span class="search-result-location">
-                        <i class="fas fa-map-marker-alt text-xs mr-1"></i>
-                        ${product.location}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              `;
-            });
-            
-            resultsContainer.innerHTML = html;
-          }
-
-          // Tashqi bosilganda qidiruv natijalarini yashirish
-          document.addEventListener('click', function(e) {
-            // Desktop qidiruv
-            if (!desktopSearch.contains(e.target) && !desktopSearchResults.contains(e.target)) {
-              desktopSearchResults.classList.remove('active');
-            }
-            
-            // Mobile qidiruv
-            if (!mobileSearch.contains(e.target) && !mobileSearchResults.contains(e.target)) {
-              mobileSearchResults.classList.remove('active');
+        }
+        
+        // Sevimlilar tugmasi funksiyasi
+        const favoriteButtons = document.querySelectorAll('.product-favorite');
+        favoriteButtons.forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.toggle('active');
+            const icon = this.querySelector('i');
+            if (this.classList.contains('active')) {
+              icon.className = 'ri-heart-fill';
+            } else {
+              icon.className = 'ri-heart-line';
             }
           });
-
-          // Enter bosilganda to'liq qidiruv
-          desktopSearch.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-              const query = this.value.trim();
-              if (query) {
-                window.location.href = `/barcha-mahsulotlar/?q=${encodeURIComponent(query)}`;
-              }
-            }
+        });
+        
+        // Mahsulot kartalariga bosilganda sahifaga o'tish
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+          card.addEventListener('click', function() {
+            // Bu yerda haqiqiy mahsulot sahifasiga yo'naltirish bo'lishi kerak
+            // window.location.href = '/mahsulot/1/';
           });
-
-          mobileSearch.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-              const query = this.value.trim();
-              if (query) {
-                window.location.href = `/barcha-mahsulotlar/?q=${encodeURIComponent(query)}`;
-              }
-            }
-          });
-
-          mobileSearchFull.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-              const query = this.value.trim();
-              if (query) {
-                closeMobileSearch();
-                window.location.href = `/barcha-mahsulotlar/?q=${encodeURIComponent(query)}`;
-              }
-            }
-          });
-
-          // Escape bosilganda qidiruvni yopish
-          document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-              document.querySelectorAll('.search-results.active').forEach(el => {
-                el.classList.remove('active');
-              });
-              if (mobileSearchModal.classList.contains('active')) {
-                closeMobileSearch();
-              }
-            }
-          });
+        });
       });
     </script>
   </body>

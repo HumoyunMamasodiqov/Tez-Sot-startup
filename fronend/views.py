@@ -6,24 +6,80 @@ from django.http import HttpResponseNotFound, JsonResponse
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import Mahsulot, Sevimli, Category
+from .models import Mahsulot, Sevimli, Category, Banner  # Banner ni import qilish
 import re
 
+
+def baner(request):
+    """Bannerlarni ko'rsatadigan alohida sahifa"""
+    try:
+        # User agent ni tekshirish
+        user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+        print(f"DEBUG baner: User Agent - {user_agent}")
+        
+        # Qurilma turini aniqlash
+        mobile_keywords = ['mobile', 'android', 'iphone', 'ipad', 'tablet']
+        device_type = 'mobile' if any(keyword in user_agent for keyword in mobile_keywords) else 'desktop'
+        print(f"DEBUG baner: Device Type - {device_type}")
+        
+        # Device type bo'yicha bannerlarni olish
+        banners = Banner.objects.filter(
+            device_type=device_type,
+            is_active=True
+        ).order_by('-created_at')[:5]
+        
+        print(f"DEBUG baner: Found {banners.count()} banners for {device_type}")
+        
+        return render(request, 'baner.html', {
+            'banners': banners,
+            'device_type': device_type
+        })
+        
+    except Exception as e:
+        print(f"DEBUG baner: Xatolik - {e}")
+        return render(request, 'baner.html', {
+            'banners': [],
+            'device_type': 'desktop'
+        })
 
 def test_404(request):
     """404 sahifasini ko'rsatish"""
     return HttpResponseNotFound(render(request, '404.html'))
 
 
+# fronend/views.py
 def home_view(request):
-    """Bosh sahifa - barcha aktiv mahsulotlar"""
+    """Bosh sahifa - bannerlar va mahsulotlar"""
     try:
+        # User agent ni tekshirish
+        user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+        
+        # Qurilma turini aniqlash
+        mobile_keywords = ['mobile', 'android', 'iphone', 'ipad', 'tablet']
+        device_type = 'mobile' if any(keyword in user_agent for keyword in mobile_keywords) else 'desktop'
+        
+        # Device type bo'yicha bannerlarni olish
+        banners = Banner.objects.filter(
+            device_type=device_type,
+            is_active=True
+        ).order_by('-created_at')[:5]
+        
+        # Yangi mahsulotlarni olish
         mahsulotlar = Mahsulot.objects.filter(aktiv=True, sotilgan=False).order_by('-id')[:12]
-        return render(request, 'home.html', {'mahsulotlar': mahsulotlar})
+        
+        return render(request, 'home.html', {
+            'mahsulotlar': mahsulotlar,
+            'banners': banners,  # ✅ Bannerlarni qo'shish
+            'device_type': device_type
+        })
+        
     except Exception as e:
         print(f"DEBUG: Xatolik - {e}")
-        return render(request, 'home.html', {'mahsulotlar': []})
-
+        return render(request, 'home.html', {
+            'mahsulotlar': [],
+            'banners': [],  # ✅ Bo'sh bannerlar
+            'device_type': 'desktop'
+        })
 
 def index(request):
     """Barcha mahsulotlar sahifasi"""
@@ -314,3 +370,8 @@ def mahsulot_detail_view(request, mahsulot_id):
 
 def newnav(request):
     return render(request, 'newnav.html')
+
+
+
+def kategoriya(request):
+    return render(request, 'kategoriya.html')

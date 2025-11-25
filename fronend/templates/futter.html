@@ -61,55 +61,76 @@
 
     
     <!-- Futer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Kompaniya haqida</h3>
-                    <ul>
-                        <li><a href="{% url 'biz_haqimizda' %}">Biz haqimizda</a></li>
-                        <li><a href="#">Hamkorlar</a></li>
-                    </ul>
-                </div>
-                
-                <!-- <div class="footer-column">
-                    <h3>Mijozlar uchun</h3>
-                    <ul>
-                        <li><a href="#">Yetkazib berish</a></li>
-                        <li><a href="#">Kafolat</a></li>
-                        <li><a href="#">To'lov usullari</a></li>
-                        <li><a href="#">Aksiyalar</a></li>
-                    </ul>
-                </div>
-                 -->
-                <div class="footer-column">
-                    <h3>Yordam</h3>
-                    <ul>
-                        <li><a href="{% url 'boglanish' %}">Yordam markazi</a></li>
-                        <li><a href="@tezsot_support_bot">Qo'llab-quvvatlash</a></li>
-                        
-            
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Aloqa</h3>
-                    <ul>
-                        <li>Manzil: Andijon Viloyati, Izboskan tumani</li>
-                        <li>Telefon: +998 33 026 00 38</li>
-                        <li>Email: humoyun731uzb@gmail.com</li>
-                    </ul>
-                    <div class="social-icons">
-                        <a href="#">FB</a>
-                        <a href="#">IG</a>
-                        <a href="#">TG</a>
-                  
+    
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="col-span-2">
+                    <h3 class="text-2xl font-['Pacifico'] mb-4">webTez Sot</h3>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        O'zbekistondagi eng yirik e'lonlar platformasi. Har qanday mahsulot va xizmatni oson va tez sotib oling yoki soting.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center transition-colors">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-facebook-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center transition-colors">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-instagram-line"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center transition-colors">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-telegram-fill"></i>
+                            </div>
+                        </a>
                     </div>
                 </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Xizmatlar</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        {% if user.is_authenticated %}
+
+                        <li><a href="{% url 'elon_qoshish' %}" class="hover:text-white transition-colors">E'lon berish</a></li>
+                        {% else %}
+
+                        <li><a href="{% url 'kirish' %}" class="hover:text-white transition-colors">E'lon berish</a></li>
+                        {% endif %}
+                        <li><a href="" class="hover:text-white transition-colors">Premium xizmat</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Biznes hisobi</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Reklama</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Yordam</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="{% url 'boglanish' %}" class="hover:text-white transition-colors">Qo'llab-quvvatlash</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Qoidalar</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Maxfiylik</a></li>
+                        <li><a href="{% url 'boglanish' %}" class="hover:text-white transition-colors">Aloqa</a></li>
+                    </ul>
+                </div>
             </div>
-            
-            <div class="copyright m-auto">
-                &copy; 2025 Tez Sot . Barcha huquqlar himoyalangan.
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    © 2025 webTez Sot. Barcha huquqlar himoyalangan.
+                </p>
+                <div class="flex items-center space-x-6 mt-4 md:mt-0">
+                    <div class="flex items-center text-gray-400 text-sm">
+                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                            <i class="ri-phone-line"></i>
+                        </div>
+                        +998 33 026 00 38
+                    </div>
+                    <div class="flex items-center text-gray-400 text-sm">
+                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                            <i class="ri-mail-line"></i>
+                        </div>
+                        humoyun731uzb@gmail.com
+                    </div>
+                </div>
             </div>
         </div>
     </footer>

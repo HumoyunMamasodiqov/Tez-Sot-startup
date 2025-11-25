@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Tez Sot | Bannerlar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .wrapper {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .img_carusel {
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 413px;
+            user-select: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            cursor: grab;
+        }
+
+        .img_carusel:active {
+            cursor: grabbing;
+        }
+
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .slide-link, .slide-no-link {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .left-btn, .right-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .left-btn:hover, .right-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .left-btn { left: 20px; }
+        .right-btn { right: 20px; }
+
+        .dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .dot.active {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .left-btn, .right-btn { 
+                display: none; 
+            }
+            
+            .img_carusel { 
+                height: 193px; 
+            }
+            
+            .dot {
+                width: 12px;
+                height: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="img_carusel">
+            {% if banners %}
+                <div class="left-btn"><i class="fa-solid fa-chevron-left"></i></div>
+
+                <div class="slides">
+                    {% for banner in banners %}
+                    <div class="slide">
+                        {% if banner.link %}
+                        <a href="{{ banner.link }}" target="_blank" class="slide-link">
+                            <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
+                        </a>
+                        {% else %}
+                        <div class="slide-no-link">
+                            <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="right-btn"><i class="fa-solid fa-chevron-right"></i></div>
+                
+                <div class="dots">
+                    {% for banner in banners %}
+                        <div class="dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}"></div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%; color: #666;">
+                    <p>Hozircha bannerlar mavjud emas. Admin panelda banner qo'shing.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if banners %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carusel = document.querySelector('.img_carusel');
+            const slidesContainer = document.querySelector('.slides');
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            const leftBtn = document.querySelector('.left-btn');
+            const rightBtn = document.querySelector('.right-btn');
+            
+            let currentIndex = 0;
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+            let dragDistance = 0;
+            let lastClickTime = 0;
+            const DRAG_THRESHOLD = 30;
+            const DOUBLE_CLICK_TIME = 300;
+            
+            // Karusel funksiyalari
+            function goToSlide(index) {
+                currentIndex = index;
+                slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                updateDots();
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slides.length;
+                goToSlide(currentIndex);
+            }
+            
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                goToSlide(currentIndex);
+            }
+            
+            function updateDots() {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            // Touch eventlar
+            carusel.addEventListener('touchstart', handleTouchStart, { passive: false });
+            carusel.addEventListener('touchmove', handleTouchMove, { passive: false });
+            carusel.addEventListener('touchend', handleTouchEnd);
+            
+            // Mouse eventlar
+            carusel.addEventListener('mousedown', handleMouseDown);
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+            
+            // Link bosish
+            carusel.addEventListener('click', handleCaruselClick);
+            
+            // Touch event funksiyalari
+            function handleTouchStart(e) {
+                e.preventDefault();
+                startX = e.touches[0].clientX;
+                isDragging = true;
+                dragDistance = 0;
+            }
+            
+            function handleTouchMove(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                currentX = e.touches[0].clientX;
+                dragDistance = startX - currentX;
+            }
+            
+            function handleTouchEnd(e) {
+                if (!isDragging) return;
+                
+                if (Math.abs(dragDistance) > DRAG_THRESHOLD) {
+                    if (dragDistance > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                }
+                
+                isDragging = false;
+                dragDistance = 0;
+            }
+            
+            // Mouse event funksiyalari
+            function handleMouseDown(e) {
+                e.preventDefault();
+                startX = e.clientX;
+                isDragging = true;
+                dragDistance = 0;
+                carusel.style.cursor = 'grabbing';
+            }
+            
+            function handleMouseMove(e) {
+                if (!isDragging) return;
+                currentX = e.clientX;
+                dragDistance = startX - currentX;
+            }
+            
+            function handleMouseUp(e) {
+                if (!isDragging) return;
+                
+                if (Math.abs(dragDistance) > DRAG_THRESHOLD) {
+                    if (dragDistance > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                }
+                
+                isDragging = false;
+                dragDistance = 0;
+                carusel.style.cursor = 'grab';
+            }
+            
+            // Karusel bosish
+            function handleCaruselClick(e) {
+                if (isDragging || Math.abs(dragDistance) > 5) {
+                    e.preventDefault();
+                    return;
+                }
+                
+                const currentTime = new Date().getTime();
+                const timeDiff = currentTime - lastClickTime;
+                
+                if (timeDiff < DOUBLE_CLICK_TIME) {
+                    const currentSlide = slides[currentIndex];
+                    const link = currentSlide.querySelector('.slide-link');
+                    if (link) {
+                        window.open(link.href, '_blank');
+                    }
+                    lastClickTime = 0;
+                } else {
+                    lastClickTime = currentTime;
+                }
+                
+                e.preventDefault();
+            }
+            
+            // Tugmalar va nuqtalar uchun eventlar
+            leftBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                prevSlide();
+            });
+            
+            rightBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                nextSlide();
+            });
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const index = parseInt(this.getAttribute('data-index'));
+                    goToSlide(index);
+                });
+            });
+            
+            // Avtomatik karusel
+            let autoSlide = setInterval(nextSlide, 5000);
+            
+            // Karuselga fokus bo'lganda avtomatik karuselni to'xtatish
+            carusel.addEventListener('mouseenter', () => clearInterval(autoSlide));
+            carusel.addEventListener('mouseleave', () => {
+                autoSlide = setInterval(nextSlide, 5000);
+            });
+            
+            // Touch uchun ham
+            carusel.addEventListener('touchstart', () => clearInterval(autoSlide));
+            carusel.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    autoSlide = setInterval(nextSlide, 5000);
+                }, 3000);
+            });
+        });
+    </script>
+    {% endif %}
+</body>
+</html>

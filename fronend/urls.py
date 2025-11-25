@@ -22,6 +22,7 @@ urlpatterns = [
     path('sevimlilarim/', views.sevimlilarim_view, name='sevimlilarim'),
     path('sevimlidan-ochirish/<int:sevimli_id>/', views.sevimlidan_ochirish_view, name='sevimlidan_ochirish'),
     path('api/search/', views.api_search, name='api_search'),
+    path('baner/', views.baner, name='baner'),
 ]
 
 if settings.DEBUG:
